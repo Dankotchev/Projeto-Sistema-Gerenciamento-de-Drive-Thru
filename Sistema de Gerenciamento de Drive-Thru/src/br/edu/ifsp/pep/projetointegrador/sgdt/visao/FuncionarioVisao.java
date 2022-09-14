@@ -2,10 +2,8 @@ package br.edu.ifsp.pep.projetointegrador.sgdt.visao;
 
 import br.edu.ifsp.pep.projetointegrador.sgdt.controledao.FuncionarioDAO;
 import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Funcionario;
-import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Refeicao;
 import br.edu.ifsp.pep.projetointegrador.utilitarios.Mensagem;
 import br.edu.ifsp.pep.projetointegrador.utilitarios.UtilitariosDeTela;
-import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
