@@ -17,7 +17,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "veiculo", uniqueConstraints = {
     @UniqueConstraint(
             name = "unique_id_placa",
-            columnNames = {"id", "placa"})
+            columnNames = {"id_veiculo", "placa"})
 })
 @NamedQueries(value = {
     @NamedQuery(name = "Veiculo.buscarTodos",
@@ -29,13 +29,13 @@ public class Veiculo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id_veiculo")
     private Integer id;
 
     @Column(name = "placa", length = 8)
     private String placa;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status_veiculo", nullable = false)
     private boolean status;
 
     @OneToMany(mappedBy = "veiculo")

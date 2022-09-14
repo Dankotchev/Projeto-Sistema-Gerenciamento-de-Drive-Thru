@@ -21,7 +21,7 @@ public class Pedido implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id_pedido")
     private Integer id;
 
     @JoinColumn(name = "veiculo")
@@ -38,7 +38,7 @@ public class Pedido implements Serializable {
     @Column(name = "estado_atual")
     private EstadoPedido estadoPedido;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status_pedido", nullable = false)
     private boolean status;
 
     @OneToOne

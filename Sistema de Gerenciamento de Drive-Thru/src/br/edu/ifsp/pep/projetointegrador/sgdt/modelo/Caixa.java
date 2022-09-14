@@ -20,7 +20,7 @@ public class Caixa implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id_caixa")
     private Integer id;
     
     @Temporal(TemporalType.DATE)
@@ -43,7 +43,7 @@ public class Caixa implements Serializable {
     @Column(name = "saidas", precision = 10, scale = 2)
     private BigDecimal saidas;
     
-    @Column(name = "status", nullable = false)
+    @Column(name = "status_caixa", nullable = false)
     private boolean status;
     
     public enum EstadoCaixa{
@@ -51,7 +51,6 @@ public class Caixa implements Serializable {
     }
     
     //  Código Gerado
-
     public Integer getId() {
         return id;
     }
