@@ -20,7 +20,7 @@ public class Pedido implements Serializable {
     private Integer id;
     
     @Column(name = "veiculo")
-    private String veiculo;
+    private Veiculo veiculo;
 
     @Column(name = "data_pedido")
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -44,11 +44,11 @@ public class Pedido implements Serializable {
         this.id = id;
     }
 
-    public String getVeiculo() {
+    public Veiculo getVeiculo() {
         return veiculo;
     }
 
-    public void setVeiculo(String veiculo) {
+    public void setVeiculo(Veiculo veiculo) {
         this.veiculo = veiculo;
     }
 
