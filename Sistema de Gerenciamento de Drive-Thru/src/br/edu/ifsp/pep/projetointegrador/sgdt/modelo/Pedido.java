@@ -83,12 +83,8 @@ public class Pedido implements Serializable {
     public void setEstadoPedido(EstadoPedido estadoPedido) {
         this.estadoPedido = estadoPedido;
     }
-    
-    
-    
-    
-    
-    private enum EstadoPedido{
+
+    public enum EstadoPedido{
         ABERTO,
         EM_FILA,
         EM_PREPARO,
