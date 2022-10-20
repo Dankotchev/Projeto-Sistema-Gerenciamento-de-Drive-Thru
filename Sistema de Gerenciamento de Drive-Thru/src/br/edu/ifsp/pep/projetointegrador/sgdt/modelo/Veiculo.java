@@ -7,9 +7,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "veiculo")
+@Table(name = "veiculo", uniqueConstraints = {
+    @UniqueConstraint(
+            name = "unique_id_placa",
+            columnNames = {"id", "placa"})
+})
 public class Veiculo implements Serializable {
 
     @Id
@@ -36,6 +41,5 @@ public class Veiculo implements Serializable {
     public void setPlaca(String placa) {
         this.placa = placa;
     }
-    
-    
+
 }

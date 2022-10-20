@@ -9,9 +9,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "funcionario")
+@Table(name = "funcionario", uniqueConstraints = {
+    @UniqueConstraint(
+            name = "unique_cpf_rg_nome",
+            columnNames = {"cpf", "rg", "nome"})
+})
 public class Funcionario implements Serializable {
 
     @Id
@@ -31,21 +36,21 @@ public class Funcionario implements Serializable {
     @Column(name = "data_nascimento")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataNascimento;
-    
+
     @Column(name = "cargo", nullable = false)
     private Cargo cargo;
-    
+
     @Column(name = "estado_civil", nullable = false)
     private EstadoCivil estadoCivil;
 
     public enum Cargo {
-        ATENDENTE,  COZINHEIRO, GERENTE
+        ATENDENTE, COZINHEIRO, GERENTE
     }
-    
+
     public enum EstadoCivil {
         SOLTEIRO, CASADO, VIUVO, DIVORCIADO, UNIAO_ESTAVEL
     }
-    
+
     // Código Gerado
     public Integer getId() {
         return id;
