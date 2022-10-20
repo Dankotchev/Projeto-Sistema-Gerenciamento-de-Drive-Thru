@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -18,23 +19,35 @@ public class Pedido implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    
+
     @Column(name = "veiculo")
     private Veiculo veiculo;
 
     @Column(name = "data_pedido")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataPedido;
-    
+
     @Column(name = "forma_pagamento")
     private FormaPagamento formaPagamento;
-    
+
     @Column(name = "nome_cliente", length = 60)
     private String nomeCliente;
-    
+
     @Column(name = "estado_atual")
     private EstadoPedido estadoPedido;
-    
+
+    @OneToOne
+    @Column(name = "caixa_id")
+    private Caixa caixa;
+
+    public enum EstadoPedido {
+        ABERTO, EM_FILA, EM_PREPARO, FINALIZADO, ENTREGUE
+    }
+
+    public enum FormaPagamento {
+        DINHEIRO, CARTAO_CREDITO, CARTAO_DEBITO, PIX
+    }
+
     // Código Gerado
     public Integer getId() {
         return id;
@@ -84,19 +97,11 @@ public class Pedido implements Serializable {
         this.estadoPedido = estadoPedido;
     }
 
-    public enum EstadoPedido{
-        ABERTO,
-        EM_FILA,
-        EM_PREPARO,
-        FINALIZADO,
-        ENTREGUE
-    }
-    
-    private enum FormaPagamento{
-        DINHEIRO,
-        CARTAO_CREDITO,
-        CARTAO_DEBITO,
-        PIX
+    public Caixa getCaixa() {
+        return caixa;
     }
 
+    public void setCaixa(Caixa caixa) {
+        this.caixa = caixa;
+    }
 }
