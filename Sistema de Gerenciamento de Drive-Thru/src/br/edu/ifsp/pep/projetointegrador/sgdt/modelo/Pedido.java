@@ -2,11 +2,14 @@ package br.edu.ifsp.pep.projetointegrador.sgdt.modelo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -40,6 +43,12 @@ public class Pedido implements Serializable {
     @OneToOne
     @Column(name = "caixa_id")
     private Caixa caixa;
+    
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    private List<PedidoProduto> listaPedidoProdutos;
+    
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    private List<PedidoRefeicao> listaPedidoRefeicao;
 
     public enum EstadoPedido {
         ABERTO, EM_FILA, EM_PREPARO, FINALIZADO, ENTREGUE
@@ -104,5 +113,21 @@ public class Pedido implements Serializable {
 
     public void setCaixa(Caixa caixa) {
         this.caixa = caixa;
+    }
+
+    public List<PedidoProduto> getListaPedidoProdutos() {
+        return listaPedidoProdutos;
+    }
+
+    public void setListaPedidoProdutos(List<PedidoProduto> listaPedidoProdutos) {
+        this.listaPedidoProdutos = listaPedidoProdutos;
+    }
+
+    public List<PedidoRefeicao> getListaPedidoRefeicao() {
+        return listaPedidoRefeicao;
+    }
+
+    public void setListaPedidoRefeicao(List<PedidoRefeicao> listaPedidoRefeicao) {
+        this.listaPedidoRefeicao = listaPedidoRefeicao;
     }
 }
