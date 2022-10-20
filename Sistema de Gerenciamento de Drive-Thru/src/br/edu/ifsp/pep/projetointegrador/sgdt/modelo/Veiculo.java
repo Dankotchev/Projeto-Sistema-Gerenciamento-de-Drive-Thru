@@ -15,17 +15,17 @@ public class Veiculo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private Integer id;
 
     @Column(name = "placa", length = 8)
     private String placa;
 
     // Código Gerado
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

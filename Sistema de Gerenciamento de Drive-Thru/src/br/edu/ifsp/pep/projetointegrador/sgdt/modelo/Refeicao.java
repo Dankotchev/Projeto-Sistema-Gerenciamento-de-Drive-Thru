@@ -16,7 +16,7 @@ public class Refeicao implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private Integer id;
     
     @Column(name = "nome_refeicao", length = 60)
     private String nomeRefeicao;
@@ -25,16 +25,16 @@ public class Refeicao implements Serializable {
     private BigDecimal precoUnitarioRefeicao;
     
     @Column(name = "descricao_refeicao", length = 100)
-    private String descricao_refeicao;
+    private String descricaoRefeicao;
     
     private String listaIngredientes;
     
     //  Código Gerado
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -54,12 +54,12 @@ public class Refeicao implements Serializable {
         this.precoUnitarioRefeicao = precoUnitarioRefeicao;
     }
 
-    public String getDescricao_refeicao() {
-        return descricao_refeicao;
+    public String getDescricaoRefeicao() {
+        return descricaoRefeicao;
     }
 
-    public void setDescricao_refeicao(String descricao_refeicao) {
-        this.descricao_refeicao = descricao_refeicao;
+    public void setDescricaoRefeicao(String descricaoRefeicao) {
+        this.descricaoRefeicao = descricaoRefeicao;
     }
 
     public String getListaIngredientes() {
