@@ -3,35 +3,42 @@ package br.edu.ifsp.pep.projetointegrador.sgdt.modelo;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "pedido_refeicao")
-@IdClass(PedidoRefeicaoPK.class)
 public class PedidoRefeicao implements Serializable {
-    
-    @Id
+
+    @EmbeddedId
+    private PedidoRefeicaoPK pedidoRefeicaoPK;
+
     @ManyToOne
     @JoinColumn(name = "pedido_id", nullable = false)
     private Pedido pedido;
-    
-    @Id
+
     @ManyToOne
     @JoinColumn(name = "refeicao_id", nullable = false)
     private Refeicao refeicao;
-    
+
     @Column(name = "quantidade", nullable = false)
     private Integer quantidade;
-    
+
     @Column(name = "preco_unitario_refeicao", precision = 10, scale = 2, nullable = false)
     private BigDecimal precoUnitarioRefeicao;
-    
+
     //  Código Gerado
+    public PedidoRefeicaoPK getPedidoRefeicaoPK() {
+        return pedidoRefeicaoPK;
+    }
+
+    public void setPedidoRefeicaoPK(PedidoRefeicaoPK pedidoRefeicaoPK) {
+        this.pedidoRefeicaoPK = pedidoRefeicaoPK;
+    }
+
     public Pedido getPedido() {
         return pedido;
     }

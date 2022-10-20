@@ -2,33 +2,39 @@ package br.edu.ifsp.pep.projetointegrador.sgdt.modelo;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
-public class PedidoProdutoPK implements Serializable{
-    
-    private Integer pedido;
-    private Integer produto;
+@Embeddable
+public class PedidoProdutoPK implements Serializable {
 
-    public Integer getPedido() {
-        return pedido;
+    @Column(name = "pedido_id", insertable = false, updatable = false)
+    private Integer pedidoId;
+
+    @Column(name = "produto_id", insertable = false, updatable = false)
+    private Integer produtoId;
+
+    public Integer getPedidoId() {
+        return pedidoId;
     }
 
-    public void setPedido(Integer pedido) {
-        this.pedido = pedido;
+    public void setPedidoId(Integer pedidoId) {
+        this.pedidoId = pedidoId;
     }
 
-    public Integer getProduto() {
-        return produto;
+    public Integer getProdutoId() {
+        return produtoId;
     }
 
-    public void setProduto(Integer produto) {
-        this.produto = produto;
+    public void setProdutoId(Integer produtoId) {
+        this.produtoId = produtoId;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.pedido);
-        hash = 97 * hash + Objects.hashCode(this.produto);
+        hash = 89 * hash + Objects.hashCode(this.pedidoId);
+        hash = 89 * hash + Objects.hashCode(this.produtoId);
         return hash;
     }
 
@@ -44,9 +50,9 @@ public class PedidoProdutoPK implements Serializable{
             return false;
         }
         final PedidoProdutoPK other = (PedidoProdutoPK) obj;
-        if (!Objects.equals(this.pedido, other.pedido)) {
+        if (!Objects.equals(this.pedidoId, other.pedidoId)) {
             return false;
         }
-        return Objects.equals(this.produto, other.produto);
-    }    
+        return Objects.equals(this.produtoId, other.produtoId);
+    }
 }

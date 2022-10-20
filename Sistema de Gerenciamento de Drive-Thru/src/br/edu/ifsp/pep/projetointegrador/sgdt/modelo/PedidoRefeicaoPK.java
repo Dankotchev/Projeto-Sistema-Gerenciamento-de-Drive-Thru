@@ -2,33 +2,39 @@ package br.edu.ifsp.pep.projetointegrador.sgdt.modelo;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
-public class PedidoRefeicaoPK implements Serializable{
-    
-    private Integer pedido;
-    private Integer refeição;
+@Embeddable
+public class PedidoRefeicaoPK implements Serializable {
 
-    public Integer getPedido() {
-        return pedido;
+    @Column(name = "pedido_id", insertable = false, updatable = false)
+    private Integer pedidoId;
+
+    @Column(name = "refeicao_id", insertable = false, updatable = false)
+    private Integer refeiçãoId;
+
+    public Integer getPedidoId() {
+        return pedidoId;
     }
 
-    public void setPedido(Integer pedido) {
-        this.pedido = pedido;
+    public void setPedidoId(Integer pedidoId) {
+        this.pedidoId = pedidoId;
     }
 
-    public Integer getRefeição() {
-        return refeição;
+    public Integer getRefeiçãoId() {
+        return refeiçãoId;
     }
 
-    public void setRefeição(Integer refeição) {
-        this.refeição = refeição;
+    public void setRefeiçãoId(Integer refeiçãoId) {
+        this.refeiçãoId = refeiçãoId;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 47 * hash + Objects.hashCode(this.pedido);
-        hash = 47 * hash + Objects.hashCode(this.refeição);
+        int hash = 3;
+        hash = 11 * hash + Objects.hashCode(this.pedidoId);
+        hash = 11 * hash + Objects.hashCode(this.refeiçãoId);
         return hash;
     }
 
@@ -44,9 +50,9 @@ public class PedidoRefeicaoPK implements Serializable{
             return false;
         }
         final PedidoRefeicaoPK other = (PedidoRefeicaoPK) obj;
-        if (!Objects.equals(this.pedido, other.pedido)) {
+        if (!Objects.equals(this.pedidoId, other.pedidoId)) {
             return false;
         }
-        return Objects.equals(this.refeição, other.refeição);
+        return Objects.equals(this.refeiçãoId, other.refeiçãoId);
     }
 }
