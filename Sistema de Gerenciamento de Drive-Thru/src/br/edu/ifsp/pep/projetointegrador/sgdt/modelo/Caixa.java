@@ -27,7 +27,7 @@ public class Caixa implements Serializable {
     @Column(name = "data_caixa", nullable = false)
     private Date dataCaixa;
     
-    @Column(name = "funcionario", nullable = false)
+    @JoinColumn(name = "funcionario", nullable = false)
     @ManyToOne()
     @JoinColumn(name = "funcionario_id")
     private Funcionario funcionario;

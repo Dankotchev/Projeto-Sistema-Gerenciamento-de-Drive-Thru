@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -23,7 +24,7 @@ public class Pedido implements Serializable {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "veiculo")
+    @JoinColumn(name = "veiculo")
     @OneToOne
     private Veiculo veiculo;
 
@@ -41,7 +42,7 @@ public class Pedido implements Serializable {
     private EstadoPedido estadoPedido;
 
     @OneToOne
-    @Column(name = "caixa_id")
+    @JoinColumn(name = "caixa_id")
     private Caixa caixa;
     
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
