@@ -21,6 +21,7 @@ public class Pedido implements Serializable {
     private Integer id;
 
     @Column(name = "veiculo")
+    @OneToOne
     private Veiculo veiculo;
 
     @Column(name = "data_pedido")

@@ -1,11 +1,13 @@
 package br.edu.ifsp.pep.projetointegrador.sgdt.modelo;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -25,6 +27,9 @@ public class Veiculo implements Serializable {
     @Column(name = "placa", length = 8)
     private String placa;
 
+    @OneToMany(mappedBy = "veiculo")
+    private List<Pedido> listaPedidos;
+
     // Código Gerado
     public Integer getId() {
         return id;
@@ -42,4 +47,11 @@ public class Veiculo implements Serializable {
         this.placa = placa;
     }
 
+    public List<Pedido> getListaPedidos() {
+        return listaPedidos;
+    }
+
+    public void setListaPedidos(List<Pedido> listaPedidos) {
+        this.listaPedidos = listaPedidos;
+    }
 }
