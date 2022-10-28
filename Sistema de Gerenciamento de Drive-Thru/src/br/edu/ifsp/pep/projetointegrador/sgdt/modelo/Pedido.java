@@ -35,9 +35,6 @@ public class Pedido implements Serializable {
     @Column(name = "forma_pagamento")
     private FormaPagamento formaPagamento;
 
-    @Column(name = "nome_cliente", length = 60)
-    private String nomeCliente;
-
     @Column(name = "estado_atual")
     private EstadoPedido estadoPedido;
 
@@ -58,7 +55,7 @@ public class Pedido implements Serializable {
     public enum FormaPagamento {
         DINHEIRO, CARTAO_CREDITO, CARTAO_DEBITO, PIX
     }
-
+    
     // Código Gerado
     public Integer getId() {
         return id;
@@ -90,14 +87,6 @@ public class Pedido implements Serializable {
 
     public void setFormaPagamento(FormaPagamento formaPagamento) {
         this.formaPagamento = formaPagamento;
-    }
-
-    public String getNomeCliente() {
-        return nomeCliente;
-    }
-
-    public void setNomeCliente(String nomeCliente) {
-        this.nomeCliente = nomeCliente;
     }
 
     public EstadoPedido getEstadoPedido() {

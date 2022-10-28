@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
@@ -27,6 +28,7 @@ public class Refeicao implements Serializable {
     @Column(name = "descricao_refeicao", length = 100)
     private String descricaoRefeicao;
     
+    @Column(name = "lista_ingredientes", columnDefinition = "TEXT")
     private String listaIngredientes;
     
     //  Código Gerado
