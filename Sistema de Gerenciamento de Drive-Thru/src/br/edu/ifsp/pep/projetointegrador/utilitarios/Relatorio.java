@@ -36,4 +36,24 @@ public class Relatorio {
             Mensagem.mErro(ex.getMessage());
         }
     }
+    
+    public static void gerarFromJasper(String fileJasper, List lista) {
+        try {
+            // Gera um data source a partir da lista
+            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(lista);
+
+            // Carrega o relatório
+            InputStream relatorioCompilado = Relatorio.class
+                    .getResourceAsStream("/br/edu/ifsp/pep/projetointegrador/relatorio/" + fileJasper);
+
+            // Preenche o relátorio com os dados
+            JasperPrint jp = JasperFillManager.fillReport(relatorioCompilado, null, dataSource);
+
+            // Exibe o relatório
+            JasperViewer visualizador = new JasperViewer(jp, true);
+            visualizador.setVisible(true);
+        } catch (JRException ex) {
+            Mensagem.mErro(ex.getMessage());
+        }
+    }
 }
