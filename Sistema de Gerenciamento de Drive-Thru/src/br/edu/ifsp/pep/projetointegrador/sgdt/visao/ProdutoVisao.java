@@ -8,12 +8,12 @@ package br.edu.ifsp.pep.projetointegrador.sgdt.visao;
  *
  * @author Aluno
  */
-public class RefeicaoVisao extends javax.swing.JDialog {
+public class ProdutoVisao extends javax.swing.JDialog {
 
     /**
      * Creates new form RefeicaoVisao
      */
-    public RefeicaoVisao(java.awt.Frame parent, boolean modal) {
+    public ProdutoVisao(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
@@ -43,9 +43,9 @@ public class RefeicaoVisao extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         txtPreco = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtDescicao = new javax.swing.JTextField();
+        txtDescricao = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        txtIngredientes = new javax.swing.JTextField();
+        txtQuantidade = new javax.swing.JTextField();
         jPanel16 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTabela = new javax.swing.JTable();
@@ -64,7 +64,7 @@ public class RefeicaoVisao extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Liberation Serif", 1, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(217, 28, 38));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("REFEIÇÃO");
+        jLabel1.setText("PRODUTO");
         jLabel1.setToolTipText("");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -122,19 +122,22 @@ public class RefeicaoVisao extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setText("Descrição:");
 
-        txtDescicao.addActionListener(new java.awt.event.ActionListener() {
+        txtDescricao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDescicaoActionPerformed(evt);
+                txtDescricaoActionPerformed(evt);
             }
         });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setText("Ingredientes:");
+        jLabel5.setText("Quantidade:");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 720, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1014, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -150,16 +153,14 @@ public class RefeicaoVisao extends javax.swing.JDialog {
                         .addComponent(jLabel5))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(365, 365, 365)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 741, Short.MAX_VALUE)
-                            .addComponent(txtIngredientes)))
+                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 741, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(619, 619, 619)
-                        .addComponent(txtDescicao, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(638, 638, 638)
+                        .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(0, 720, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1014, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,12 +176,12 @@ public class RefeicaoVisao extends javax.swing.JDialog {
                 .addGap(52, 52, 52)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
-                .addComponent(txtDescicao, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
                 .addComponent(jLabel5)
                 .addGap(31, 31, 31)
-                .addComponent(txtIngredientes, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(107, Short.MAX_VALUE))
         );
 
         tabPainel.addTab("Cadastro", jPanel4);
@@ -195,7 +196,7 @@ public class RefeicaoVisao extends javax.swing.JDialog {
                 {null, null, null, null}
             },
             new String [] {
-                "Nome", "Preço Unit.", "Descriçao", "Lista de Ingredientes"
+                "Nome", "Preço Unit.", "Descriçao", "Quantidade"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -313,9 +314,9 @@ public class RefeicaoVisao extends javax.swing.JDialog {
 
     }//GEN-LAST:event_txtPesquisaActionPerformed
 
-    private void txtDescicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescicaoActionPerformed
+    private void txtDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescricaoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtDescicaoActionPerformed
+    }//GEN-LAST:event_txtDescricaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -334,20 +335,21 @@ public class RefeicaoVisao extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RefeicaoVisao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProdutoVisao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RefeicaoVisao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProdutoVisao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RefeicaoVisao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProdutoVisao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RefeicaoVisao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProdutoVisao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                RefeicaoVisao dialog = new RefeicaoVisao(new javax.swing.JFrame(), true);
+                ProdutoVisao dialog = new ProdutoVisao(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -379,10 +381,10 @@ public class RefeicaoVisao extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTable jTabela;
     private javax.swing.JTabbedPane tabPainel;
-    private javax.swing.JTextField txtDescicao;
-    private javax.swing.JTextField txtIngredientes;
+    private javax.swing.JTextField txtDescricao;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtPesquisa;
     private javax.swing.JTextField txtPreco;
+    private javax.swing.JTextField txtQuantidade;
     // End of variables declaration//GEN-END:variables
 }

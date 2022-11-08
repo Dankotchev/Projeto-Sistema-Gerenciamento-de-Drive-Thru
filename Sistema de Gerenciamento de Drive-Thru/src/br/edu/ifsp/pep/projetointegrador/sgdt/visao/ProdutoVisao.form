@@ -118,7 +118,7 @@
                   <Color blue="26" green="1c" red="d9" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="REFEI&#xc7;&#xc3;O"/>
+                <Property name="text" type="java.lang.String" value="PRODUTO"/>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
             </Component>
@@ -213,6 +213,10 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="0" pref="720" max="32767" attributes="0"/>
+                          <Component id="jLabel2" min="-2" pref="1014" max="-2" attributes="0"/>
+                      </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
@@ -232,21 +236,18 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="365" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="txtNome" pref="741" max="32767" attributes="0"/>
-                                      <Component id="txtIngredientes" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="txtNome" min="-2" pref="741" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="619" max="-2" attributes="0"/>
-                                  <Component id="txtDescicao" min="-2" pref="269" max="-2" attributes="0"/>
+                                  <Component id="txtDescricao" min="-2" pref="269" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="638" max="-2" attributes="0"/>
+                                  <Component id="txtQuantidade" min="-2" pref="225" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="720" max="32767" attributes="0"/>
-                          <Component id="jLabel2" min="-2" pref="1014" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -264,12 +265,12 @@
                           <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                           <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="txtDescicao" min="-2" pref="55" max="-2" attributes="0"/>
+                          <Component id="txtDescricao" min="-2" pref="55" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                          <Component id="txtIngredientes" min="-2" pref="78" max="-2" attributes="0"/>
-                          <EmptySpace pref="53" max="32767" attributes="0"/>
+                          <Component id="txtQuantidade" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="107" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -303,9 +304,9 @@
                     <Property name="text" type="java.lang.String" value="Descri&#xe7;&#xe3;o:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtDescicao">
+                <Component class="javax.swing.JTextField" name="txtDescricao">
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDescicaoActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDescricaoActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel5">
@@ -313,10 +314,10 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI" size="18" style="1"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Ingredientes:"/>
+                    <Property name="text" type="java.lang.String" value="Quantidade:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtIngredientes">
+                <Component class="javax.swing.JTextField" name="txtQuantidade">
                 </Component>
               </SubComponents>
             </Container>
@@ -384,7 +385,7 @@
                             <Column editable="false" title="Nome" type="java.lang.Object"/>
                             <Column editable="false" title="Pre&#xe7;o Unit." type="java.lang.Object"/>
                             <Column editable="false" title="Descri&#xe7;ao" type="java.lang.Object"/>
-                            <Column editable="false" title="Lista de Ingredientes" type="java.lang.Object"/>
+                            <Column editable="false" title="Quantidade" type="java.lang.Object"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
