@@ -7,10 +7,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "produto")
+@NamedQueries(value = {
+    @NamedQuery(name = "Produto.buscarPorNome",
+            query = "SELECT p FROM Produto p WHERE p.nomeProduto LIKE :nome AND p.status = true")       
+})
 public class Produto implements Serializable {
 
     @Id
