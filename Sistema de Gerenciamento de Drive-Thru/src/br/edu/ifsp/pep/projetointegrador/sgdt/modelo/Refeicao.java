@@ -7,11 +7,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "refeicao")
+@NamedQueries(value = {
+    @NamedQuery(name = "Refeicao.buscarPorNome",
+            query = "SELECT r FROM Refeicao r WHERE r.nomeRefeicao LIKE :nome")
+})
 public class Refeicao implements Serializable {
 
     @Id
