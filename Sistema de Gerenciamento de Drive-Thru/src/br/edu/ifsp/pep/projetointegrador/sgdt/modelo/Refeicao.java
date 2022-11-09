@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Table(name = "refeicao")
 @NamedQueries(value = {
     @NamedQuery(name = "Refeicao.buscarPorNome",
-            query = "SELECT r FROM Refeicao r WHERE r.nomeRefeicao LIKE :nome")
+            query = "SELECT r FROM Refeicao r WHERE r.nomeRefeicao LIKE :nome AND status = true")
 })
 public class Refeicao implements Serializable {
 
@@ -35,6 +35,9 @@ public class Refeicao implements Serializable {
     
     @Column(name = "lista_ingredientes", columnDefinition = "TEXT")
     private String listaIngredientes;
+    
+    @Column(name = "status", nullable = false)
+    private boolean status;
     
     //  Código Gerado
     public Integer getId() {
@@ -75,5 +78,24 @@ public class Refeicao implements Serializable {
 
     public void setListaIngredientes(String listaIngredientes) {
         this.listaIngredientes = listaIngredientes;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+    
+        public Refeicao(String nomeRefeicao, BigDecimal precoUnitarioRefeicao, String descricaoRefeicao, String listaIngredientes) {
+        this.nomeRefeicao = nomeRefeicao;
+        this.precoUnitarioRefeicao = precoUnitarioRefeicao;
+        this.descricaoRefeicao = descricaoRefeicao;
+        this.listaIngredientes = listaIngredientes;
+        this.status = true;
+    }
+
+    public Refeicao() {
     }
 }

@@ -4,6 +4,7 @@ import br.edu.ifsp.pep.projetointegrador.sgdt.controledao.RefeicaoDAO;
 import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Refeicao;
 import br.edu.ifsp.pep.projetointegrador.utilitarios.Mensagem;
 import br.edu.ifsp.pep.projetointegrador.utilitarios.UtilitariosDeTela;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -367,8 +368,98 @@ public class RefeicaoVisao extends javax.swing.JDialog implements UtilitariosDeT
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
-        // TODO add your handling code here:
+        String mensagem = "Cliente cadastrado";
+        boolean tudoOK = true;
+        BigDecimal precoNumerico = null;
+
+        if (this.txtNome.getText().isEmpty()) {
+            Mensagem.mAtencao("Nome não informado");
+            this.txtNome.requestFocus();
+            tudoOK = false;
+        }
+
+        if (this.txtDescricao.getText().isEmpty()) {
+            Mensagem.mAtencao("Descrição não informado");
+            this.txtDescricao.requestFocus();
+            tudoOK = false;
+        }
+
+        if (this.txtIngrediente.getText().isEmpty()) {
+            Mensagem.mAtencao("Ingredientes não informado");
+            this.txtIngrediente.requestFocus();
+            tudoOK = false;
+        }
+
+        if (this.txtPreco.getText().isEmpty()) {
+            Mensagem.mAtencao("Preço não informado");
+            this.txtPreco.requestFocus();
+            tudoOK = false;
+        }
+        
+        try {
+            precoNumerico = new BigDecimal(this.txtPreco.getText());
+        } catch (NumberFormatException nfe) {
+            Mensagem.mErro("Informe um valor numerico para o Preço");
+            this.txtPreco.requestFocus();
+        }
+
+        if (tudoOK) {
+            // Propagar no Banco de Dados se não houver informações faltantes ou incorretas
+
+            // Verifica se está realizando uma exclusão, comparando o texto do botão
+            if (this.btnGravar.getText().equals("Excluir")) {
+                mensagem = "Refeição excluída";
+                this.refeicaoGlobal.setStatus(false);
+                try {
+                    refeicaoDAO.alterar(this.refeicaoGlobal);
+                    this.aposGravar(mensagem, evt);
+                } catch (Exception e) {
+                    Mensagem.mErro(e.getMessage());
+                } finally {
+                    this.refeicaoGlobal = null;
+                }
+
+                // Se o texto não foi alterado, é uma inserção ou alteração
+            } else {
+                // Realizando uma inserção
+                if (this.refeicaoGlobal == null) {
+                    this.refeicaoGlobal = new Refeicao(
+                            this.txtNome.getText(),
+                            precoNumerico,
+                            this.txtDescricao.getText(),
+                            this.txtIngrediente.getText()
+                    );
+
+                } else {
+                    // Realizando uma alteração
+                    this.refeicaoGlobal.setNomeRefeicao(this.txtNome.getText());
+                    this.refeicaoGlobal.setPrecoUnitarioRefeicao(new BigDecimal(this.txtPreco.getText()));
+                    this.refeicaoGlobal.setDescricaoRefeicao(this.txtDescricao.getText());
+                    this.refeicaoGlobal.setListaIngredientes(this.txtIngrediente.getText());
+                    mensagem = "Refeição alterada";
+                }
+
+                // Propagando no banco a alteração ou inserção
+                try {
+                    refeicaoDAO.alterar(this.refeicaoGlobal);
+                    this.aposGravar(mensagem, evt);
+                } catch (Exception e) {
+                    Mensagem.mErro(e.getMessage());
+                } finally {
+                    this.refeicaoGlobal = null;
+                }
+            }
+        }
     }//GEN-LAST:event_btnGravarActionPerformed
+
+    private void aposGravar(String mensagem, java.awt.event.ActionEvent evt) {
+        Mensagem.mCorreto(mensagem);
+        this.limparCampos();
+        this.setEstadoBotoes(true);
+        this.setEstadoCamposTexto(false);
+        this.setVisibilidadeCamposTextos(false);
+        this.btnPesquisarActionPerformed(evt);
+    }
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.setEstadoBotoes(true);
