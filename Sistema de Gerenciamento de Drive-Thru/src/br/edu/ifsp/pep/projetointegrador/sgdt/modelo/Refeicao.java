@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Table(name = "refeicao")
 @NamedQueries(value = {
     @NamedQuery(name = "Refeicao.buscarPorNome",
-            query = "SELECT r FROM Refeicao r WHERE r.nomeRefeicao LIKE :nome AND status = true")
+            query = "SELECT r FROM Refeicao r WHERE r.nomeRefeicao LIKE :nome AND r.status = true")
 })
 public class Refeicao implements Serializable {
 
