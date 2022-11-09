@@ -38,13 +38,16 @@ public class Pedido implements Serializable {
     @Column(name = "estado_atual")
     private EstadoPedido estadoPedido;
 
+    @Column(name = "status", nullable = false)
+    private boolean status;
+
     @OneToOne
     @JoinColumn(name = "caixa_id")
     private Caixa caixa;
-    
+
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<PedidoProduto> listaPedidoProdutos;
-    
+
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<PedidoRefeicao> listaPedidoRefeicao;
 
@@ -55,7 +58,7 @@ public class Pedido implements Serializable {
     public enum FormaPagamento {
         DINHEIRO, CARTAO_CREDITO, CARTAO_DEBITO, PIX
     }
-    
+
     // Código Gerado
     public Integer getId() {
         return id;
@@ -97,6 +100,14 @@ public class Pedido implements Serializable {
         this.estadoPedido = estadoPedido;
     }
 
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     public Caixa getCaixa() {
         return caixa;
     }
@@ -119,5 +130,19 @@ public class Pedido implements Serializable {
 
     public void setListaPedidoRefeicao(List<PedidoRefeicao> listaPedidoRefeicao) {
         this.listaPedidoRefeicao = listaPedidoRefeicao;
+    }
+
+    public Pedido(Veiculo veiculo, Date dataPedido, FormaPagamento formaPagamento, EstadoPedido estadoPedido, Caixa caixa, List<PedidoProduto> listaPedidoProdutos, List<PedidoRefeicao> listaPedidoRefeicao) {
+        this.veiculo = veiculo;
+        this.dataPedido = dataPedido;
+        this.formaPagamento = formaPagamento;
+        this.estadoPedido = estadoPedido;
+        this.caixa = caixa;
+        this.listaPedidoProdutos = listaPedidoProdutos;
+        this.listaPedidoRefeicao = listaPedidoRefeicao;
+        this.status = true;
+    }
+
+    public Pedido() {
     }
 }

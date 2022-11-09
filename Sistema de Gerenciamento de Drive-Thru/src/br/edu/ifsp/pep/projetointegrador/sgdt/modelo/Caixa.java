@@ -43,6 +43,9 @@ public class Caixa implements Serializable {
     @Column(name = "saidas", precision = 10, scale = 2)
     private BigDecimal saidas;
     
+    @Column(name = "status", nullable = false)
+    private boolean status;
+    
     public enum EstadoCaixa{
         ABERTO, FECHADO
     }
@@ -103,5 +106,26 @@ public class Caixa implements Serializable {
 
     public void setSaidas(BigDecimal saidas) {
         this.saidas = saidas;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public Caixa(Date dataCaixa, Funcionario funcionario, EstadoCaixa estadoCaixa, BigDecimal abertura, BigDecimal entradas, BigDecimal saidas) {
+        this.dataCaixa = dataCaixa;
+        this.funcionario = funcionario;
+        this.estadoCaixa = estadoCaixa;
+        this.abertura = abertura;
+        this.entradas = entradas;
+        this.saidas = saidas;
+        this.status = true;
+    }
+
+    public Caixa() {
     }
 }

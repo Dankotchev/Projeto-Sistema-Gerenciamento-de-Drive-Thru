@@ -39,6 +39,9 @@ public class PedidoRefeicao implements Serializable {
     @Column(name = "preco_unitario_refeicao", precision = 10, scale = 2, nullable = false)
     private BigDecimal precoUnitarioRefeicao;
 
+    @Column(name = "status", nullable = false)
+    private boolean status;
+
     //  Código Gerado
     public Integer getId() {
         return id;
@@ -78,5 +81,24 @@ public class PedidoRefeicao implements Serializable {
 
     public void setPrecoUnitarioRefeicao(BigDecimal precoUnitarioRefeicao) {
         this.precoUnitarioRefeicao = precoUnitarioRefeicao;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public PedidoRefeicao(Pedido pedido, Refeicao refeicao, Integer quantidade, BigDecimal precoUnitarioRefeicao) {
+        this.pedido = pedido;
+        this.refeicao = refeicao;
+        this.quantidade = quantidade;
+        this.precoUnitarioRefeicao = precoUnitarioRefeicao;
+        this.status = true;
+    }
+
+    public PedidoRefeicao() {
     }
 }

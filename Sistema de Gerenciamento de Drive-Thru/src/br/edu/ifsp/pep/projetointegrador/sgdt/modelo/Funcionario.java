@@ -29,7 +29,6 @@ public class Funcionario implements Serializable {
     @Column(name = "cpf", nullable = false, length = 11)
     private String cpf;
 
-
     @Column(name = "Nome", length = 60, nullable = false)
     private String nome;
 
@@ -42,7 +41,10 @@ public class Funcionario implements Serializable {
 
     @Column(name = "estado_civil", nullable = false)
     private EstadoCivil estadoCivil;
-    
+
+    @Column(name = "status", nullable = false)
+    private boolean status;
+
     @OneToMany(mappedBy = "funcionario")
     private List<Caixa> listaResponsabilidadeCaixas;
 
@@ -70,7 +72,6 @@ public class Funcionario implements Serializable {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
-
 
     public String getNome() {
         return nome;
@@ -104,11 +105,31 @@ public class Funcionario implements Serializable {
         this.estadoCivil = estadoCivil;
     }
 
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     public List<Caixa> getListaResponsabilidadeCaixas() {
         return listaResponsabilidadeCaixas;
     }
 
     public void setListaResponsabilidadeCaixas(List<Caixa> listaResponsabilidadeCaixas) {
         this.listaResponsabilidadeCaixas = listaResponsabilidadeCaixas;
+    }
+
+    public Funcionario(String cpf, String nome, Date dataNascimento, Cargo cargo, EstadoCivil estadoCivil) {
+        this.cpf = cpf;
+        this.nome = nome;
+        this.dataNascimento = dataNascimento;
+        this.cargo = cargo;
+        this.estadoCivil = estadoCivil;
+        this.status = true;
+    }
+
+    public Funcionario() {
     }
 }

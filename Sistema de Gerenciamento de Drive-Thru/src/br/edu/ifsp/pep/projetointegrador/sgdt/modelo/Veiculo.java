@@ -35,6 +35,9 @@ public class Veiculo implements Serializable {
     @Column(name = "placa", length = 8)
     private String placa;
 
+    @Column(name = "status", nullable = false)
+    private boolean status;
+
     @OneToMany(mappedBy = "veiculo")
     private List<Pedido> listaPedidos;
 
@@ -55,11 +58,27 @@ public class Veiculo implements Serializable {
         this.placa = placa;
     }
 
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     public List<Pedido> getListaPedidos() {
         return listaPedidos;
     }
 
     public void setListaPedidos(List<Pedido> listaPedidos) {
         this.listaPedidos = listaPedidos;
+    }
+
+    public Veiculo(String placa) {
+        this.placa = placa;
+        this.status = true;
+    }
+
+    public Veiculo() {
     }
 }

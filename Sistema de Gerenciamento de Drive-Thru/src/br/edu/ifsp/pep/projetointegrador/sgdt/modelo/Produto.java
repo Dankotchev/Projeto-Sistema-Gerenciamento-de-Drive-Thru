@@ -17,19 +17,22 @@ public class Produto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    
+
     @Column(name = "nome_produto", length = 60)
     private String nomeProduto;
-    
+
     @Column(name = "preco_unitario_produto", precision = 10, scale = 2)
     private BigDecimal precoUnitarioProduto;
-    
+
     @Column(name = "descricao_produto", length = 100)
     private String descricaoProduto;
-    
-    @Column(name =  "quantidade_produto")
+
+    @Column(name = "quantidade_produto")
     private Integer quantidadeProduto;
-    
+
+    @Column(name = "status", nullable = false)
+    private boolean status;
+
     //  Código Gerado
     public Integer getId() {
         return id;
@@ -69,5 +72,23 @@ public class Produto implements Serializable {
 
     public void setQuantidadeProduto(Integer quantidadeProduto) {
         this.quantidadeProduto = quantidadeProduto;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public Produto(String nomeProduto, BigDecimal precoUnitarioProduto, String descricaoProduto, Integer quantidadeProduto) {
+        this.nomeProduto = nomeProduto;
+        this.precoUnitarioProduto = precoUnitarioProduto;
+        this.descricaoProduto = descricaoProduto;
+        this.quantidadeProduto = quantidadeProduto;
+    }
+
+    public Produto() {
     }
 }
