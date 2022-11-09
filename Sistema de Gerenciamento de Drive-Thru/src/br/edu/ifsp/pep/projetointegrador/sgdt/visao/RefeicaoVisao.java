@@ -195,6 +195,7 @@ public class RefeicaoVisao extends javax.swing.JDialog implements UtilitariosDeT
                 return canEdit [columnIndex];
             }
         });
+        tabelaRefeicao.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         jScrollPane6.setViewportView(tabelaRefeicao);
 
         labelDescricao.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -372,7 +373,7 @@ public class RefeicaoVisao extends javax.swing.JDialog implements UtilitariosDeT
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
-        String mensagem = "Cliente cadastrado";
+        String mensagem = "Refeição cadastrada";
         boolean tudoOK = true;
         BigDecimal precoNumerico = null;
         
@@ -405,6 +406,7 @@ public class RefeicaoVisao extends javax.swing.JDialog implements UtilitariosDeT
         } catch (NumberFormatException nfe) {
             Mensagem.mErro("Informe um valor numerico para o Preço");
             this.txtPreco.requestFocus();
+            tudoOK = false;
         }
         
         if (tudoOK) {
