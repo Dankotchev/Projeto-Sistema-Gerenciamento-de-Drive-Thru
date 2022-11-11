@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -16,8 +18,12 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "funcionario", uniqueConstraints = {
     @UniqueConstraint(
-            name = "unique_cpf_rg_nome",
-            columnNames = {"cpf", "rg", "nome"})
+            name = "uniqueCpfNome",
+            columnNames = {"cpf", "nome"})
+})
+@NamedQueries(value = {
+    @NamedQuery(name = "Funcionario.buscarPorNome",
+            query = "SELECT f FROM Funcionario f WHERE f.nome LIKE :nome AND f.status = true")
 })
 public class Funcionario implements Serializable {
 
@@ -49,11 +55,24 @@ public class Funcionario implements Serializable {
     private List<Caixa> listaResponsabilidadeCaixas;
 
     public enum Cargo {
-        ATENDENTE, COZINHEIRO, GERENTE
+        ATENDENTE("Atendente"), COZINHEIRO("Cozinheiro"), GERENTE("Gerente");
+
+        public final String cargoFuncionario;
+
+        Cargo(String cargoFunc) {
+            cargoFuncionario = cargoFunc;
+        }
     }
 
     public enum EstadoCivil {
-        SOLTEIRO, CASADO, VIUVO, DIVORCIADO, UNIAO_ESTAVEL
+        SOLTEIRO("Solteiro"), CASADO("Casado"), VIUVO("Viúvo"),
+        DIVORCIADO("Divorciado"), UNIAO_ESTAVEL("União Estável");
+
+        public final String estadoCivilFuncionario;
+
+        private EstadoCivil(String estadoCFunc) {
+            this.estadoCivilFuncionario = estadoCFunc;
+        }
     }
 
     // Código Gerado
