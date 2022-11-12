@@ -21,7 +21,7 @@ public class Produto implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id_produto")
     private Integer id;
 
     @Column(name = "nome_produto", length = 60)
@@ -36,7 +36,7 @@ public class Produto implements Serializable {
     @Column(name = "quantidade_produto")
     private Integer quantidadeProduto;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status_produto", nullable = false)
     private boolean status;
 
     //  Código Gerado
@@ -93,6 +93,7 @@ public class Produto implements Serializable {
         this.precoUnitarioProduto = precoUnitarioProduto;
         this.descricaoProduto = descricaoProduto;
         this.quantidadeProduto = quantidadeProduto;
+        this.status = true;
     }
 
     public Produto() {

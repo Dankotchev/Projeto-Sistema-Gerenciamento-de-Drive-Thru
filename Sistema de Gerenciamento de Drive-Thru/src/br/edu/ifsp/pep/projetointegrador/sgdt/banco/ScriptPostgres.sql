@@ -9,13 +9,7 @@ CREATE TABLE
         PRIMARY KEY (id_refeicao)
     );
 
-INSERT INTO
-    refeicao (
-        nome_refeicao,
-        preco_unitario_refeicao,
-        descricao_refeicao,
-        lista_ingredientes
-    ) 
+INSERT INTO refeicao (nome_refeicao,preco_unitario_refeicao, descricao_refeicao, lista_ingredientes) 
     VALUES
         ('Refeição Barata A', 12.50, 'Uma refeição boa e barata', 'ingrediente 1, ingrediente 2, ingrediente 3'),
         ('Refeição Barata B', 11.50, 'Uma refeição boa e barata', 'ingrediente 1, ingrediente 2, ingrediente 3'),
@@ -36,7 +30,7 @@ CREATE TABLE
     );
 
 INSERT INTO produto (nome_produto, preco_unitario_produto, quantidade_produto, descricao_produto)
-VALUES 
+	VALUES 
     ('Água Mineral', 1.20, 250, 'Água mineral'),
     ('Suco de Uva 300ml', 4.5, 100, 'Suco de uva em caixinha'),
     ('Coca-cola 600ml', 10.99, 200, 'Refrigerante Coca-cola'),
@@ -62,7 +56,13 @@ CREATE TABLE
         PRIMARY KEY (id_veiculo)
     );
 
-INSERT INTO veiculo (placa) VALUES ('ABC4F568'), (), (), (), (), ;
+INSERT INTO veiculo (placa)
+	VALUES
+	('ABC4F568'),
+	('BCC5A658'),
+	('BGH3D658'),
+	('MJU5D475'),
+	('RGT6D985');
 
 CREATE TABLE
     IF NOT EXISTS funcionario (
@@ -70,12 +70,18 @@ CREATE TABLE
         nome_funcionario VARCHAR(60) NOT NULL,
         cpf VARCHAR(11) NOT NULL,
         data_nascimento DATE NULL,
-        cargo VARCHAR(45) NULL,
-        estado_civil VARCHAR(45) NULL,
+        cargo VARCHAR(11) NULL,
+        estado_civil VARCHAR(14) NULL,
         status_funcionario BOOLEAN NOT NULL DEFAULT TRUE,
         PRIMARY KEY (id_funcionario),
         UNIQUE (cpf, nome)
     );
+INSERT INTO funcionario (nome_funcionario, cpf, data_nascimento, cargo, estado_civil)
+	VALUES
+	('Danilo Quirino', '45632598210', '1996-06-27', 'GERENTE', 'SOLTEIRO'),
+	('Tereza Domingues', '36598745230', '1963-09-15', 'GERENTE', 'CASADO'),
+	('Lucas Quirino', '10236502500', '1965-03-30', 'COZINHEIRO', 'CASADO'),
+	('Dani Domingues Quirino', '00014530266', '1999-08-24', 'ATENDENTE', 'SOLTEIRO');
 
 CREATE TABLE
     IF NOT EXISTS caixa (

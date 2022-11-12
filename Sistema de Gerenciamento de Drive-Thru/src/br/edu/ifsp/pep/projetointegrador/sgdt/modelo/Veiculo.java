@@ -29,13 +29,13 @@ public class Veiculo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id_veiculo")
     private Integer id;
 
     @Column(name = "placa", length = 8)
     private String placa;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status_veiculo", nullable = false)
     private boolean status;
 
     @OneToMany(mappedBy = "veiculo")

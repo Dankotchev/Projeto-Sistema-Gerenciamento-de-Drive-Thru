@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,13 +31,13 @@ public class Funcionario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id_funcionario")
     private Integer id;
 
     @Column(name = "cpf", nullable = false, length = 11)
     private String cpf;
 
-    @Column(name = "Nome", length = 60, nullable = false)
+    @Column(name = "nome_funcionario", length = 60, nullable = false)
     private String nome;
 
     @Column(name = "data_nascimento")
@@ -43,12 +45,14 @@ public class Funcionario implements Serializable {
     private Date dataNascimento;
 
     @Column(name = "cargo", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Cargo cargo;
 
     @Column(name = "estado_civil", nullable = false)
+    @Enumerated(EnumType.STRING)
     private EstadoCivil estadoCivil;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status_funcionario", nullable = false)
     private boolean status;
 
     @OneToMany(mappedBy = "funcionario")

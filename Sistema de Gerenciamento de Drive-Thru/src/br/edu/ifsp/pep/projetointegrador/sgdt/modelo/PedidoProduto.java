@@ -3,27 +3,18 @@ package br.edu.ifsp.pep.projetointegrador.sgdt.modelo;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "pedido_produto", uniqueConstraints = {
-    @UniqueConstraint(
-            name = "unique_id_pedido_produto",
-            columnNames = {"id", "pedido_id", "produto_id"})
-})
+@Table(name = "pedido_produto")
 public class PedidoProduto implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    @EmbeddedId
+    PedidoProdutoPK pedidoProdutoPK;
 
     @ManyToOne
     @JoinColumn(name = "pedido_id", referencedColumnName = "id", nullable = false)
@@ -39,16 +30,16 @@ public class PedidoProduto implements Serializable {
     @Column(name = "preco_unitario_produto", precision = 10, scale = 2, nullable = false)
     private BigDecimal precoUnitarioProduto;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status_pedido_produto", nullable = false)
     private boolean status;
 
     //  Código Gerado
-    public Integer getId() {
-        return id;
+    public PedidoProdutoPK getPedidoProdutoPK() {
+        return pedidoProdutoPK;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setPedidoProdutoPK(PedidoProdutoPK pedidoProdutoPK) {
+        this.pedidoProdutoPK = pedidoProdutoPK;
     }
 
     public Pedido getPedido() {

@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +23,7 @@ public class Pedido implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id_pedido")
     private Integer id;
 
     @JoinColumn(name = "veiculo")
@@ -33,12 +35,14 @@ public class Pedido implements Serializable {
     private Date dataPedido;
 
     @Column(name = "forma_pagamento")
+    @Enumerated(EnumType.STRING)
     private FormaPagamento formaPagamento;
 
     @Column(name = "estado_atual")
+    @Enumerated(EnumType.STRING)
     private EstadoPedido estadoPedido;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status_pedido", nullable = false)
     private boolean status;
 
     @OneToOne
