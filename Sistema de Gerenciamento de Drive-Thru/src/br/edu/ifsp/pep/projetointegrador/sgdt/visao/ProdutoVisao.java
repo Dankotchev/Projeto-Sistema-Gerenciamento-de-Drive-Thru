@@ -52,13 +52,12 @@ public class ProdutoVisao extends javax.swing.JDialog implements UtilitariosDeTe
 
         painelFundo = new javax.swing.JPanel();
         painelBotoes = new javax.swing.JPanel();
-        btnInserir = new javax.swing.JButton();
+        btnComprar = new javax.swing.JButton();
         btnVisualizar = new javax.swing.JButton();
         btnGravar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
-        btnComprar = new javax.swing.JButton();
         painelTitulo = new javax.swing.JPanel();
         labelTitulo = new javax.swing.JLabel();
         labelNome = new javax.swing.JLabel();
@@ -84,18 +83,18 @@ public class ProdutoVisao extends javax.swing.JDialog implements UtilitariosDeTe
         painelFundo.setBackground(new java.awt.Color(255, 202, 138));
 
         painelBotoes.setBackground(new java.awt.Color(255, 202, 138));
-        painelBotoes.setLayout(new java.awt.GridLayout());
+        painelBotoes.setLayout(new java.awt.GridLayout(1, 0));
 
-        btnInserir.setBackground(new java.awt.Color(243, 192, 32));
-        btnInserir.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnInserir.setForeground(new java.awt.Color(217, 28, 38));
-        btnInserir.setText("Inserir");
-        btnInserir.addActionListener(new java.awt.event.ActionListener() {
+        btnComprar.setBackground(new java.awt.Color(243, 192, 32));
+        btnComprar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnComprar.setForeground(new java.awt.Color(217, 28, 38));
+        btnComprar.setText("Comprar");
+        btnComprar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInserirActionPerformed(evt);
+                btnComprarActionPerformed(evt);
             }
         });
-        painelBotoes.add(btnInserir);
+        painelBotoes.add(btnComprar);
 
         btnVisualizar.setBackground(new java.awt.Color(243, 192, 32));
         btnVisualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -151,17 +150,6 @@ public class ProdutoVisao extends javax.swing.JDialog implements UtilitariosDeTe
             }
         });
         painelBotoes.add(btnExcluir);
-
-        btnComprar.setBackground(new java.awt.Color(243, 192, 32));
-        btnComprar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnComprar.setForeground(new java.awt.Color(217, 28, 38));
-        btnComprar.setText("Comprar");
-        btnComprar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnComprarActionPerformed(evt);
-            }
-        });
-        painelBotoes.add(btnComprar);
 
         painelTitulo.setBackground(new java.awt.Color(243, 192, 32));
 
@@ -342,14 +330,6 @@ public class ProdutoVisao extends javax.swing.JDialog implements UtilitariosDeTe
         this.setEstadoBotoes(true);
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
-    private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
-        this.limparCampos();
-        this.setVisibilidadeCamposTextos(true);
-        this.txtNome.requestFocus();
-        this.setEstadoBotoes(false);
-        this.setEstadoCamposTexto(true);
-    }//GEN-LAST:event_btnInserirActionPerformed
-
     private void btnVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarActionPerformed
         if (this.tabelaProduto.getSelectedRow() >= 0) {
             this.setVisivelVisualizar(false);
@@ -368,6 +348,7 @@ public class ProdutoVisao extends javax.swing.JDialog implements UtilitariosDeTe
         this.setEstadoCamposTexto(true);
         this.setVisibilidadeCamposTextos(false);
         this.tabelaProduto.setEnabled(true);
+        this.tabelaProduto.clearSelection();
         this.setVisivelVisualizar(true);
     }//GEN-LAST:event_btnOKActionPerformed
 
@@ -381,6 +362,7 @@ public class ProdutoVisao extends javax.swing.JDialog implements UtilitariosDeTe
             this.setEstadoCamposTexto(true);
             this.setEstadoBotoes(false);
             this.txtQuantidade.setEnabled(false);
+            this.btnGravar.setText("Alterar");
         } else {
             Mensagem.mAviso("Nenhum Produto selecionada.\nSelecione um Produto");
         }
@@ -403,6 +385,7 @@ public class ProdutoVisao extends javax.swing.JDialog implements UtilitariosDeTe
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         String mensagem = "Produto cadastrado";
+        String textoBotao = this.btnGravar.getText();
         boolean tudoOK = true;
         BigDecimal precoNumerico = null;
         Integer quantidadeNumerico = null;
@@ -420,17 +403,25 @@ public class ProdutoVisao extends javax.swing.JDialog implements UtilitariosDeTe
             tudoOK = false;
         }
 
-        if (this.txtQuantidade.getText().isEmpty()) {
+        if (this.txtQuantidade.getText().isEmpty() && this.txtQuantidade.isVisible()) {
             Mensagem.mAtencao("Quantidade não informado");
             this.txtQuantidade.requestFocus();
             tudoOK = false;
         }
 
-        try {
-            quantidadeNumerico = Integer.valueOf(this.txtPreco.getText());
-        } catch (NumberFormatException nfe) {
-            Mensagem.mErro("Informe um valor numérico para o Preço");
-            this.txtQuantidade.requestFocus();
+        if (this.txtQuantidade.isVisible()) {
+            try {
+                quantidadeNumerico = Integer.valueOf(this.txtQuantidade.getText());
+            } catch (NumberFormatException nfe) {
+                Mensagem.mErro("Informe um valor numérico para o Quantidade");
+                this.txtQuantidade.requestFocus();
+                tudoOK = false;
+            }
+        }
+
+        if ((quantidadeComprada == 0) && (textoBotao.equals("Comprar"))) {
+            Mensagem.mAtencao("Quantidade Comprada não informado");
+            this.spinnerAdicionar.requestFocus();
             tudoOK = false;
         }
 
@@ -445,62 +436,73 @@ public class ProdutoVisao extends javax.swing.JDialog implements UtilitariosDeTe
         } catch (NumberFormatException nfe) {
             Mensagem.mErro("Informe um valor numérico para o Preço");
             this.txtPreco.requestFocus();
+            tudoOK = false;
         }
 
         if (tudoOK) {
             // Propagar no Banco de Dados se não houver informações faltantes ou incorretas
-
             // Verifica se está realizando uma exclusão, comparando o texto do botão
-            if (this.btnGravar.getText().equals("Excluir")) {
-                mensagem = "Produto excluído";
-                this.produtoGlobal.setStatus(false);
-                try {
-                    produtoDAO.alterar(this.produtoGlobal);
-                    this.aposGravar(mensagem, evt);
-                } catch (Exception e) {
-                    Mensagem.mErro(e.getMessage());
-                } finally {
-                    this.produtoGlobal = null;
-                }
+            switch (textoBotao) {
+                case "Excluir":
+                    mensagem = "Produto excluído";
+                    this.produtoGlobal.setStatus(false);
+                    this.consolidarGravacao(false, mensagem, evt);
+                    break;
+                case "Comprar":
+                    // Produto Existente
+                    if (this.produtoGlobal != null) {
 
-                // Se o texto não foi alterado, é uma inserção ou alteração
-            } else {
-                // Realizando uma inserção
-                if (this.produtoGlobal == null) {
-                    this.produtoGlobal = new Produto(
-                            this.txtNome.getText(),
-                            precoNumerico,
-                            this.txtDescricao.getText(),
-                            quantidadeNumerico
-                    );
-
-                } else {
-                    if (this.btnComprar.isVisible()) {
-                        // Realizando uma compra
-                        mensagem = "Produto Comprado";
-                        
-                    } else {
-                        // Realizando uma alteração
                         this.produtoGlobal.setNomeProduto(this.txtNome.getText());
                         this.produtoGlobal.setPrecoUnitarioProduto(precoNumerico);
                         this.produtoGlobal.setDescricaoProduto(this.txtDescricao.getText());
-                        this.produtoGlobal.setQuantidadeProduto(quantidadeNumerico);
-                        mensagem = "Produto alterado";
+                        this.produtoGlobal.setQuantidadeProduto(
+                                this.produtoGlobal.getQuantidadeProduto()
+                                + quantidadeNumerico);
+                        mensagem = "Produto comprado";
+                        this.consolidarGravacao(false, mensagem, evt);
+                    } else {
+                        // Produto novo
+                        this.produtoGlobal = new Produto(
+                                this.txtNome.getText(),
+                                precoNumerico,
+                                this.txtDescricao.getText(),
+                                quantidadeComprada
+                        );
+                        mensagem = "Produto Novo adquirido";
+                        this.consolidarGravacao(true, mensagem, evt);
                     }
-
-                    // Propagando no banco a alteração ou inserção
-                    try {
-                        produtoDAO.alterar(this.produtoGlobal);
-                        this.aposGravar(mensagem, evt);
-                    } catch (Exception e) {
-                        Mensagem.mErro(e.getMessage());
-                    } finally {
-                        this.produtoGlobal = null;
-                    }
-                }
+                    break;
+                case "Alterar":
+                    // Alterando um produto
+                    this.produtoGlobal.setNomeProduto(this.txtNome.getText());
+                    this.produtoGlobal.setPrecoUnitarioProduto(precoNumerico);
+                    this.produtoGlobal.setDescricaoProduto(this.txtDescricao.getText());
+                    this.produtoGlobal.setQuantidadeProduto(quantidadeNumerico);
+                    mensagem = "Produto alterado";
+                    this.consolidarGravacao(false, mensagem, evt);
+                default:
+                    break;
             }
         }
     }//GEN-LAST:event_btnGravarActionPerformed
+
+    private void consolidarGravacao(boolean metodo, String mensagem, java.awt.event.ActionEvent evt) {
+        try {
+            if (metodo) {
+                // Inserir no Banco
+                produtoDAO.inserir(this.produtoGlobal);
+            } else {
+                // Alterar no
+                produtoDAO.alterar(this.produtoGlobal);
+            }
+            this.aposGravar(mensagem, evt);
+
+        } catch (Exception e) {
+            Mensagem.mErro(e.getMessage());
+        } finally {
+            this.produtoGlobal = null;
+        }
+    }
 
     private void aposGravar(String mensagem, java.awt.event.ActionEvent evt) {
         Mensagem.mCorreto(mensagem);
@@ -517,24 +519,44 @@ public class ProdutoVisao extends javax.swing.JDialog implements UtilitariosDeTe
         this.spinnerAdicionar.setVisible(false);
         this.btnOK.setVisible(false);
         this.limparCampos();
+        this.tabelaProduto.clearSelection();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
+        boolean escolha = false;
+        this.btnGravar.setText("Comprar");
         if (this.tabelaProduto.getSelectedRow() >= 0) {
             this.tabelaProduto.setEnabled(false);
             this.produtoGlobal = this.listagemDeProdutos
                     .get(this.tabelaProduto.getSelectedRow());
             this.setCampos(this.produtoGlobal);
-            this.setEstadoBotoes(false);
-            this.labelAdicionar.setVisible(true);
-            this.spinnerAdicionar.setVisible(true);
-            this.setVisibilidadeCamposTextos(true);
+
+            this.compraSetCampos();
+
             this.setEstadoCamposTexto(false);
             this.txtPreco.setEnabled(true);
         } else {
-            Mensagem.mAviso("Nenhum Produto selecionada.\nSelecione um Produto");
+            escolha = Mensagem.mSimNao("Nenhum Produto selecionada.\nComprar um Produto Novo?");
+            if (escolha) {
+                this.compraSetCampos();
+                this.produtoGlobal = null;
+
+                this.limparCampos();
+                this.setEstadoCamposTexto(true);
+                this.txtQuantidade.setVisible(false);
+                this.labelQuantidade.setVisible(false);
+                this.txtNome.requestFocus();
+            }
         }
     }//GEN-LAST:event_btnComprarActionPerformed
+
+    private void compraSetCampos() {
+        this.setEstadoBotoes(false);
+        this.setVisibilidadeCamposTextos(true);
+        this.labelAdicionar.setVisible(true);
+        this.spinnerAdicionar.setVisible(true);
+        this.tabelaProduto.setEnabled(false);
+    }
 
     /**
      * @param args the command line arguments
@@ -585,7 +607,6 @@ public class ProdutoVisao extends javax.swing.JDialog implements UtilitariosDeTe
     private javax.swing.JButton btnComprar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnGravar;
-    private javax.swing.JButton btnInserir;
     private javax.swing.JButton btnOK;
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnVisualizar;
@@ -621,13 +642,12 @@ public class ProdutoVisao extends javax.swing.JDialog implements UtilitariosDeTe
             }
         }
         this.btnPesquisar.setVisible(estado);
-        this.btnInserir.setVisible(estado);
+        this.btnComprar.setVisible(estado);
         this.btnVisualizar.setVisible(subEstado);
         this.btnAlterar.setVisible(subEstado);
         this.btnExcluir.setVisible(subEstado);
         this.btnGravar.setVisible(!estado);
         this.btnCancelar.setVisible(!estado);
-        this.btnComprar.setVisible(subEstado);
     }
 
     @Override
@@ -667,7 +687,7 @@ public class ProdutoVisao extends javax.swing.JDialog implements UtilitariosDeTe
     public void setVisivelVisualizar(boolean estado) {
         this.btnPesquisar.setVisible(estado);
         this.btnOK.setVisible(!estado);
-        this.btnInserir.setVisible(estado);
+        this.btnComprar.setVisible(estado);
         this.btnVisualizar.setVisible(estado);
         this.btnAlterar.setVisible(estado);
         this.btnExcluir.setVisible(estado);

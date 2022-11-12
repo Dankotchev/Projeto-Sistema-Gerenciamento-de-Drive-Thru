@@ -153,7 +153,7 @@
             <Property name="rows" type="int" value="1"/>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="btnInserir">
+            <Component class="javax.swing.JButton" name="btnComprar">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="20" green="c0" red="f3" type="rgb"/>
@@ -164,10 +164,10 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="26" green="1c" red="d9" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Inserir"/>
+                <Property name="text" type="java.lang.String" value="Comprar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInserirActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnComprarActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnVisualizar">
@@ -253,23 +253,6 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExcluirActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnComprar">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="20" green="c0" red="f3" type="rgb"/>
-                </Property>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Segoe UI" size="14" style="1"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="26" green="1c" red="d9" type="rgb"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Comprar"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnComprarActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
