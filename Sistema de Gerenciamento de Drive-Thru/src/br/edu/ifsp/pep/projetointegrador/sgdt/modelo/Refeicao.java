@@ -21,7 +21,7 @@ public class Refeicao implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_refeicao")
+    @Column(name = "id")
     private Integer id;
     
     @Column(name = "nome_refeicao", length = 60)
@@ -36,7 +36,7 @@ public class Refeicao implements Serializable {
     @Column(name = "lista_ingredientes", columnDefinition = "TEXT")
     private String listaIngredientes;
     
-    @Column(name = "status_refeicao", nullable = false)
+    @Column(name = "status", nullable = false)
     private boolean status;
     
     //  Código Gerado

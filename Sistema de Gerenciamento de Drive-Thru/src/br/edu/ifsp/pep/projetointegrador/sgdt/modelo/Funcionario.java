@@ -29,7 +29,7 @@ public class Funcionario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_funcionario")
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "cpf", nullable = false, length = 11)
@@ -48,7 +48,7 @@ public class Funcionario implements Serializable {
     @Column(name = "estado_civil", nullable = false)
     private EstadoCivil estadoCivil;
 
-    @Column(name = "status_funcionario", nullable = false)
+    @Column(name = "status", nullable = false)
     private boolean status;
 
     @OneToMany(mappedBy = "funcionario")
