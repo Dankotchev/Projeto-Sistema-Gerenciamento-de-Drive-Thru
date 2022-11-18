@@ -40,7 +40,7 @@
     <Container class="javax.swing.JPanel" name="painelFundo">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="8a" green="ca" red="ff" type="rgb"/>
+          <Color blue="6" green="a4" red="fe" type="rgb"/>
         </Property>
       </Properties>
 
@@ -131,9 +131,9 @@
                       <Component id="txtPreco" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
                       <Component id="labelPreco" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                   <Component id="jScrollPane6" min="-2" pref="197" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="painelBotoes" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>

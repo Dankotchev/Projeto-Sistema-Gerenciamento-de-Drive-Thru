@@ -80,7 +80,7 @@ public class ProdutoVisao extends javax.swing.JDialog implements UtilitariosDeTe
         setTitle("Manter Produto");
         setMinimumSize(new java.awt.Dimension(854, 480));
 
-        painelFundo.setBackground(new java.awt.Color(255, 202, 138));
+        painelFundo.setBackground(new java.awt.Color(254, 164, 6));
 
         painelBotoes.setBackground(new java.awt.Color(255, 202, 138));
         painelBotoes.setLayout(new java.awt.GridLayout(1, 0));
@@ -303,9 +303,9 @@ public class ProdutoVisao extends javax.swing.JDialog implements UtilitariosDeTe
                 .addGroup(painelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
+                .addGap(44, 44, 44)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(painelBotoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
