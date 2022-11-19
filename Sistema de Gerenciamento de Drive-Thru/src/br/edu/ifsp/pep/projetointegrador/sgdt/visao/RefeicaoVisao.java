@@ -32,8 +32,8 @@ public class RefeicaoVisao extends javax.swing.JDialog implements UtilitariosDeT
             modelo.setNumRows(0);
             
             for (Refeicao refeicao : this.listagemDeRefeicoes) {
-                modelo.addRow(new Object[]{refeicao.getNomeRefeicao(), refeicao.getPrecoUnitarioRefeicao(),
-                    refeicao.getDescricaoRefeicao(), refeicao.getListaIngredientes()
+                modelo.addRow(new Object[]{refeicao.getNome(), refeicao.getPrecoUnitario(),
+                    refeicao.getDescricao(), refeicao.getListaIngredientes()
                 });
             }
         }
@@ -433,14 +433,15 @@ public class RefeicaoVisao extends javax.swing.JDialog implements UtilitariosDeT
                             this.txtNome.getText(),
                             precoNumerico,
                             this.txtDescricao.getText(),
-                            this.txtIngrediente.getText()
+                            this.txtIngrediente.getText(),
+                            0
                     );
                     
                 } else {
                     // Realizando uma alteração
-                    this.refeicaoGlobal.setNomeRefeicao(this.txtNome.getText());
-                    this.refeicaoGlobal.setPrecoUnitarioRefeicao(new BigDecimal(this.txtPreco.getText()));
-                    this.refeicaoGlobal.setDescricaoRefeicao(this.txtDescricao.getText());
+                    this.refeicaoGlobal.setNome(this.txtNome.getText());
+                    this.refeicaoGlobal.setPrecoUnitario(new BigDecimal(this.txtPreco.getText()));
+                    this.refeicaoGlobal.setDescricao(this.txtDescricao.getText());
                     this.refeicaoGlobal.setListaIngredientes(this.txtIngrediente.getText());
                     mensagem = "Refeição alterada";
                 }
@@ -589,10 +590,10 @@ public class RefeicaoVisao extends javax.swing.JDialog implements UtilitariosDeT
     
     @Override
     public void setCampos(Refeicao entity) {
-        this.txtNome.setText(entity.getNomeRefeicao());
-        this.txtDescricao.setText(entity.getDescricaoRefeicao());
+        this.txtNome.setText(entity.getNome());
+        this.txtDescricao.setText(entity.getDescricao());
         this.txtIngrediente.setText(entity.getListaIngredientes());
-        this.txtPreco.setText(String.valueOf(entity.getPrecoUnitarioRefeicao()));
+        this.txtPreco.setText(String.valueOf(entity.getPrecoUnitario()));
     }
     
     public void setVisivelVisualizar(boolean estado) {

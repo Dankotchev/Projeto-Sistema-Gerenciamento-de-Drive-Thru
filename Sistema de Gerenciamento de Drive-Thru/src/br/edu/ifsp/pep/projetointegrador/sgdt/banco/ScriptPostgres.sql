@@ -74,7 +74,7 @@ CREATE TABLE
         estado_civil VARCHAR(14) NULL,
         status_funcionario BOOLEAN NOT NULL DEFAULT TRUE,
         PRIMARY KEY (id_funcionario),
-        UNIQUE (cpf, nome)
+        UNIQUE (cpf, nome_funcionario)
     );
 INSERT INTO funcionario (nome_funcionario, cpf, data_nascimento, cargo, estado_civil)
 	VALUES
@@ -93,7 +93,7 @@ CREATE TABLE
         entradas DECIMAL(10, 2) NOT NULL DEFAULT 0,
         saidas DECIMAL(10, 2) NOT NULL DEFAULT 0,
         status_caixa BOOLEAN NOT NULL DEFAULT TRUE,
-        PRIMARY KEY (id_funcionario),
+        PRIMARY KEY (id_caixa),
         FOREIGN KEY (funcionario_id) REFERENCES funcionario (id_funcionario)
     );
 
@@ -106,9 +106,9 @@ CREATE TABLE
         data_pagamento DATE NOT NULL,
         estado_pedido VARCHAR(45) NOT NULL DEFAULT 'ABERTO',
         status_pedido BOOLEAN NOT NULL DEFAULT TRUE,
-        PRIMARY KEY (id),
-        FOREIGN KEY (veiculo_id) REFERENCES veiculo (id),
-        FOREIGN KEY (caixa_id) REFERENCES caixa (id)
+        PRIMARY KEY (id_pedido),
+        FOREIGN KEY (veiculo_id) REFERENCES veiculo (id_veiculo),
+        FOREIGN KEY (caixa_id) REFERENCES caixa (id_caixa)
     );
 
 CREATE TABLE

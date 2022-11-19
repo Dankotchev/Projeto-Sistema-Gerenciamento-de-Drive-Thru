@@ -34,8 +34,8 @@ public class ProdutoVisao extends javax.swing.JDialog implements UtilitariosDeTe
             modelo.setNumRows(0);
 
             for (Produto produto : this.listagemDeProdutos) {
-                modelo.addRow(new Object[]{produto.getNomeProduto(), produto.getDescricaoProduto(),
-                    produto.getQuantidadeProduto(), produto.getPrecoUnitarioProduto()
+                modelo.addRow(new Object[]{produto.getNome(), produto.getDescricao(),
+                    produto.getQuantidade(), produto.getPrecoUnitario()
                 });
             }
         }
@@ -452,11 +452,11 @@ public class ProdutoVisao extends javax.swing.JDialog implements UtilitariosDeTe
                     // Produto Existente
                     if (this.produtoGlobal != null) {
 
-                        this.produtoGlobal.setNomeProduto(this.txtNome.getText());
-                        this.produtoGlobal.setPrecoUnitarioProduto(precoNumerico);
-                        this.produtoGlobal.setDescricaoProduto(this.txtDescricao.getText());
-                        this.produtoGlobal.setQuantidadeProduto(
-                                this.produtoGlobal.getQuantidadeProduto()
+                        this.produtoGlobal.setNome(this.txtNome.getText());
+                        this.produtoGlobal.setPrecoUnitario(precoNumerico);
+                        this.produtoGlobal.setDescricao(this.txtDescricao.getText());
+                        this.produtoGlobal.setQuantidade(
+                                this.produtoGlobal.getQuantidade()
                                 + quantidadeNumerico);
                         mensagem = "Produto comprado";
                         this.consolidarGravacao(false, mensagem, evt);
@@ -474,10 +474,10 @@ public class ProdutoVisao extends javax.swing.JDialog implements UtilitariosDeTe
                     break;
                 case "Alterar":
                     // Alterando um produto
-                    this.produtoGlobal.setNomeProduto(this.txtNome.getText());
-                    this.produtoGlobal.setPrecoUnitarioProduto(precoNumerico);
-                    this.produtoGlobal.setDescricaoProduto(this.txtDescricao.getText());
-                    this.produtoGlobal.setQuantidadeProduto(quantidadeNumerico);
+                    this.produtoGlobal.setNome(this.txtNome.getText());
+                    this.produtoGlobal.setPrecoUnitario(precoNumerico);
+                    this.produtoGlobal.setDescricao(this.txtDescricao.getText());
+                    this.produtoGlobal.setQuantidade(quantidadeNumerico);
                     mensagem = "Produto alterado";
                     this.consolidarGravacao(false, mensagem, evt);
                 default:
@@ -678,10 +678,10 @@ public class ProdutoVisao extends javax.swing.JDialog implements UtilitariosDeTe
 
     @Override
     public void setCampos(Produto entity) {
-        this.txtNome.setText(entity.getNomeProduto());
-        this.txtDescricao.setText(entity.getDescricaoProduto());
-        this.txtQuantidade.setText(String.valueOf(entity.getQuantidadeProduto()));
-        this.txtPreco.setText(String.valueOf(entity.getPrecoUnitarioProduto()));
+        this.txtNome.setText(entity.getNome());
+        this.txtDescricao.setText(entity.getDescricao());
+        this.txtQuantidade.setText(String.valueOf(entity.getQuantidade()));
+        this.txtPreco.setText(String.valueOf(entity.getPrecoUnitario()));
     }
 
     public void setVisivelVisualizar(boolean estado) {

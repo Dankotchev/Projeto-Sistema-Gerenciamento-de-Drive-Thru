@@ -5,7 +5,13 @@ import java.util.List;
 
 public class RefeicaoDAO extends AbstractDAO<Refeicao> {
 
-    public List<Refeicao> buscarPorNome (String nome){
+    public List<Refeicao> buscarTodos() {
+        return getEntityManager()
+                .createNamedQuery("Refeicao.buscarTodos", Refeicao.class)
+                .getResultList();
+    }
+
+    public List<Refeicao> buscarPorNome(String nome) {
         return getEntityManager()
                 .createNamedQuery("Refeicao.buscarPorNome", Refeicao.class)
                 .setParameter("nome", "%" + nome + "%")
