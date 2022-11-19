@@ -19,16 +19,16 @@ public abstract class ItemPedido implements Serializable {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "nome", length = 60)
+    @Column(name = "nome", length = 60, nullable = false)
     private String nome;
 
-    @Column(name = "preco_unitario", precision = 10, scale = 2)
+    @Column(name = "preco_unitario", precision = 10, scale = 2, nullable = false)
     private BigDecimal precoUnitario;
 
-    @Column(name = "descricao", length = 100)
+    @Column(name = "descricao", length = 100, nullable = false)
     private String descricao;
 
-    @Column(name = "quantidade")
+    @Column(name = "quantidade", nullable = false)
     private Integer quantidade;
 
     @Column(name = "status", nullable = false)

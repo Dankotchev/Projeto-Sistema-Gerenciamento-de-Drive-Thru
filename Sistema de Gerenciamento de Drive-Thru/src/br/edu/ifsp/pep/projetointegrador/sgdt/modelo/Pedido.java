@@ -1,6 +1,7 @@
 package br.edu.ifsp.pep.projetointegrador.sgdt.modelo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -33,6 +34,9 @@ public class Pedido implements Serializable {
     @Column(name = "data_pedido")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataPedido;
+    
+    @Column(name = "total_pedido", precision = 10, scale = 2, nullable = false)
+    BigDecimal totalPedido;
 
     @Column(name = "forma_pagamento")
     @Enumerated(EnumType.STRING)
@@ -88,6 +92,14 @@ public class Pedido implements Serializable {
         this.dataPedido = dataPedido;
     }
 
+    public BigDecimal getTotalPedido() {
+        return totalPedido;
+    }
+
+    public void setTotalPedido(BigDecimal totalPedido) {
+        this.totalPedido = totalPedido;
+    }
+
     public FormaPagamento getFormaPagamento() {
         return formaPagamento;
     }
@@ -136,9 +148,10 @@ public class Pedido implements Serializable {
         this.listaPedidoRefeicao = listaPedidoRefeicao;
     }
 
-    public Pedido(Veiculo veiculo, Date dataPedido, FormaPagamento formaPagamento, EstadoPedido estadoPedido, Caixa caixa, List<PedidoProduto> listaPedidoProdutos, List<PedidoRefeicao> listaPedidoRefeicao) {
+    public Pedido(Veiculo veiculo, Date dataPedido, BigDecimal totalPedido, FormaPagamento formaPagamento, EstadoPedido estadoPedido, Caixa caixa, List<PedidoProduto> listaPedidoProdutos, List<PedidoRefeicao> listaPedidoRefeicao) {
         this.veiculo = veiculo;
         this.dataPedido = dataPedido;
+        this.totalPedido = totalPedido;
         this.formaPagamento = formaPagamento;
         this.estadoPedido = estadoPedido;
         this.caixa = caixa;
