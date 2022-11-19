@@ -109,24 +109,19 @@ public class LoginVisao extends javax.swing.JDialog {
             .addGroup(painelLoginLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelLoginLayout.createSequentialGroup()
-                        .addGroup(painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(labelSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelLoginLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelLoginLayout.createSequentialGroup()
-                                .addComponent(txtCPFFormatted, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(401, 401, 401))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelLoginLayout.createSequentialGroup()
-                                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(295, 295, 295))))))
+                    .addComponent(labelUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelLoginLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(399, 399, 399))
+                .addContainerGap(163, Short.MAX_VALUE)
+                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(138, 138, 138))
+            .addGroup(painelLoginLayout.createSequentialGroup()
+                .addGap(248, 248, 248)
+                .addGroup(painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCPFFormatted, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelLoginLayout.setVerticalGroup(
             painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,9 +200,18 @@ public class LoginVisao extends javax.swing.JDialog {
             if (this.funcionario != null) {
                 if (this.funcionario.getSenha().equals(senha)) {
                     Mensagem.mCorreto("Bem vindo " + this.funcionario.getNome());
-                    MenuVisao menuVisao = new MenuVisao(null, true);
-                    menuVisao.setVisible(true);
-                    this.dispose();
+
+                    if (this.funcionario.getCargo() != Funcionario.Cargo.COZINHEIRO) {
+                        MenuVisao menuVisao = new MenuVisao(null, true);
+                        menuVisao.setFuncionario(funcionario);
+                        menuVisao.setVisible(true);
+                        this.dispose();
+                    } else {
+                        //                        CozinhaVisao cozinhaVisao = new CozinhaVisao(null, true);
+                        //                        cozinhaVisao.setFuncionario(this.funcionario);
+                        //                        cozinhaVisao.setVisible(true);
+                        //                        this.dispose();
+                    }
                 } else {
                     Mensagem.mErro("Senha incorreta");
                 }
@@ -267,7 +271,8 @@ public class LoginVisao extends javax.swing.JDialog {
                 dialog.setVisible(true);
             }
         });
-        
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
     private javax.swing.JLabel labelSenha;

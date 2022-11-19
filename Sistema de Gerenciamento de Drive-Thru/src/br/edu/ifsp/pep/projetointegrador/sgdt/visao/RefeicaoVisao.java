@@ -3,17 +3,16 @@ package br.edu.ifsp.pep.projetointegrador.sgdt.visao;
 import br.edu.ifsp.pep.projetointegrador.sgdt.controledao.RefeicaoDAO;
 import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Refeicao;
 import br.edu.ifsp.pep.projetointegrador.utilitarios.Mensagem;
-import br.edu.ifsp.pep.projetointegrador.utilitarios.UtilitariosDeTela;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
-public class RefeicaoVisao extends javax.swing.JDialog implements UtilitariosDeTela<Refeicao> {
-    
+public class RefeicaoVisao extends javax.swing.JDialog {
+
     private List<Refeicao> listagemDeRefeicoes;
     private Refeicao refeicaoGlobal;
     private final RefeicaoDAO refeicaoDAO = new RefeicaoDAO();
-    
+
     public RefeicaoVisao(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -23,14 +22,14 @@ public class RefeicaoVisao extends javax.swing.JDialog implements UtilitariosDeT
         this.setVisibilidadeCamposTextos(false);
         this.btnOK.setVisible(false);
     }
-    
+
     private void atualizarTabela() {
         if (this.listagemDeRefeicoes.isEmpty()) {
             Mensagem.mAviso("Não há Refeições cadastradas");
         } else {
             DefaultTableModel modelo = (DefaultTableModel) this.tabelaRefeicao.getModel();
             modelo.setNumRows(0);
-            
+
             for (Refeicao refeicao : this.listagemDeRefeicoes) {
                 modelo.addRow(new Object[]{refeicao.getNome(), refeicao.getPrecoUnitario(),
                     refeicao.getDescricao(), refeicao.getListaIngredientes()
@@ -376,31 +375,31 @@ public class RefeicaoVisao extends javax.swing.JDialog implements UtilitariosDeT
         String mensagem = "Refeição cadastrada";
         boolean tudoOK = true;
         BigDecimal precoNumerico = null;
-        
+
         if (this.txtNome.getText().isEmpty()) {
             Mensagem.mAtencao("Nome não informado");
             this.txtNome.requestFocus();
             tudoOK = false;
         }
-        
+
         if (this.txtDescricao.getText().isEmpty()) {
             Mensagem.mAtencao("Descrição não informado");
             this.txtDescricao.requestFocus();
             tudoOK = false;
         }
-        
+
         if (this.txtIngrediente.getText().isEmpty()) {
             Mensagem.mAtencao("Ingredientes não informado");
             this.txtIngrediente.requestFocus();
             tudoOK = false;
         }
-        
+
         if (this.txtPreco.getText().isEmpty()) {
             Mensagem.mAtencao("Preço não informado");
             this.txtPreco.requestFocus();
             tudoOK = false;
         }
-        
+
         try {
             precoNumerico = new BigDecimal(this.txtPreco.getText());
         } catch (NumberFormatException nfe) {
@@ -408,7 +407,7 @@ public class RefeicaoVisao extends javax.swing.JDialog implements UtilitariosDeT
             this.txtPreco.requestFocus();
             tudoOK = false;
         }
-        
+
         if (tudoOK) {
             // Propagar no Banco de Dados se não houver informações faltantes ou incorretas
 
@@ -436,7 +435,7 @@ public class RefeicaoVisao extends javax.swing.JDialog implements UtilitariosDeT
                             this.txtIngrediente.getText(),
                             0
                     );
-                    
+
                 } else {
                     // Realizando uma alteração
                     this.refeicaoGlobal.setNome(this.txtNome.getText());
@@ -458,7 +457,7 @@ public class RefeicaoVisao extends javax.swing.JDialog implements UtilitariosDeT
             }
         }
     }//GEN-LAST:event_btnGravarActionPerformed
-    
+
     private void aposGravar(String mensagem, java.awt.event.ActionEvent evt) {
         Mensagem.mCorreto(mensagem);
         this.btnCancelarActionPerformed(evt);
@@ -541,8 +540,7 @@ public class RefeicaoVisao extends javax.swing.JDialog implements UtilitariosDeT
     private javax.swing.JTextField txtPreco;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void setEstadoBotoes(boolean estado) {
+    private void setEstadoBotoes(boolean estado) {
         boolean subEstado;
         if (this.tabelaRefeicao.getRowCount() > 0) {
             subEstado = estado;
@@ -561,17 +559,15 @@ public class RefeicaoVisao extends javax.swing.JDialog implements UtilitariosDeT
         this.btnGravar.setVisible(!estado);
         this.btnCancelar.setVisible(!estado);
     }
-    
-    @Override
-    public void setEstadoCamposTexto(boolean estado) {
+
+    private void setEstadoCamposTexto(boolean estado) {
         this.txtNome.setEnabled(estado);
         this.txtDescricao.setEnabled(estado);
         this.txtIngrediente.setEnabled(estado);
         this.txtPreco.setEnabled(estado);
     }
-    
-    @Override
-    public void setVisibilidadeCamposTextos(boolean estado) {
+
+    private void setVisibilidadeCamposTextos(boolean estado) {
         this.txtDescricao.setVisible(estado);
         this.txtIngrediente.setVisible(estado);
         this.txtPreco.setVisible(estado);
@@ -579,24 +575,22 @@ public class RefeicaoVisao extends javax.swing.JDialog implements UtilitariosDeT
         this.labelIngredientes.setVisible(estado);
         this.labelPreco.setVisible(estado);
     }
-    
-    @Override
-    public void limparCampos() {
+
+    private void limparCampos() {
         this.txtNome.setText("");
         this.txtDescricao.setText("");
         this.txtIngrediente.setText("");
         this.txtPreco.setText("");
     }
-    
-    @Override
-    public void setCampos(Refeicao entity) {
+
+    private void setCampos(Refeicao entity) {
         this.txtNome.setText(entity.getNome());
         this.txtDescricao.setText(entity.getDescricao());
         this.txtIngrediente.setText(entity.getListaIngredientes());
         this.txtPreco.setText(String.valueOf(entity.getPrecoUnitario()));
     }
-    
-    public void setVisivelVisualizar(boolean estado) {
+
+    private void setVisivelVisualizar(boolean estado) {
         this.btnPesquisar.setVisible(estado);
         this.btnOK.setVisible(!estado);
         this.btnInserir.setVisible(estado);
