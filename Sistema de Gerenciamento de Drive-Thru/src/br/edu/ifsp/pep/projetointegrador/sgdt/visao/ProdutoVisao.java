@@ -3,12 +3,11 @@ package br.edu.ifsp.pep.projetointegrador.sgdt.visao;
 import br.edu.ifsp.pep.projetointegrador.sgdt.controledao.ProdutoDAO;
 import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Produto;
 import br.edu.ifsp.pep.projetointegrador.utilitarios.Mensagem;
-import br.edu.ifsp.pep.projetointegrador.utilitarios.UtilitariosDeTela;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
-public class ProdutoVisao extends javax.swing.JDialog implements UtilitariosDeTela<Produto> {
+public class ProdutoVisao extends javax.swing.JDialog {
 
     private List<Produto> listagemDeProdutos;
     private Produto produtoGlobal;
@@ -629,8 +628,7 @@ public class ProdutoVisao extends javax.swing.JDialog implements UtilitariosDeTe
     private javax.swing.JTextField txtQuantidade;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void setEstadoBotoes(boolean estado) {
+    private void setEstadoBotoes(boolean estado) {
         boolean subEstado;
         if (this.tabelaProduto.getRowCount() > 0) {
             subEstado = estado;
@@ -650,16 +648,14 @@ public class ProdutoVisao extends javax.swing.JDialog implements UtilitariosDeTe
         this.btnCancelar.setVisible(!estado);
     }
 
-    @Override
-    public void setEstadoCamposTexto(boolean estado) {
+    private void setEstadoCamposTexto(boolean estado) {
         this.txtNome.setEnabled(estado);
         this.txtDescricao.setEnabled(estado);
         this.txtQuantidade.setEnabled(estado);
         this.txtPreco.setEnabled(estado);
     }
 
-    @Override
-    public void setVisibilidadeCamposTextos(boolean estado) {
+    private void setVisibilidadeCamposTextos(boolean estado) {
         this.txtDescricao.setVisible(estado);
         this.txtQuantidade.setVisible(estado);
         this.txtPreco.setVisible(estado);
@@ -668,23 +664,21 @@ public class ProdutoVisao extends javax.swing.JDialog implements UtilitariosDeTe
         this.labelPreco.setVisible(estado);
     }
 
-    @Override
-    public void limparCampos() {
+    private void limparCampos() {
         this.txtNome.setText("");
         this.txtDescricao.setText("");
         this.txtQuantidade.setText("");
         this.txtPreco.setText("");
     }
 
-    @Override
-    public void setCampos(Produto entity) {
+    private void setCampos(Produto entity) {
         this.txtNome.setText(entity.getNome());
         this.txtDescricao.setText(entity.getDescricao());
         this.txtQuantidade.setText(String.valueOf(entity.getQuantidade()));
         this.txtPreco.setText(String.valueOf(entity.getPrecoUnitario()));
     }
 
-    public void setVisivelVisualizar(boolean estado) {
+    private void setVisivelVisualizar(boolean estado) {
         this.btnPesquisar.setVisible(estado);
         this.btnOK.setVisible(!estado);
         this.btnComprar.setVisible(estado);
