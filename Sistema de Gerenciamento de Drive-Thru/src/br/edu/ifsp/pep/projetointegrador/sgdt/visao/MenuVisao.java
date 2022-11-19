@@ -22,7 +22,6 @@ public class MenuVisao extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         this.carregarPainelInformacoes();
         this.setVisibilidadeBotoes();
-
     }
 
     public void setFuncionario(Funcionario funcionario) {
@@ -341,7 +340,6 @@ public class MenuVisao extends javax.swing.JDialog {
             this.caixa.setEstadoCaixa(Caixa.EstadoCaixa.FECHADO);
             this.caixaDAO.alterar(this.caixa);
             this.caixa = null;
-
         } else {
             Mensagem.mAviso("Não há caixa aberto");
         }
