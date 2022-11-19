@@ -97,6 +97,7 @@ hs_err_pid*
 replay_pid*
 
 ### NetBeans ###
+**/nbproject/*.properties
 **/nbproject/private/
 **/nbproject/Makefile-*.mk
 **/nbproject/Package-*.bash
