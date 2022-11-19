@@ -1,6 +1,7 @@
 package br.edu.ifsp.pep.projetointegrador.utilitarios;
 
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -37,7 +38,7 @@ public class Relatorio {
         }
     }
     
-    public static void gerarFromJasper(String fileJasper, List lista) {
+    public static void gerarFromJasper(String fileJasper, List lista, HashMap<String,Object> parametros) {
         try {
             // Gera um data source a partir da lista
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(lista);
@@ -45,9 +46,9 @@ public class Relatorio {
             // Carrega o relatório
             InputStream relatorioCompilado = Relatorio.class
                     .getResourceAsStream("/br/edu/ifsp/pep/projetointegrador/relatorio/" + fileJasper);
-
+            
             // Preenche o relátorio com os dados
-            JasperPrint jp = JasperFillManager.fillReport(relatorioCompilado, null, dataSource);
+            JasperPrint jp = JasperFillManager.fillReport(relatorioCompilado, parametros, dataSource);
 
             // Exibe o relatório
             JasperViewer visualizador = new JasperViewer(jp, true);
