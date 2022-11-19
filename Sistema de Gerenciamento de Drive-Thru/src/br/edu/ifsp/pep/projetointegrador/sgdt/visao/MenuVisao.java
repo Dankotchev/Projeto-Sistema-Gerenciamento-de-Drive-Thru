@@ -1,19 +1,33 @@
 package br.edu.ifsp.pep.projetointegrador.sgdt.visao;
 
+import br.edu.ifsp.pep.projetointegrador.sgdt.controledao.CaixaDAO;
+import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Caixa;
+import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Funcionario;
+import br.edu.ifsp.pep.projetointegrador.utilitarios.Mensagem;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MenuVisao extends javax.swing.JDialog {
 
+    private Caixa caixa;
+    private CaixaDAO caixaDAO;
+    private Funcionario funcionario;
+    private final Date dataAtual = new Date();
+    private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     public MenuVisao(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
-        
+        this.carregarPainelInformacoes();
+        this.setVisibilidadeBotoes();
 
     }
 
-   
-   
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,17 +47,24 @@ public class MenuVisao extends javax.swing.JDialog {
         labelNomeFuncionario = new javax.swing.JLabel();
         labelData = new javax.swing.JLabel();
         labelDataAtual = new javax.swing.JLabel();
+        labelCargo = new javax.swing.JLabel();
+        labelCargoFuncionario = new javax.swing.JLabel();
+        labelCaixa = new javax.swing.JLabel();
+        labelIdCaixa = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        jPanel1 = new javax.swing.JPanel();
-        btnGerenciarProduto = new javax.swing.JButton();
-        btnGerenciarRefeicao = new javax.swing.JButton();
-        btnGerenciarFuncionario = new javax.swing.JButton();
+        painelBotoes = new javax.swing.JPanel();
+        btnAbrirCaixa = new javax.swing.JButton();
         btnRealizarPedido = new javax.swing.JButton();
+        btnFecharCaixa = new javax.swing.JButton();
+        btnGerenciarRefeicoes = new javax.swing.JButton();
+        btnGerenciarFuncionarios = new javax.swing.JButton();
+        btnGerenciarProdutos = new javax.swing.JButton();
         btnGerarRelatorio = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Realizar Pedido");
-        setMinimumSize(new java.awt.Dimension(854, 480));
+        setTitle("Menu");
+        setMinimumSize(new java.awt.Dimension(1280, 720));
+        setPreferredSize(new java.awt.Dimension(1280, 720));
 
         painelFundo.setBackground(new java.awt.Color(242, 183, 5));
 
@@ -84,6 +105,18 @@ public class MenuVisao extends javax.swing.JDialog {
         labelDataAtual.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelDataAtual.setText("12/11/2022");
 
+        labelCargo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        labelCargo.setText("Cargo");
+
+        labelCargoFuncionario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        labelCargoFuncionario.setText("GERENTE");
+
+        labelCaixa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        labelCaixa.setText("Caixa: ");
+
+        labelIdCaixa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        labelIdCaixa.setText("Caixa Fechado");
+
         javax.swing.GroupLayout painelInfoCaixaOperacaoLayout = new javax.swing.GroupLayout(painelInfoCaixaOperacao);
         painelInfoCaixaOperacao.setLayout(painelInfoCaixaOperacaoLayout);
         painelInfoCaixaOperacaoLayout.setHorizontalGroup(
@@ -91,8 +124,16 @@ public class MenuVisao extends javax.swing.JDialog {
             .addGroup(painelInfoCaixaOperacaoLayout.createSequentialGroup()
                 .addComponent(labelFuncionario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelNomeFuncionario)
+                .addComponent(labelNomeFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelCargo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelCargoFuncionario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelCaixa)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelIdCaixa)
+                .addGap(18, 18, 18)
                 .addComponent(labelData)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelDataAtual)
@@ -101,79 +142,133 @@ public class MenuVisao extends javax.swing.JDialog {
         painelInfoCaixaOperacaoLayout.setVerticalGroup(
             painelInfoCaixaOperacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelInfoCaixaOperacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(labelDataAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(painelInfoCaixaOperacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(labelFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(labelNomeFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(labelNomeFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(painelInfoCaixaOperacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelDataAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(painelInfoCaixaOperacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelIdCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(painelInfoCaixaOperacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelCargoFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        painelBotoes.setBackground(new java.awt.Color(204, 204, 204));
+        painelBotoes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        btnGerenciarProduto.setBackground(new java.awt.Color(242, 159, 5));
-        btnGerenciarProduto.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
-        btnGerenciarProduto.setForeground(new java.awt.Color(217, 28, 38));
-        btnGerenciarProduto.setText("Gerenciar Produto");
-        btnGerenciarProduto.addActionListener(new java.awt.event.ActionListener() {
+        btnAbrirCaixa.setBackground(new java.awt.Color(242, 159, 5));
+        btnAbrirCaixa.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
+        btnAbrirCaixa.setForeground(new java.awt.Color(217, 28, 38));
+        btnAbrirCaixa.setText("Abrir Caixa");
+        btnAbrirCaixa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGerenciarProdutoActionPerformed(evt);
+                btnAbrirCaixaActionPerformed(evt);
             }
         });
-
-        btnGerenciarRefeicao.setBackground(new java.awt.Color(242, 159, 5));
-        btnGerenciarRefeicao.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
-        btnGerenciarRefeicao.setForeground(new java.awt.Color(217, 28, 38));
-        btnGerenciarRefeicao.setText("Gerenciar Refeição");
-
-        btnGerenciarFuncionario.setBackground(new java.awt.Color(242, 159, 5));
-        btnGerenciarFuncionario.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
-        btnGerenciarFuncionario.setForeground(new java.awt.Color(217, 28, 38));
-        btnGerenciarFuncionario.setText("Gerenciar Funcionários");
 
         btnRealizarPedido.setBackground(new java.awt.Color(242, 159, 5));
         btnRealizarPedido.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
         btnRealizarPedido.setForeground(new java.awt.Color(217, 28, 38));
         btnRealizarPedido.setText("Realizar Pedido");
+        btnRealizarPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRealizarPedidoActionPerformed(evt);
+            }
+        });
+
+        btnFecharCaixa.setBackground(new java.awt.Color(242, 159, 5));
+        btnFecharCaixa.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
+        btnFecharCaixa.setForeground(new java.awt.Color(217, 28, 38));
+        btnFecharCaixa.setText("Fechar Caixa");
+        btnFecharCaixa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharCaixaActionPerformed(evt);
+            }
+        });
+
+        btnGerenciarRefeicoes.setBackground(new java.awt.Color(242, 159, 5));
+        btnGerenciarRefeicoes.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
+        btnGerenciarRefeicoes.setForeground(new java.awt.Color(217, 28, 38));
+        btnGerenciarRefeicoes.setText("Gerenciar Refeições");
+        btnGerenciarRefeicoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGerenciarRefeicoesActionPerformed(evt);
+            }
+        });
+
+        btnGerenciarFuncionarios.setBackground(new java.awt.Color(242, 159, 5));
+        btnGerenciarFuncionarios.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
+        btnGerenciarFuncionarios.setForeground(new java.awt.Color(217, 28, 38));
+        btnGerenciarFuncionarios.setText("Gerenciar Funcionários");
+        btnGerenciarFuncionarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGerenciarFuncionariosActionPerformed(evt);
+            }
+        });
+
+        btnGerenciarProdutos.setBackground(new java.awt.Color(242, 159, 5));
+        btnGerenciarProdutos.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
+        btnGerenciarProdutos.setForeground(new java.awt.Color(217, 28, 38));
+        btnGerenciarProdutos.setText("Gerenciar Produtos");
+        btnGerenciarProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGerenciarProdutosActionPerformed(evt);
+            }
+        });
 
         btnGerarRelatorio.setBackground(new java.awt.Color(242, 159, 5));
         btnGerarRelatorio.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
         btnGerarRelatorio.setForeground(new java.awt.Color(217, 28, 38));
         btnGerarRelatorio.setText("Gerar Relatório");
+        btnGerarRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGerarRelatorioActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout painelBotoesLayout = new javax.swing.GroupLayout(painelBotoes);
+        painelBotoes.setLayout(painelBotoesLayout);
+        painelBotoesLayout.setHorizontalGroup(
+            painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelBotoesLayout.createSequentialGroup()
                 .addGap(62, 62, 62)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnGerenciarProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnGerenciarFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE))
+                .addGroup(painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnGerenciarRefeicoes, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAbrirCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnGerenciarRefeicao, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
-                    .addComponent(btnRealizarPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(23, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnGerarRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(217, 217, 217))
+                .addGroup(painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelBotoesLayout.createSequentialGroup()
+                        .addComponent(btnGerarRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(painelBotoesLayout.createSequentialGroup()
+                        .addComponent(btnRealizarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnFecharCaixa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(painelBotoesLayout.createSequentialGroup()
+                        .addComponent(btnGerenciarFuncionarios, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnGerenciarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(233, Short.MAX_VALUE))))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnGerenciarProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
-                    .addComponent(btnGerenciarRefeicao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        painelBotoesLayout.setVerticalGroup(
+            painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelBotoesLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnAbrirCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnRealizarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnFecharCaixa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnRealizarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnGerenciarFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnGerarRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addGroup(painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGerenciarRefeicoes, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGerenciarFuncionarios, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGerenciarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnGerarRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout painelFundoLayout = new javax.swing.GroupLayout(painelFundo);
@@ -186,12 +281,12 @@ public class MenuVisao extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(painelInfoCaixaOperacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(painelFundoLayout.createSequentialGroup()
-                .addComponent(jSeparator1)
+                .addGroup(painelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1)
+                    .addGroup(painelFundoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(painelBotoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(painelFundoLayout.createSequentialGroup()
-                .addGap(337, 337, 337)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 517, Short.MAX_VALUE))
         );
         painelFundoLayout.setVerticalGroup(
             painelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,9 +298,9 @@ public class MenuVisao extends javax.swing.JDialog {
                 .addComponent(painelInfoCaixaOperacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
+                .addGap(18, 18, 18)
+                .addComponent(painelBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -213,22 +308,70 @@ public class MenuVisao extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(painelFundo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(painelFundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelFundo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(painelFundo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-   
+    private void btnAbrirCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirCaixaActionPerformed
+        if (this.caixa == null) {
+            try {
+                this.caixa = new Caixa(dataAtual, funcionario, Caixa.EstadoCaixa.ABERTO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
+                this.caixaDAO.inserir(this.caixa);
+                this.carregarPainelInformacoes();
+            } catch (Exception ex) {
+                Mensagem.mErro(ex.getMessage());
+            }
+        } else {
+            Mensagem.mAviso("Caixa já aberto");
+        }
+    }//GEN-LAST:event_btnAbrirCaixaActionPerformed
 
-    private void btnGerenciarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerenciarProdutoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGerenciarProdutoActionPerformed
+    private void btnFecharCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharCaixaActionPerformed
+        if (this.caixa != null) {
+
+            this.caixa.setEstadoCaixa(Caixa.EstadoCaixa.FECHADO);
+            this.caixaDAO.alterar(this.caixa);
+            this.caixa = null;
+
+        } else {
+            Mensagem.mAviso("Não há caixa aberto");
+        }
+    }//GEN-LAST:event_btnFecharCaixaActionPerformed
+
+    private void btnRealizarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarPedidoActionPerformed
+        PedidoVisao pedidoVisao = new PedidoVisao(null, true);
+        pedidoVisao.setInformacoes(this.funcionario, this.caixa);
+        pedidoVisao.setVisible(true);
+    }//GEN-LAST:event_btnRealizarPedidoActionPerformed
+
+    private void btnGerenciarRefeicoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerenciarRefeicoesActionPerformed
+        RefeicaoVisao refeicaoVisao = new RefeicaoVisao(null, true);
+        refeicaoVisao.setVisible(true);
+    }//GEN-LAST:event_btnGerenciarRefeicoesActionPerformed
+
+    private void btnGerenciarFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerenciarFuncionariosActionPerformed
+        FuncionarioVisao funcionarioVisao = new FuncionarioVisao(null, true);
+        funcionarioVisao.setVisible(true);
+    }//GEN-LAST:event_btnGerenciarFuncionariosActionPerformed
+
+    private void btnGerenciarProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerenciarProdutosActionPerformed
+        ProdutoVisao produtoVisao = new ProdutoVisao(null, true);
+        produtoVisao.setVisible(true);
+    }//GEN-LAST:event_btnGerenciarProdutosActionPerformed
+
+    private void btnGerarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarRelatorioActionPerformed
+        RelatorioVisao relatorioVisao = new RelatorioVisao(null, true);
+        relatorioVisao.setVisible(true);
+    }//GEN-LAST:event_btnGerarRelatorioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -257,20 +400,7 @@ public class MenuVisao extends javax.swing.JDialog {
         }
         //</editor-fold>
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -288,23 +418,48 @@ public class MenuVisao extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAbrirCaixa;
+    private javax.swing.JButton btnFecharCaixa;
     private javax.swing.JButton btnGerarRelatorio;
-    private javax.swing.JButton btnGerenciarFuncionario;
-    private javax.swing.JButton btnGerenciarProduto;
-    private javax.swing.JButton btnGerenciarRefeicao;
+    private javax.swing.JButton btnGerenciarFuncionarios;
+    private javax.swing.JButton btnGerenciarProdutos;
+    private javax.swing.JButton btnGerenciarRefeicoes;
     private javax.swing.JButton btnRealizarPedido;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel labelCaixa;
+    private javax.swing.JLabel labelCargo;
+    private javax.swing.JLabel labelCargoFuncionario;
     private javax.swing.JLabel labelData;
     private javax.swing.JLabel labelDataAtual;
     private javax.swing.JLabel labelFuncionario;
+    private javax.swing.JLabel labelIdCaixa;
     private javax.swing.JLabel labelNomeFuncionario;
     private javax.swing.JLabel labelTitulo;
+    private javax.swing.JPanel painelBotoes;
     private javax.swing.JPanel painelFundo;
     private javax.swing.JPanel painelInfoCaixaOperacao;
     private javax.swing.JPanel painelTitulo;
     // End of variables declaration//GEN-END:variables
 
+    private void carregarPainelInformacoes() {
+        if (this.caixa == null) {
+            this.labelIdCaixa.setText("Caixa Fechado");
+        } else {
+            this.labelIdCaixa.setText(String.valueOf(this.caixa.getId()));
 
+        }
+        this.labelNomeFuncionario.setText(funcionario.getNome());
+        this.labelCargoFuncionario.setText(this.funcionario.getCargo().toString());
+        this.labelDataAtual.setText(this.sdf.format(dataAtual));
+    }
+
+    private void setVisibilidadeBotoes() {
+        if (this.funcionario.getCargo().equals(Funcionario.Cargo.ATENDENTE)) {
+            this.btnGerenciarRefeicoes.setVisible(false);
+            this.btnGerenciarFuncionarios.setVisible(false);
+            this.btnGerenciarProdutos.setVisible(false);
+            this.btnGerarRelatorio.setVisible(false);
+        }
+    }
 }
