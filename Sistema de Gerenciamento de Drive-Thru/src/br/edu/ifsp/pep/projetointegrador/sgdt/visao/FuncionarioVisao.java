@@ -75,6 +75,8 @@ public class FuncionarioVisao extends javax.swing.JDialog implements Utilitarios
         cbCargo = new javax.swing.JComboBox<>();
         cbEstadoCivil = new javax.swing.JComboBox<>();
         txtCPFFormated = new javax.swing.JFormattedTextField();
+        labelSenha = new javax.swing.JLabel();
+        txtSenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Manter Refeição");
@@ -235,6 +237,15 @@ public class FuncionarioVisao extends javax.swing.JDialog implements Utilitarios
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtCPFFormated.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtCPFFormated.setFont(new java.awt.Font("DejaVu Sans", 0, 16)); // NOI18N
+
+        labelSenha.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        labelSenha.setText("Senha");
+
+        txtSenha.setFont(new java.awt.Font("DejaVu Sans", 0, 16)); // NOI18N
+        txtSenha.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtSenha.setText("senhaexemplo");
 
         javax.swing.GroupLayout painelFundoLayout = new javax.swing.GroupLayout(painelFundo);
         painelFundo.setLayout(painelFundoLayout);
@@ -263,7 +274,11 @@ public class FuncionarioVisao extends javax.swing.JDialog implements Utilitarios
                                         .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(painelFundoLayout.createSequentialGroup()
                                         .addComponent(txtCPFFormated, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(labelSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(371, 371, 371))))
                             .addGroup(painelFundoLayout.createSequentialGroup()
                                 .addGroup(painelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(labelDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -277,8 +292,8 @@ public class FuncionarioVisao extends javax.swing.JDialog implements Utilitarios
                                     .addGroup(painelFundoLayout.createSequentialGroup()
                                         .addComponent(labelEstadoCivil)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cbEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE)))))))
+                                        .addComponent(cbEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         painelFundoLayout.setVerticalGroup(
@@ -294,7 +309,6 @@ public class FuncionarioVisao extends javax.swing.JDialog implements Utilitarios
                         .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnOK, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(painelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(painelFundoLayout.createSequentialGroup()
                         .addGap(66, 66, 66)
@@ -302,7 +316,9 @@ public class FuncionarioVisao extends javax.swing.JDialog implements Utilitarios
                     .addGroup(painelFundoLayout.createSequentialGroup()
                         .addGroup(painelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(labelCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCPFFormated, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCPFFormated, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -314,7 +330,7 @@ public class FuncionarioVisao extends javax.swing.JDialog implements Utilitarios
                 .addGap(41, 41, 41)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(painelBotoes, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
+                .addComponent(painelBotoes, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -399,16 +415,25 @@ public class FuncionarioVisao extends javax.swing.JDialog implements Utilitarios
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         String mensagem = "Funcionário cadastrado";
         boolean tudoOK = true;
+        String cpf = this.txtCPFFormated.getText();
+        String nome = this.txtNome.getText();
+        String senha = new String(this.txtSenha.getPassword());
         
-        if (this.txtNome.getText().isEmpty()) {
+        if (nome.isEmpty()) {
             Mensagem.mAtencao("Nome não informado");
             this.txtNome.requestFocus();
             tudoOK = false;
         }
         
-        if (this.txtCPFFormated.getText().isEmpty()) {
+        if (cpf.isEmpty()) {
             Mensagem.mAtencao("CPF não informado");
             this.txtCPFFormated.requestFocus();
+            tudoOK = false;
+        }
+        
+        if (senha.isEmpty() || senha.equals("senhaexemplo")) {
+            Mensagem.mAtencao("Senha não informada");
+            this.txtNome.requestFocus();
             tudoOK = false;
         }
         
@@ -452,8 +477,9 @@ public class FuncionarioVisao extends javax.swing.JDialog implements Utilitarios
                 // Realizando uma inserção
                 if (this.funcionarioGlobal == null) {
                     this.funcionarioGlobal = new Funcionario(
-                            this.txtNome.getText(),
-                            this.txtCPFFormated.getText(),
+                            cpf,
+                            nome,
+                            senha,
                             this.dateDataNascimento.getDate(),
                             (Funcionario.Cargo) this.cbCargo.getSelectedItem(),
                             (Funcionario.EstadoCivil) this.cbEstadoCivil.getSelectedItem()
@@ -461,8 +487,9 @@ public class FuncionarioVisao extends javax.swing.JDialog implements Utilitarios
                     
                 } else {
                     // Realizando uma alteração
-                    this.funcionarioGlobal.setNome(this.txtNome.getText());
-                    this.funcionarioGlobal.setCpf(this.txtCPFFormated.getText());
+                    this.funcionarioGlobal.setNome(nome);
+                    this.funcionarioGlobal.setCpf(cpf);
+                    this.funcionarioGlobal.setSenha(senha);
                     this.funcionarioGlobal.setDataNascimento(this.dateDataNascimento.getDate());
                     this.funcionarioGlobal.setCargo(
                             (Funcionario.Cargo) this.cbCargo.getSelectedItem());
@@ -560,6 +587,7 @@ public class FuncionarioVisao extends javax.swing.JDialog implements Utilitarios
     private javax.swing.JLabel labelDataNascimento;
     private javax.swing.JLabel labelEstadoCivil;
     private javax.swing.JLabel labelNome;
+    private javax.swing.JLabel labelSenha;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JPanel painelBotoes;
     private javax.swing.JPanel painelFundo;
@@ -567,6 +595,7 @@ public class FuncionarioVisao extends javax.swing.JDialog implements Utilitarios
     private javax.swing.JTable tabelaFuncionario;
     private javax.swing.JFormattedTextField txtCPFFormated;
     private javax.swing.JTextField txtNome;
+    private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
 
     @Override

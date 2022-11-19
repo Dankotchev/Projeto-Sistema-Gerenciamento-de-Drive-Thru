@@ -69,6 +69,7 @@ CREATE TABLE
         id_funcionario SERIAL,
         nome_funcionario VARCHAR(60) NOT NULL,
         cpf VARCHAR(11) NOT NULL,
+        senha VARCHAR(16) NOT NULL,
         data_nascimento DATE NULL,
         cargo VARCHAR(11) NULL,
         estado_civil VARCHAR(14) NULL,
@@ -76,12 +77,12 @@ CREATE TABLE
         PRIMARY KEY (id_funcionario),
         UNIQUE (cpf, nome_funcionario)
     );
-INSERT INTO funcionario (nome_funcionario, cpf, data_nascimento, cargo, estado_civil)
+INSERT INTO funcionario (nome_funcionario, cpf, senha, data_nascimento, cargo, estado_civil)
 	VALUES
-	('Danilo Quirino', '45632598210', '1996-06-27', 'GERENTE', 'SOLTEIRO'),
-	('Tereza Domingues', '36598745230', '1963-09-15', 'GERENTE', 'CASADO'),
-	('Lucas Quirino', '10236502500', '1965-03-30', 'COZINHEIRO', 'CASADO'),
-	('Dani Domingues Quirino', '00014530266', '1999-08-24', 'ATENDENTE', 'SOLTEIRO');
+	('Danilo Quirino', '45632598210', 'danilo123', '1996-06-27', 'GERENTE', 'SOLTEIRO'),
+	('Tereza Domingues', '36598745230', 'tereza123', '1963-09-15', 'GERENTE', 'CASADO'),
+	('Lucas Quirino', '10236502500', 'lucas123' , '1965-03-30', 'COZINHEIRO', 'CASADO'),
+	('Dani Domingues Quirino', '00014530266', 'dani123', '1999-08-24', 'ATENDENTE', 'SOLTEIRO');
 
 CREATE TABLE
     IF NOT EXISTS caixa (

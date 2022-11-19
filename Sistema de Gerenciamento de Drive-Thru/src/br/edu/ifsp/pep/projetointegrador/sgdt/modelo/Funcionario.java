@@ -25,7 +25,9 @@ import javax.persistence.UniqueConstraint;
 })
 @NamedQueries(value = {
     @NamedQuery(name = "Funcionario.buscarPorNome",
-            query = "SELECT f FROM Funcionario f WHERE f.nome LIKE :nome AND f.status = true")
+            query = "SELECT f FROM Funcionario f WHERE f.nome LIKE :nome AND f.status = true"),
+    @NamedQuery(name = "Funcionario.buscarPorCPF",
+            query = "SELECT f FROM Funcionario f WHERE f.cpf = :cpf AND f.status = true")
 })
 public class Funcionario implements Serializable {
 
@@ -36,6 +38,9 @@ public class Funcionario implements Serializable {
 
     @Column(name = "cpf", nullable = false, length = 11)
     private String cpf;
+    
+    @Column(name = "senha", length = 16, nullable = false)
+    private String senha;
 
     @Column(name = "nome_funcionario", length = 60, nullable = false)
     private String nome;
@@ -96,6 +101,14 @@ public class Funcionario implements Serializable {
         this.cpf = cpf;
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -144,9 +157,10 @@ public class Funcionario implements Serializable {
         this.listaResponsabilidadeCaixas = listaResponsabilidadeCaixas;
     }
 
-    public Funcionario(String cpf, String nome, Date dataNascimento, Cargo cargo, EstadoCivil estadoCivil) {
+    public Funcionario(String cpf, String nome, String senha, Date dataNascimento, Cargo cargo, EstadoCivil estadoCivil) {
         this.cpf = cpf;
         this.nome = nome;
+        this.senha = senha;
         this.dataNascimento = dataNascimento;
         this.cargo = cargo;
         this.estadoCivil = estadoCivil;
