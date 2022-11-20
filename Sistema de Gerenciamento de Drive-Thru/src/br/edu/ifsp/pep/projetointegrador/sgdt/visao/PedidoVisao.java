@@ -24,11 +24,11 @@ public class PedidoVisao extends javax.swing.JDialog {
     private Pedido pedidoGlobal;
     private Produto produtoGlobal;
     private Refeicao refeicaoGlobal;
+    private Funcionario funcionario;
+    private Caixa caixa;
     private final ProdutoDAO produtoDAO = new ProdutoDAO();
     private final RefeicaoDAO refeicaoDAO = new RefeicaoDAO();
     private final PedidoDAO pedidoDAO = new PedidoDAO();
-    private final Funcionario funcionario;
-    private final Caixa caixa;
     private final Date dataAtual = new Date();
     private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -41,6 +41,11 @@ public class PedidoVisao extends javax.swing.JDialog {
         this.carregarPainelInformacoes();
         this.funcionario = null;
         this.caixa = null;
+    }
+    
+    public void setInformacoes(Funcionario funcionario, Caixa caixa){
+        this.funcionario = funcionario;
+        this.caixa = caixa;
     }
 
     private void atualizarTabelaResumo() {

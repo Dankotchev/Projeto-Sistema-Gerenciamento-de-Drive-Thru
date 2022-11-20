@@ -1,22 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package br.edu.ifsp.pep.projetointegrador.sgdt.visao;
 
-/**
- *
- * @author giova
- */
+import br.edu.ifsp.pep.projetointegrador.sgdt.controledao.CaixaDAO;
+import br.edu.ifsp.pep.projetointegrador.utilitarios.Mensagem;
+import br.edu.ifsp.pep.projetointegrador.utilitarios.Relatorio;
+import java.util.Date;
+import java.util.HashMap;
+
 public class RelatorioVisao extends javax.swing.JDialog {
 
-    /**
-     * Creates new form RelatorioVisao
-     */
     public RelatorioVisao(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-         this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -28,21 +23,24 @@ public class RelatorioVisao extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        painelGeral = new javax.swing.JPanel();
         painelTitulo = new javax.swing.JPanel();
         labelTitulo = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        labelRelatorio = new javax.swing.JLabel();
+        cbTiposRelatorios = new javax.swing.JComboBox<>();
+        labelPeriodo = new javax.swing.JLabel();
+        labelDE = new javax.swing.JLabel();
+        labelATE = new javax.swing.JLabel();
         btnGerarRelatorio = new javax.swing.JButton();
+        dateDataInicial = new com.toedter.calendar.JDateChooser();
+        dateDataFinal = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Relatórios Gerenciais");
+        setMinimumSize(new java.awt.Dimension(587, 330));
+        setPreferredSize(new java.awt.Dimension(587, 330));
 
-        jPanel1.setBackground(new java.awt.Color(242, 183, 5));
+        painelGeral.setBackground(new java.awt.Color(242, 183, 5));
 
         painelTitulo.setBackground(new java.awt.Color(242, 5, 5));
 
@@ -69,20 +67,21 @@ public class RelatorioVisao extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel1.setText("Relatório");
+        labelRelatorio.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        labelRelatorio.setText("Relatório");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("Período:");
+        cbTiposRelatorios.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        cbTiposRelatorios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fluxo de Caixa", "Relatório de Vendas", "Relátorio de Estoque" }));
+        cbTiposRelatorios.setSelectedIndex(-1);
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setText("De");
+        labelPeriodo.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        labelPeriodo.setText("Período:");
 
-        jTextField1.setText("jTextField1");
+        labelDE.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        labelDE.setText("De");
 
-        jLabel4.setText("até");
-
-        jTextField2.setText("jTextField2");
+        labelATE.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        labelATE.setText("até");
 
         btnGerarRelatorio.setBackground(new java.awt.Color(242, 5, 5));
         btnGerarRelatorio.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
@@ -94,69 +93,127 @@ public class RelatorioVisao extends javax.swing.JDialog {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout painelGeralLayout = new javax.swing.GroupLayout(painelGeral);
+        painelGeral.setLayout(painelGeralLayout);
+        painelGeralLayout.setHorizontalGroup(
+            painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(painelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel4)
-                        .addGap(49, 49, 49)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(303, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnGerarRelatorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(painelGeralLayout.createSequentialGroup()
+                .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelGeralLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnGerarRelatorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(painelGeralLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelRelatorio)
+                            .addComponent(labelPeriodo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(painelGeralLayout.createSequentialGroup()
+                                .addComponent(labelDE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(dateDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labelATE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(dateDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 17, Short.MAX_VALUE))
+                            .addComponent(cbTiposRelatorios, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        painelGeralLayout.setVerticalGroup(
+            painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelGeralLayout.createSequentialGroup()
                 .addComponent(painelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
-                .addComponent(btnGerarRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39))
+                .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbTiposRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
+                .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelDE, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dateDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dateDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelATE, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnGerarRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 16, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(painelGeral, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(painelGeral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGerarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarRelatorioActionPerformed
-        // TODO add your handling code here:
+        String relatorio;
+        boolean tudoOK = true;
+        int selecao = this.cbTiposRelatorios.getSelectedIndex();
+        Date dataInicial = this.dateDataInicial.getDate();
+        Date dataFinal = this.dateDataFinal.getDate();
+        HashMap<String, Object> parametros = null;
+
+        if (selecao < 0) {
+            Mensagem.mAtencao("Selecione um tipo de relatório a ser gerado");
+            this.cbTiposRelatorios.requestFocus();
+            tudoOK = false;
+        }
+
+        if (dataInicial == null) {
+            Mensagem.mAtencao("Selecione uma data inicial");
+            this.dateDataInicial.requestFocus();
+            tudoOK = false;
+        }
+
+        if (dataFinal == null) {
+            Mensagem.mAtencao("Selecione uma data final");
+            this.dateDataFinal.requestFocus();
+            tudoOK = false;
+        }
+
+        if (dataInicial.before(dataFinal)) {
+            Mensagem.mAtencao("Data inicial posterior a data final da consulta");
+            this.dateDataInicial.requestFocus();
+            tudoOK = false;
+        }
+
+        if (tudoOK) {
+            parametros.put("DataInicial", dataInicial);
+            parametros.put("DataFinal", dataFinal);
+            switch (selecao) {
+                case 0:
+                    CaixaDAO caixaDAO = new CaixaDAO();
+                    relatorio = "Fluxo_de_Caixa.jrxml";
+                    break;
+                case 1:
+                    relatorio = "Relatorio_de_Vendas.jrxml";
+
+                    break;
+
+                case 2:
+                    relatorio = "Relatorio_de_Estoque.jrxml";
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+//            Relatorio.gerarFromJasper(relatorio, lista, parametros);
+        }
+
+        this.cbTiposRelatorios.setSelectedIndex(-1);
+        this.dateDataInicial.cleanup();
+        this.dateDataFinal.cleanup();
     }//GEN-LAST:event_btnGerarRelatorioActionPerformed
 
     /**
@@ -203,15 +260,15 @@ public class RelatorioVisao extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGerarRelatorio;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JComboBox<String> cbTiposRelatorios;
+    private com.toedter.calendar.JDateChooser dateDataFinal;
+    private com.toedter.calendar.JDateChooser dateDataInicial;
+    private javax.swing.JLabel labelATE;
+    private javax.swing.JLabel labelDE;
+    private javax.swing.JLabel labelPeriodo;
+    private javax.swing.JLabel labelRelatorio;
     private javax.swing.JLabel labelTitulo;
+    private javax.swing.JPanel painelGeral;
     private javax.swing.JPanel painelTitulo;
     // End of variables declaration//GEN-END:variables
 }
