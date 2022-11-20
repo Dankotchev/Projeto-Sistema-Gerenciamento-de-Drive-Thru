@@ -13,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -20,6 +22,16 @@ import javax.persistence.Temporal;
 
 @Entity
 @Table(name = "pedido")
+@NamedQueries(value = {
+    @NamedQuery(name = "Pedido.buscarTodos",
+            query = "SELECT p FROM Pedido p WHERE p.status = true"),
+    @NamedQuery(name = "Pedido.buscarPorEstado",
+            query = "SELECT p FROM Pedido p WHERE p.estadoPedido = :estadoPedido "
+                    + "AND p.status = true"),
+    @NamedQuery(name = "Pedido.buscarEmFilaEmPreparo",
+            query = "SELECT p FROM Pedido p WHERE p.estadoPedido = :emFila OR p.estadoPedido = :emPreparo "
+                    + "AND p.status = true ORDER BY p.id ASC")
+})
 public class Pedido implements Serializable {
 
     @Id
