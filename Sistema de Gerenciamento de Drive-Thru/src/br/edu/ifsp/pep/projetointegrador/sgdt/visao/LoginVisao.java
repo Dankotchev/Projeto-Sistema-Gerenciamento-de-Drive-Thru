@@ -3,10 +3,12 @@ package br.edu.ifsp.pep.projetointegrador.sgdt.visao;
 import br.edu.ifsp.pep.projetointegrador.sgdt.controledao.FuncionarioDAO;
 import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Funcionario;
 import br.edu.ifsp.pep.projetointegrador.utilitarios.Mensagem;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.NoResultException;
 
 public class LoginVisao extends javax.swing.JDialog {
 
-    private Funcionario funcionario;
     private final FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 
     public LoginVisao(java.awt.Frame parent, boolean modal) {
@@ -36,7 +38,7 @@ public class LoginVisao extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Login");
-        setMinimumSize(new java.awt.Dimension(1024, 576));
+        setMinimumSize(new java.awt.Dimension(500, 544));
 
         painelFundo.setBackground(new java.awt.Color(254, 164, 6));
 
@@ -109,25 +111,19 @@ public class LoginVisao extends javax.swing.JDialog {
             .addGroup(painelLoginLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labelSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelLoginLayout.createSequentialGroup()
-                .addContainerGap(163, Short.MAX_VALUE)
-                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(138, 138, 138))
-            .addGroup(painelLoginLayout.createSequentialGroup()
-                .addGap(248, 248, 248)
-                .addGroup(painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(labelSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                        .addComponent(labelUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(txtCPFFormatted, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
         painelLoginLayout.setVerticalGroup(
             painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelLoginLayout.createSequentialGroup()
                 .addComponent(painelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCPFFormatted, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -154,7 +150,7 @@ public class LoginVisao extends javax.swing.JDialog {
             .addGroup(painelFundoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(painelLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -179,6 +175,7 @@ public class LoginVisao extends javax.swing.JDialog {
         boolean tudoOK = true;
         String cpf = this.txtCPFFormatted.getText();
         String senha = new String(this.txtSenha.getPassword());
+        Funcionario.Cargo cozinha = Funcionario.Cargo.COZINHEIRO;
 
         System.out.println(cpf);
         System.out.println(senha);
@@ -196,28 +193,32 @@ public class LoginVisao extends javax.swing.JDialog {
         }
 
         if (tudoOK) {
-            this.funcionario = funcionarioDAO.buscarPorCPF(cpf);
-            if (this.funcionario != null) {
-                if (this.funcionario.getSenha().equals(senha)) {
-                    Mensagem.mCorreto("Bem vindo " + this.funcionario.getNome());
+            Funcionario funcionario = null;
+            try {
+                funcionario = funcionarioDAO.buscarPorCPF(cpf);
+                
+                if (funcionario.getSenha().equals(senha)) {
+                    Mensagem.mCorreto("Bem vindo " + funcionario.getNome());
+                    System.out.println(funcionario.getCargo());
 
-                    if (this.funcionario.getCargo() != Funcionario.Cargo.COZINHEIRO) {
-                        MenuVisao menuVisao = new MenuVisao(null, true);
+                    if (funcionario.getCargo() != cozinha) {
+                        MenuVisao menuVisao = new MenuVisao(null, false);
+                        menuVisao.setModal(true);
                         menuVisao.setFuncionario(funcionario);
                         menuVisao.setVisible(true);
                         this.dispose();
                     } else {
-                        //                        CozinhaVisao cozinhaVisao = new CozinhaVisao(null, true);
-                        //                        cozinhaVisao.setFuncionario(this.funcionario);
-                        //                        cozinhaVisao.setVisible(true);
-                        //                        this.dispose();
+                        CozinhaVisao cozinhaVisao = new CozinhaVisao(null, false);
+                        cozinhaVisao.setVisible(true);
+                        this.dispose();
                     }
                 } else {
                     Mensagem.mErro("Senha incorreta");
                 }
-
-            } else {
+            } catch (NoResultException nre) {
                 Mensagem.mAviso("Usuário não cadastrado ou incorreto");
+            } catch (Exception ex) {
+                Mensagem.mAviso(ex.getMessage());
             }
         }
     }//GEN-LAST:event_btnLoginActionPerformed
@@ -272,7 +273,7 @@ public class LoginVisao extends javax.swing.JDialog {
             }
         });
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
     private javax.swing.JLabel labelSenha;
@@ -284,5 +285,4 @@ public class LoginVisao extends javax.swing.JDialog {
     private javax.swing.JFormattedTextField txtCPFFormatted;
     private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
-
 }

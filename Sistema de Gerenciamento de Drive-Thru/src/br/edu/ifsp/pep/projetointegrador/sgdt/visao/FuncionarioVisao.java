@@ -3,6 +3,7 @@ package br.edu.ifsp.pep.projetointegrador.sgdt.visao;
 import br.edu.ifsp.pep.projetointegrador.sgdt.controledao.FuncionarioDAO;
 import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Funcionario;
 import br.edu.ifsp.pep.projetointegrador.utilitarios.Mensagem;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
@@ -12,6 +13,7 @@ public class FuncionarioVisao extends javax.swing.JDialog {
     private List<Funcionario> listagemDeFuncionarios;
     private Funcionario funcionarioGlobal;
     private final FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+    private final SimpleDateFormat sdf = new SimpleDateFormat("dd / MM / yyyy");
 
     public FuncionarioVisao(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -33,7 +35,7 @@ public class FuncionarioVisao extends javax.swing.JDialog {
 
             for (Funcionario funcionario : this.listagemDeFuncionarios) {
                 modelo.addRow(new Object[]{funcionario.getNome(), funcionario.getCpf(),
-                    funcionario.getDataNascimento(),
+                    sdf.format(funcionario.getDataNascimento()),
                     funcionario.getCargo(), funcionario.getEstadoCivil()
                 });
             }
@@ -619,6 +621,7 @@ public class FuncionarioVisao extends javax.swing.JDialog {
     private void setEstadoCamposTexto(boolean estado) {
         this.txtNome.setEnabled(estado);
         this.txtCPFFormated.setEnabled(estado);
+        this.txtSenha.setEnabled(estado);
         this.dateDataNascimento.setEnabled(estado);
         this.cbCargo.setEnabled(estado);
         this.cbEstadoCivil.setEnabled(estado);
@@ -627,10 +630,12 @@ public class FuncionarioVisao extends javax.swing.JDialog {
 
     private void setVisibilidadeCamposTextos(boolean estado) {
         this.txtCPFFormated.setVisible(estado);
+        this.txtSenha.setVisible(estado);
         this.dateDataNascimento.setVisible(estado);
         this.cbCargo.setVisible(estado);
         this.cbEstadoCivil.setVisible(estado);
         this.labelCPF.setVisible(estado);
+        this.labelSenha.setVisible(estado);
         this.labelDataNascimento.setVisible(estado);
         this.labelCargo.setVisible(estado);
         this.labelEstadoCivil.setVisible(estado);
@@ -639,6 +644,7 @@ public class FuncionarioVisao extends javax.swing.JDialog {
     private void limparCampos() {
         this.txtNome.setText("");
         this.txtCPFFormated.setText("");
+        this.txtSenha.setText("senhaexemplo");
         this.dateDataNascimento.cleanup();
         this.cbCargo.setSelectedIndex(-1);
         this.cbEstadoCivil.setSelectedIndex(-1);
@@ -647,6 +653,7 @@ public class FuncionarioVisao extends javax.swing.JDialog {
     private void setCampos(Funcionario entity) {
         this.txtNome.setText(entity.getNome());
         this.txtCPFFormated.setText(entity.getCpf());
+        this.txtSenha.setText(entity.getSenha());
         this.dateDataNascimento.setDate(entity.getDataNascimento());
         this.cbCargo.setSelectedItem(entity.getCargo());
         this.cbEstadoCivil.setSelectedItem(entity.getEstadoCivil());

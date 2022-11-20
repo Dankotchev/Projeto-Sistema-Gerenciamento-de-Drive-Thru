@@ -4,6 +4,7 @@ import br.edu.ifsp.pep.projetointegrador.sgdt.controledao.RefeicaoDAO;
 import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Refeicao;
 import br.edu.ifsp.pep.projetointegrador.utilitarios.Mensagem;
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -12,6 +13,7 @@ public class RefeicaoVisao extends javax.swing.JDialog {
     private List<Refeicao> listagemDeRefeicoes;
     private Refeicao refeicaoGlobal;
     private final RefeicaoDAO refeicaoDAO = new RefeicaoDAO();
+    private final NumberFormat nf = NumberFormat.getCurrencyInstance();
 
     public RefeicaoVisao(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -31,8 +33,11 @@ public class RefeicaoVisao extends javax.swing.JDialog {
             modelo.setNumRows(0);
 
             for (Refeicao refeicao : this.listagemDeRefeicoes) {
-                modelo.addRow(new Object[]{refeicao.getNome(), refeicao.getPrecoUnitario(),
-                    refeicao.getDescricao(), refeicao.getListaIngredientes()
+                modelo.addRow(new Object[]{
+                    refeicao.getNome(),
+                    nf.format(refeicao.getPrecoUnitario()),
+                    refeicao.getDescricao(),
+                    refeicao.getListaIngredientes()
                 });
             }
         }

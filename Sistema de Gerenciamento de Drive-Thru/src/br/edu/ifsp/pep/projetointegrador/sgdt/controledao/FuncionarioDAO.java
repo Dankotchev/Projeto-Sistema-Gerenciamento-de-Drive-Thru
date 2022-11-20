@@ -12,7 +12,7 @@ public class FuncionarioDAO extends AbstractDAO<Funcionario> {
                 .getResultList();
     }
 
-    public Funcionario buscarPorCPF(String cpf) {
+    public Funcionario buscarPorCPF(String cpf) throws Exception {
         return getEntityManager()
                 .createNamedQuery("Funcionario.buscarPorCPF", Funcionario.class)
                 .setParameter("cpf", cpf)

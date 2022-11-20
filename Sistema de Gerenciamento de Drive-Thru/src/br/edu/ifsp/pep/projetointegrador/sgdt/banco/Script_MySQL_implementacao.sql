@@ -1,5 +1,5 @@
-DROP DATABASE sgdt;
-CREATE DATABASE sgdt;
+-- DROP DATABASE sgdt;
+-- CREATE DATABASE sgdt;
 
 
 CREATE TABLE
@@ -61,7 +61,7 @@ CREATE TABLE
     IF NOT EXISTS funcionario (
         id_funcionario INT AUTO_INCREMENT NOT NULL,
         nome_funcionario VARCHAR(60) NOT NULL,
-        cpf VARCHAR(11) NOT NULL,
+        cpf VARCHAR(14) NOT NULL,
         senha VARCHAR (16) NOT NULL,
         data_nascimento DATE NULL,
         cargo VARCHAR(11) NULL,
@@ -72,11 +72,11 @@ CREATE TABLE
     );
 INSERT INTO funcionario (nome_funcionario, cpf, senha, data_nascimento, cargo, estado_civil)
 	VALUES
-	('Danilo Quirino', '45632598210', 'danilo123', '1996-06-27', 'GERENTE', 'SOLTEIRO'),
-	('Tereza Domingues', '36598745230', 'tereza123', '1963-09-15', 'GERENTE', 'CASADO'),
-	('Lucas Quirino', '10236502500', 'lucas123' , '1965-03-30', 'COZINHEIRO', 'CASADO'),
-	('Dani Domingues Quirino', 'dani123' , '00014530266', '1999-08-24', 'ATENDENTE', 'SOLTEIRO'),
-	('Giovana Perreira Dassie', '65430222255', 'giovana123' , '1999-01-01', 'ATENDENTE', 'CASADO');
+	('Danilo Quirino', '456.325.982-10', 'danilo123', '1996-06-27', 'GERENTE', 'SOLTEIRO'),
+	('Tereza Domingues', '365.987.452-30', 'tereza123', '1963-09-15', 'GERENTE', 'CASADO'),
+	('Lucas Quirino', '102.365.025-00', 'lucas123' , '1965-03-30', 'COZINHEIRO', 'CASADO'),
+	('Dani Domingues Quirino', '000.145.302-66', 'dani123', '1999-08-24', 'ATENDENTE', 'SOLTEIRO'),
+	('Giovana Perreira Dassie', '654.302.222-55', 'giovana123' , '1999-01-01', 'ATENDENTE', 'CASADO');
 
 CREATE TABLE
     IF NOT EXISTS caixa (
@@ -103,12 +103,12 @@ INSERT INTO caixa (data, funcionario_id, estado, abertura, entradas, saidas)
 
 CREATE TABLE
     IF NOT EXISTS pedido (
-        id_pedido INT NOT NULL,
+        id_pedido INT AUTO_INCREMENT NOT NULL,
         veiculo_id INT NOT NULL,
         caixa_id INT NOT NULL,
         forma_pagamento VARCHAR(45) NOT NULL,
         data_pagamento DATE NOT NULL,
-         total_pedido DECIMAL(10, 2) NOT NULL
+        total_pedido DECIMAL(10, 2) NOT NULL,
         estado_pedido VARCHAR(45) NOT NULL DEFAULT 'ABERTO',
         status_pedido BOOLEAN NOT NULL DEFAULT TRUE,
         PRIMARY KEY (id_pedido),
@@ -124,7 +124,7 @@ INSERT INTO pedido (veiculo_id, caixa_id, forma_pagamento, data_pagamento, total
 	(3, 4, 'PIX', '2022-11-03', 65.66),
 	(1, 5, 'PIX', '2022-11-04', 70.15),
 	(2, 5, 'PIX', '2022-11-05', 100);
-UPDATE pedido SET estado_pedido = 'ENTREGUE' WHERE  id > 0;
+UPDATE pedido SET estado_pedido = 'ENTREGUE' WHERE  id_pedido > 0;
 
 CREATE TABLE
     IF NOT EXISTS pedido_produto (
@@ -137,7 +137,7 @@ CREATE TABLE
         FOREIGN KEY (produto_id) REFERENCES produto (id),
         FOREIGN KEY (pedido_id) REFERENCES pedido (id_pedido)
     );
-INSERT INTO pedido_produto (produto_id, pedidio_id, quantidade_pedido_produto , preco_unitario_produto)
+INSERT INTO pedido_produto (pedido_id, produto_id, quantidade_pedido_produto, preco_unitario_produto)
 	VALUES 
 	(2, 1, 2, 4.75),
 	(1, 1, 2, 1.25),
@@ -157,7 +157,7 @@ CREATE TABLE
         FOREIGN KEY (refeicao_id) REFERENCES refeicao (id),
         FOREIGN KEY (pedido_id) REFERENCES pedido (id_pedido)
     );
- INSERT INTO pedido_refeicao  (refeicao_id, pedido_id , quantidade_pedido_refeicao, preco_unitario_refeicao)
+ INSERT INTO pedido_refeicao (pedido_id, refeicao_id, quantidade_pedido_refeicao, preco_unitario_refeicao)
 	VALUES 
 	(3, 1, 2, 12.75),
 	(3, 2, 2, 11.25),

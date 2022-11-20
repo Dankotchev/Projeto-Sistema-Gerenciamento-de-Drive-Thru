@@ -91,7 +91,7 @@ CREATE TABLE
     IF NOT EXISTS funcionario (
         id_funcionario SERIAL,
         nome_funcionario VARCHAR(60) NOT NULL,
-        cpf VARCHAR(11) NOT NULL,
+        cpf VARCHAR(14) NOT NULL,
         senha VARCHAR(16) NOT NULL,
         data_nascimento DATE NULL,
         cargo VARCHAR(11) NULL,
@@ -102,12 +102,11 @@ CREATE TABLE
     );
 INSERT INTO funcionario (nome_funcionario, cpf, senha, data_nascimento, cargo, estado_civil)
 	VALUES
-	('Danilo Quirino', '45632598210', 'danilo123', '1996-06-27', 'GERENTE', 'SOLTEIRO'),
-	('Tereza Domingues', '36598745230', 'tereza123', '1963-09-15', 'GERENTE', 'CASADO'),
-	('Lucas Quirino', '10236502500', 'lucas123' , '1965-03-30', 'COZINHEIRO', 'CASADO'),
-	('Dani Domingues Quirino', '00014530266', 'dani123', '1999-08-24', 'ATENDENTE', 'SOLTEIRO'),
-	('Giovana Perreira Dassie', '65430222255', 'giovana123' , '1999-01-01', 'ATENDENTE', 'CASADO');
-
+	('Danilo Quirino', '456.325.982-10', 'danilo123', '1996-06-27', 'GERENTE', 'SOLTEIRO'),
+	('Tereza Domingues', '365.987.452-30', 'tereza123', '1963-09-15', 'GERENTE', 'CASADO'),
+	('Lucas Quirino', '102.365.025-00', 'lucas123' , '1965-03-30', 'COZINHEIRO', 'CASADO'),
+	('Dani Domingues Quirino', '000.145.302-66', 'dani123', '1999-08-24', 'ATENDENTE', 'SOLTEIRO'),
+	('Giovana Perreira Dassie', '654.302.222-55', 'giovana123' , '1999-01-01', 'ATENDENTE', 'CASADO');
 
 
 CREATE TABLE
@@ -140,7 +139,7 @@ CREATE TABLE
         caixa_id INT NOT NULL,
         forma_pagamento VARCHAR(45) NOT NULL,
         data_pagamento DATE NOT NULL,
-        total_pedido DECIMAL(10, 2) NOT NULL
+        total_pedido DECIMAL(10, 2) NOT NULL,
         estado_pedido VARCHAR(45) NOT NULL DEFAULT 'ABERTO',
         status_pedido BOOLEAN NOT NULL DEFAULT TRUE,
         PRIMARY KEY (id),
@@ -202,7 +201,7 @@ INSERT INTO pedido_refeicao  (pedido_id, refeicao_id, quantidade_pedido_refeicao
 CREATE TABLE
     IF NOT EXISTS fornecedor (
         id_fornecedor SERIAL,
-        cnpj VARCHAR(15) NOT NULL,
+        cnpj VARCHAR(18) NOT NULL,
         razao_social VARCHAR(60) NOT NULL,
         nome_fantasia VARCHAR(60) NULL,
         contato_interno VARCHAR(60) NOT NULL,
@@ -212,8 +211,8 @@ CREATE TABLE
     );
 INSERT INTO fornecedor (cnpj, razao_social, nome_fantasia, contato_interno)
 	VALUES
-	('125465893200015', 'Fornecedor A', 'Fantasia A', 'Carlos'),
-	('658424566800015', 'Fornecedor B', 'Fantasia B', 'Maruan');
+	('12.546.589/0001-12', 'Fornecedor A', 'Fantasia A', 'Carlos'),
+	('65.842.456/0001-36', 'Fornecedor B', 'Fantasia B', 'Maruan');
 
 CREATE TABLE
     IF NOT EXISTS contato (
