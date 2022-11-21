@@ -5,24 +5,22 @@ import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Caixa;
 import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Funcionario;
 import br.edu.ifsp.pep.projetointegrador.utilitarios.Mensagem;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MenuVisao extends javax.swing.JFrame {
 
     private Caixa caixa;
-    private CaixaDAO caixaDAO;
+    private CaixaDAO caixaDAO = new CaixaDAO();
     private Funcionario funcionario;
+    private boolean statusCaixa;
     private final Date dataAtual = new Date();
     private final SimpleDateFormat sdf = new SimpleDateFormat("dd / MM / yyyy");
 
     public MenuVisao() {
         initComponents();
-        this.funcionarioTeste();
+        this.statusCaixa = false;
         this.setLocationRelativeTo(null);
-        this.carregarPainelInformacoes();
-        this.setVisibilidadeBotoes();
     }
 
     @SuppressWarnings("unchecked")
@@ -308,21 +306,19 @@ public class MenuVisao extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAbrirCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirCaixaActionPerformed
+        BigDecimal zero = new BigDecimal(0);
+
         if (this.caixa == null) {
             try {
                 this.caixa = new Caixa(
-                        dataAtual,
-                        funcionario,
-                        Caixa.EstadoCaixa.ABERTO,
-                        new BigDecimal(0),
-                        new BigDecimal(0),
-                        new BigDecimal(0));
-                this.caixaDAO.alterar(this.caixa);
+                        this.dataAtual,
+                        this.funcionario);
+                this.caixaDAO.inserir(caixa);
                 this.carregarPainelInformacoes();
-                System.out.println(caixa);
+
             } catch (Exception ex) {
-                Mensagem.mErro(ex.getMessage());
-                System.out.println("erro");
+                ex.printStackTrace();
+                System.out.println(ex.getMessage());
             }
         } else {
             Mensagem.mAviso("Caixa já aberto");
@@ -330,9 +326,18 @@ public class MenuVisao extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAbrirCaixaActionPerformed
 
     private void btnRealizarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarPedidoActionPerformed
-        PedidoVisao pedidoVisao = new PedidoVisao();
-        pedidoVisao.setInformacoes(this.funcionario, this.caixa);
-        pedidoVisao.setVisible(true);
+        if (this.caixa == null) {
+            if (Mensagem.mSimNao("Caixa Fechado.\nDeseja Abrir para continuar?")) {
+                this.btnAbrirCaixaActionPerformed(evt);              
+                PedidoVisao pedidoVisao = new PedidoVisao();
+                pedidoVisao.setInformacoes(this.funcionario, this.caixa);
+                pedidoVisao.setVisible(true);
+            }
+        } else {
+            PedidoVisao pedidoVisao = new PedidoVisao();
+            pedidoVisao.setInformacoes(this.funcionario, this.caixa);
+            pedidoVisao.setVisible(true);
+        }
     }//GEN-LAST:event_btnRealizarPedidoActionPerformed
 
     private void btnFecharCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharCaixaActionPerformed
@@ -340,6 +345,8 @@ public class MenuVisao extends javax.swing.JFrame {
             this.caixa.setEstadoCaixa(Caixa.EstadoCaixa.FECHADO);
             this.caixaDAO.alterar(this.caixa);
             this.caixa = null;
+            this.carregarPainelInformacoes();
+            Mensagem.mInformacao("Caixa Fechado");
         } else {
             Mensagem.mAviso("Não há caixa aberto");
         }
@@ -428,6 +435,8 @@ public class MenuVisao extends javax.swing.JFrame {
 
     public void setFuncionario(Funcionario funcionario) {
         this.funcionario = funcionario;
+        this.carregarPainelInformacoes();
+        this.setVisibilidadeBotoes();
     }
 
     private void carregarPainelInformacoes() {
@@ -436,7 +445,7 @@ public class MenuVisao extends javax.swing.JFrame {
         } else {
             this.labelIdCaixa.setText(String.valueOf(this.caixa.getId()));
         }
-        this.labelNomeFuncionario.setText(funcionario.getNome());
+        this.labelNomeFuncionario.setText(this.funcionario.getNome());
         this.labelCargoFuncionario.setText(this.funcionario.getCargo().toString());
         this.labelDataAtual.setText(this.sdf.format(dataAtual));
     }
@@ -448,21 +457,5 @@ public class MenuVisao extends javax.swing.JFrame {
             this.btnGerenciarProdutos.setVisible(false);
             this.btnGerarRelatorio.setVisible(false);
         }
-    }
-
-    private void funcionarioTeste() {
-        Funcionario func;
-        func = new Funcionario(
-                "123.456.789-36",
-                "teste",
-                "teste",
-                dataAtual,
-                Funcionario.Cargo.GERENTE,
-                Funcionario.EstadoCivil.CASADO
-        );
-        this.funcionario = func;
-//        FuncionarioDAO funcdao = new FuncionarioDAO();
-//        funcdao.alterar(func);
-
     }
 }

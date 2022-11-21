@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,41 +19,41 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "caixa")
 public class Caixa implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_caixa")
     private Integer id;
-    
+
     @Temporal(TemporalType.DATE)
-    @Column(name = "data_caixa", nullable = false)
+    @Column(name = "data", nullable = false)
     private Date dataCaixa;
-    
-    @JoinColumn(name = "funcionario", nullable = false)
+
+    @JoinColumn(name = "funcionario_id", nullable = false)
     @ManyToOne()
     private Funcionario funcionario;
-    
-    @Column(name = "estado_caixa", nullable = false)
+
+    @Column(name = "estado", nullable = false)
+    @Enumerated(EnumType.STRING)
     private EstadoCaixa estadoCaixa;
-    
+
     @Column(name = "abertura", nullable = false, precision = 10, scale = 2)
     private BigDecimal abertura;
-    
+
     @Column(name = "entradas", precision = 10, scale = 2)
     private BigDecimal entradas;
-    
+
     @Column(name = "saidas", precision = 10, scale = 2)
     private BigDecimal saidas;
-    
+
     @Column(name = "status_caixa", nullable = false)
     private boolean status;
-    
-    public enum EstadoCaixa{
+
+    public enum EstadoCaixa {
         ABERTO, FECHADO
     }
-    
-    //  Código Gerado
 
+    //  Código Gerado
     public Integer getId() {
         return id;
     }
@@ -116,16 +118,21 @@ public class Caixa implements Serializable {
         this.status = status;
     }
 
-    public Caixa(Date dataCaixa, Funcionario funcionario, EstadoCaixa estadoCaixa, BigDecimal abertura, BigDecimal entradas, BigDecimal saidas) {
+    public Caixa(Date dataCaixa, Funcionario funcionario) {
         this.dataCaixa = dataCaixa;
         this.funcionario = funcionario;
-        this.estadoCaixa = estadoCaixa;
-        this.abertura = abertura;
-        this.entradas = entradas;
-        this.saidas = saidas;
+        this.estadoCaixa = Caixa.EstadoCaixa.ABERTO;
+        this.abertura = new BigDecimal(0);
+        this.entradas = new BigDecimal(0);
+        this.saidas = new BigDecimal(0);
         this.status = true;
     }
 
     public Caixa() {
+    }
+
+    @Override
+    public String toString() {
+        return "Caixa{" + "id=" + id + ", dataCaixa=" + dataCaixa + ", funcionario=" + funcionario + ", estadoCaixa=" + estadoCaixa + ", abertura=" + abertura + ", entradas=" + entradas + ", saidas=" + saidas + ", status=" + status + '}';
     }
 }

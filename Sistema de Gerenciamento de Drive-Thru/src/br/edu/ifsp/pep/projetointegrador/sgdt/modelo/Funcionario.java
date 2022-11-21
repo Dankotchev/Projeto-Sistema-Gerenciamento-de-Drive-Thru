@@ -150,13 +150,13 @@ public class Funcionario implements Serializable {
         this.status = status;
     }
 
-    public List<Caixa> getListaResponsabilidadeCaixas() {
-        return listaResponsabilidadeCaixas;
-    }
-
-    public void setListaResponsabilidadeCaixas(List<Caixa> listaResponsabilidadeCaixas) {
-        this.listaResponsabilidadeCaixas = listaResponsabilidadeCaixas;
-    }
+//    public List<Caixa> getListaResponsabilidadeCaixas() {
+//        return listaResponsabilidadeCaixas;
+//    }
+//
+//    public void setListaResponsabilidadeCaixas(List<Caixa> listaResponsabilidadeCaixas) {
+//        this.listaResponsabilidadeCaixas = listaResponsabilidadeCaixas;
+//    }
 
     public Funcionario(String cpf, String nome, String senha, Date dataNascimento, Cargo cargo, EstadoCivil estadoCivil) {
         this.cpf = cpf;

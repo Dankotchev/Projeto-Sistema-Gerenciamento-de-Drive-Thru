@@ -3,6 +3,8 @@ package br.edu.ifsp.pep.projetointegrador.sgdt.visao;
 import br.edu.ifsp.pep.projetointegrador.sgdt.controledao.FuncionarioDAO;
 import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Funcionario;
 import br.edu.ifsp.pep.projetointegrador.utilitarios.Mensagem;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import javax.persistence.NoResultException;
 
 public class LoginVisao extends javax.swing.JFrame {
@@ -54,6 +56,11 @@ public class LoginVisao extends javax.swing.JFrame {
         txtSenha.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtSenhaFocusGained(evt);
+            }
+        });
+        txtSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSenhaKeyPressed(evt);
             }
         });
 
@@ -215,9 +222,6 @@ public class LoginVisao extends javax.swing.JFrame {
         String senha = new String(this.txtSenha.getPassword());
         Funcionario.Cargo cozinha = Funcionario.Cargo.COZINHEIRO;
 
-        System.out.println(cpf);
-        System.out.println(senha);
-
         if (cpf.isEmpty()) {
             Mensagem.mAtencao("Usuário não informado");
             this.txtCPFFormatted.requestFocus();
@@ -231,23 +235,20 @@ public class LoginVisao extends javax.swing.JFrame {
         }
 
         if (tudoOK) {
-            Funcionario funcionario = null;
+            Funcionario funcionario;
             try {
                 funcionario = funcionarioDAO.buscarPorCPF(cpf);
 
                 if (funcionario.getSenha().equals(senha)) {
                     Mensagem.mCorreto("Bem vindo " + funcionario.getNome());
-                    System.out.println(funcionario.getCargo());
 
                     if (funcionario.getCargo() != cozinha) {
                         MenuVisao menuVisao = new MenuVisao();
                         menuVisao.setFuncionario(funcionario);
                         menuVisao.setVisible(true);
-                        this.dispose();
                     } else {
                         CozinhaVisao cozinhaVisao = new CozinhaVisao();
                         cozinhaVisao.setVisible(true);
-                        this.dispose();
                     }
                 } else {
                     Mensagem.mErro("Senha incorreta");
@@ -256,9 +257,17 @@ public class LoginVisao extends javax.swing.JFrame {
                 Mensagem.mAviso("Usuário não cadastrado ou incorreto");
             } catch (Exception ex) {
                 Mensagem.mAviso(ex.getMessage());
+                ex.printStackTrace();
             }
         }
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void txtSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSenhaKeyPressed
+        if (evt.getKeyCode()== KeyEvent.VK_ENTER) {
+            java.awt.event.ActionEvent aevt = null;
+            this.btnLoginActionPerformed(aevt);
+        }
+    }//GEN-LAST:event_txtSenhaKeyPressed
 
     /**
      * @param args the command line arguments

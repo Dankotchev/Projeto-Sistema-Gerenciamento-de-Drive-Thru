@@ -39,9 +39,6 @@ public class PedidoVisao extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.carregarComboBox();
         this.carregarTabelas();
-        this.carregarPainelInformacoes();
-        this.funcionario = null;
-        this.caixa = null;
     }
 
     @SuppressWarnings("unchecked")
@@ -562,6 +559,7 @@ public class PedidoVisao extends javax.swing.JFrame {
     public void setInformacoes(Funcionario funcionario, Caixa caixa) {
         this.funcionario = funcionario;
         this.caixa = caixa;
+        this.carregarPainelInformacoes();
     }
 
     private void atualizarTabelaResumo() {
@@ -641,7 +639,7 @@ public class PedidoVisao extends javax.swing.JFrame {
     private void carregarPainelInformacoes() {
         this.labelNomeFuncionario.setText(this.funcionario.getNome());
         this.labelVisualizarTotalPedido.setText("R$ 0,00");
-//        this.labelIdCaixa.setText(String.valueOf(this.caixa.getId()));
+        this.labelIdCaixa.setText(String.valueOf(this.caixa.getId()));
         this.labelDataAtual.setText(
                 this.sdf.format(dataAtual));
     }
