@@ -8,13 +8,12 @@ import br.edu.ifsp.pep.projetointegrador.utilitarios.Mensagem;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
-public class CozinhaVisao extends javax.swing.JDialog {
+public class CozinhaVisao extends javax.swing.JFrame {
 
     private List<Pedido> listagemDePedidos;
     private final PedidoDAO pedidoDAO = new PedidoDAO();
 
-    public CozinhaVisao(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public CozinhaVisao() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.atualizarListaPedidos();
@@ -39,9 +38,10 @@ public class CozinhaVisao extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cozinha");
         setMinimumSize(new java.awt.Dimension(1280, 720));
+        setName("cozinha"); // NOI18N
         setPreferredSize(new java.awt.Dimension(1280, 720));
 
-        painelFundo.setBackground(new java.awt.Color(242, 183, 5));
+        painelFundo.setBackground(new java.awt.Color(255, 202, 138));
 
         painelTitulo.setBackground(new java.awt.Color(242, 5, 5));
 
@@ -68,6 +68,7 @@ public class CozinhaVisao extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        tabelaPedido.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         tabelaPedido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -86,10 +87,6 @@ public class CozinhaVisao extends javax.swing.JDialog {
         });
         tabelaPedido.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         jScrollPane1.setViewportView(tabelaPedido);
-        if (tabelaPedido.getColumnModel().getColumnCount() > 0) {
-            tabelaPedido.getColumnModel().getColumn(0).setResizable(false);
-            tabelaPedido.getColumnModel().getColumn(1).setResizable(false);
-        }
 
         btnPrepararPedido.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnPrepararPedido.setForeground(new java.awt.Color(217, 28, 38));
@@ -109,6 +106,7 @@ public class CozinhaVisao extends javax.swing.JDialog {
             }
         });
 
+        tabelaDetalhamento.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         tabelaDetalhamento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -127,11 +125,6 @@ public class CozinhaVisao extends javax.swing.JDialog {
         });
         tabelaDetalhamento.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         jScrollPane2.setViewportView(tabelaDetalhamento);
-        if (tabelaDetalhamento.getColumnModel().getColumnCount() > 0) {
-            tabelaDetalhamento.getColumnModel().getColumn(0).setResizable(false);
-            tabelaDetalhamento.getColumnModel().getColumn(1).setResizable(false);
-            tabelaDetalhamento.getColumnModel().getColumn(2).setResizable(false);
-        }
 
         labelTabelaPedidos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         labelTabelaPedidos.setText("Pedidos em Fila");
@@ -148,20 +141,19 @@ public class CozinhaVisao extends javax.swing.JDialog {
                 .addGap(15, 15, 15)
                 .addGroup(painelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelTabelaPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
-                .addGroup(painelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(painelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnPrepararPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnFinalizarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
                 .addGroup(painelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelFundoLayout.createSequentialGroup()
-                        .addGap(62, 62, 62)
+                        .addGap(95, 95, 95)
                         .addComponent(labelTabelaDetalhamento, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(28, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelFundoLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(12, Short.MAX_VALUE))
+                    .addGroup(painelFundoLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         painelFundoLayout.setVerticalGroup(
@@ -177,14 +169,14 @@ public class CozinhaVisao extends javax.swing.JDialog {
                         .addComponent(labelTabelaDetalhamento, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(painelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(painelFundoLayout.createSequentialGroup()
-                            .addComponent(btnPrepararPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(204, 204, 204)
-                            .addComponent(btnFinalizarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(92, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
+                    .addGroup(painelFundoLayout.createSequentialGroup()
+                        .addComponent(btnPrepararPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnFinalizarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(85, 85, 85))
+                    .addComponent(jScrollPane2))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -275,18 +267,10 @@ public class CozinhaVisao extends javax.swing.JDialog {
         //</editor-fold>
         //</editor-fold>
 
-
-        /* Create and display the dialog */
+        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                CozinhaVisao dialog = new CozinhaVisao(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+                new CozinhaVisao().setVisible(true);
             }
         });
     }
