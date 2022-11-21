@@ -82,7 +82,8 @@ public class PedidoVisao extends javax.swing.JFrame {
         txtPesquisarRefeicao = new javax.swing.JTextField();
         btnAdicionarItem = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Realizar Pedido");
+        setName("realizarpedido"); // NOI18N
 
         painelFundo.setBackground(new java.awt.Color(255, 202, 138));
 
@@ -638,7 +639,7 @@ public class PedidoVisao extends javax.swing.JFrame {
     }
 
     private void carregarPainelInformacoes() {
-//        this.labelNomeFuncionario.setText(this.funcionario.getNome());
+        this.labelNomeFuncionario.setText(this.funcionario.getNome());
         this.labelVisualizarTotalPedido.setText("R$ 0,00");
 //        this.labelIdCaixa.setText(String.valueOf(this.caixa.getId()));
         this.labelDataAtual.setText(

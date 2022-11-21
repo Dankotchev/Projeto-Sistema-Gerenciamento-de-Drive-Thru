@@ -5,6 +5,7 @@ import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Caixa;
 import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Funcionario;
 import br.edu.ifsp.pep.projetointegrador.utilitarios.Mensagem;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -18,6 +19,7 @@ public class MenuVisao extends javax.swing.JFrame {
 
     public MenuVisao() {
         initComponents();
+        this.funcionarioTeste();
         this.setLocationRelativeTo(null);
         this.carregarPainelInformacoes();
         this.setVisibilidadeBotoes();
@@ -273,7 +275,7 @@ public class MenuVisao extends javax.swing.JFrame {
                     .addComponent(jSeparator1)
                     .addGroup(painelFundoLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(painelBotoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(painelBotoes, javax.swing.GroupLayout.DEFAULT_SIZE, 1268, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         painelFundoLayout.setVerticalGroup(
@@ -299,9 +301,7 @@ public class MenuVisao extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(painelFundo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(painelFundo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -310,11 +310,19 @@ public class MenuVisao extends javax.swing.JFrame {
     private void btnAbrirCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirCaixaActionPerformed
         if (this.caixa == null) {
             try {
-                this.caixa = new Caixa(dataAtual, funcionario, Caixa.EstadoCaixa.ABERTO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
-                this.caixaDAO.inserir(this.caixa);
+                this.caixa = new Caixa(
+                        dataAtual,
+                        funcionario,
+                        Caixa.EstadoCaixa.ABERTO,
+                        new BigDecimal(0),
+                        new BigDecimal(0),
+                        new BigDecimal(0));
+                this.caixaDAO.alterar(this.caixa);
                 this.carregarPainelInformacoes();
+                System.out.println(caixa);
             } catch (Exception ex) {
                 Mensagem.mErro(ex.getMessage());
+                System.out.println("erro");
             }
         } else {
             Mensagem.mAviso("Caixa já aberto");
@@ -440,5 +448,21 @@ public class MenuVisao extends javax.swing.JFrame {
             this.btnGerenciarProdutos.setVisible(false);
             this.btnGerarRelatorio.setVisible(false);
         }
+    }
+
+    private void funcionarioTeste() {
+        Funcionario func;
+        func = new Funcionario(
+                "123.456.789-36",
+                "teste",
+                "teste",
+                dataAtual,
+                Funcionario.Cargo.GERENTE,
+                Funcionario.EstadoCivil.CASADO
+        );
+        this.funcionario = func;
+//        FuncionarioDAO funcdao = new FuncionarioDAO();
+//        funcdao.alterar(func);
+
     }
 }

@@ -3,6 +3,7 @@ package br.edu.ifsp.pep.projetointegrador.sgdt.modelo;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -60,7 +61,7 @@ public class Funcionario implements Serializable {
     @Column(name = "status_funcionario", nullable = false)
     private boolean status;
 
-    @OneToMany(mappedBy = "funcionario")
+    @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL)
     private List<Caixa> listaResponsabilidadeCaixas;
 
     public enum Cargo {
