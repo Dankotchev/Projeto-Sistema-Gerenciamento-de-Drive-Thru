@@ -10,8 +10,10 @@ import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Pedido;
 import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Produto;
 import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Refeicao;
 import br.edu.ifsp.pep.projetointegrador.utilitarios.Mensagem;
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -21,10 +23,8 @@ public class PedidoVisao extends javax.swing.JFrame {
 
     private List<Produto> listagemDeProdutos;
     private List<Refeicao> listagemDeRefeicoes;
-    private List<ItemPedido> listagemItensPedido;
+    private List<ItemPedido> listagemItensPedido = new ArrayList<>();
     private Pedido pedidoGlobal;
-    private Produto produtoGlobal;
-    private Refeicao refeicaoGlobal;
     private Funcionario funcionario;
     private Caixa caixa;
     private final ProdutoDAO produtoDAO = new ProdutoDAO();
@@ -146,11 +146,11 @@ public class PedidoVisao extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Item", "Quantidade", "Valor Unitário"
+                "Item", "Quantidade", "Valor Unit.", "SubTotal"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -159,6 +159,11 @@ public class PedidoVisao extends javax.swing.JFrame {
         });
         tabelaResumo.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         jScrollPane6.setViewportView(tabelaResumo);
+        if (tabelaResumo.getColumnModel().getColumnCount() > 0) {
+            tabelaResumo.getColumnModel().getColumn(0).setResizable(false);
+            tabelaResumo.getColumnModel().getColumn(1).setResizable(false);
+            tabelaResumo.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         labelFormaDePagamento.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         labelFormaDePagamento.setText("Forma de Pagamento");
@@ -257,7 +262,7 @@ public class PedidoVisao extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tabelaProduto.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tabelaProduto.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane7.setViewportView(tabelaProduto);
 
         txtPesquisarProduto.setText("PRODUTO");
@@ -284,7 +289,7 @@ public class PedidoVisao extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tabelaRefeicao.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tabelaRefeicao.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane8.setViewportView(tabelaRefeicao);
 
         txtPesquisarRefeicao.setText("REFEIÇÃO");
@@ -417,7 +422,25 @@ public class PedidoVisao extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFinalizarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarPedidoActionPerformed
-        // Todo
+        boolean tudoOK = true;
+        
+        String placa = this.txtPlacaFormated.getText().toUpperCase();
+        Pedido.FormaPagamento formaPagamento = (Pedido.FormaPagamento) this.cbFormaPagamento.getSelectedItem();
+        BigDecimal totalPedido = new BigDecimal(String.valueOf(this.labelVisualizarTotalPedido.getText()));
+        
+        
+  
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         String mensagem = "Pedido realizado";
         this.aposGravar(mensagem, evt);
     }//GEN-LAST:event_btnFinalizarPedidoActionPerformed
@@ -430,6 +453,7 @@ public class PedidoVisao extends javax.swing.JFrame {
             }
         }
         this.tabelaResumo.clearSelection();
+        this.atualizarTabelaResumo();
     }//GEN-LAST:event_btnExcluirItemActionPerformed
 
     private void btnPesquisarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarItemActionPerformed
@@ -455,30 +479,42 @@ public class PedidoVisao extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPesquisarRefeicaoFocusGained
 
     private void btnAdicionarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarItemActionPerformed
-        boolean tudoOK = false;
-        if (this.tabelaProduto.getSelectedRow() >= 0) {
-            this.produtoGlobal = this.listagemDeProdutos
-                    .get(this.tabelaProduto.getSelectedRow());
-            this.produtoGlobal.setQuantidade((Integer) this.spinnerAdicionar.getValue());
-            this.listagemItensPedido.add(this.produtoGlobal);
-            this.produtoGlobal = null;
-            tudoOK = true;
+        ItemPedido itemPedido = new ItemPedido();
+        boolean tudoOK = true;
+        int selecionadoProduto = this.tabelaProduto.getSelectedRow();
+        int selecionadoRefeicao = this.tabelaRefeicao.getSelectedRow();
+        int quantidade = (int) this.spinnerAdicionar.getValue();
+
+        // Verifica se selecionou uma quantidade
+        if (quantidade <= 0) {
+            Mensagem.mErro("Informe um valor Positivo para Quantidade");
+            this.spinnerAdicionar.requestFocus();
+            tudoOK = false;
         }
 
-        if (this.tabelaRefeicao.getSelectedRow() >= 0) {
-            this.refeicaoGlobal = this.listagemDeRefeicoes
+        // Não selecionou nem um produto nem uma refeição
+        if (selecionadoProduto < 0 && selecionadoRefeicao < 0) {
+            Mensagem.mErro("Selecione UM Produto ou Refeição para adicionar");
+            tudoOK = false;
+        }
+
+        // Se selecionado um Produto
+        if (selecionadoProduto >= 0 && selecionadoRefeicao < 0) {
+            itemPedido = this.listagemDeProdutos
+                    .get(this.tabelaProduto.getSelectedRow());
+            itemPedido.setQuantidade(quantidade);
+        }
+
+        // Se selecionado uma Refeição
+        if (selecionadoRefeicao >= 0 && selecionadoProduto < 0) {
+            itemPedido = this.listagemDeRefeicoes
                     .get(this.tabelaRefeicao.getSelectedRow());
-            this.refeicaoGlobal.setQuantidade((Integer) this.spinnerAdicionar.getValue());
-            this.listagemItensPedido.add(this.refeicaoGlobal);
-            this.refeicaoGlobal = null;
-            tudoOK = true;
+            itemPedido.setQuantidade(quantidade);
         }
 
         if (tudoOK) {
+            this.listagemItensPedido.add(itemPedido);
             this.atualizarTabelaResumo();
-        } else {
-            Mensagem.mAviso("Selecione um Produto ou Refeição para adicionar");
-
         }
         this.tabelaProduto.clearSelection();
         this.tabelaRefeicao.clearSelection();
@@ -562,21 +598,39 @@ public class PedidoVisao extends javax.swing.JFrame {
         this.carregarPainelInformacoes();
     }
 
+    private void carregarPainelInformacoes() {
+        this.labelNomeFuncionario.setText(this.funcionario.getNome());
+        this.labelVisualizarTotalPedido.setText("R$ 0,00");
+        this.labelIdCaixa.setText(String.valueOf(this.caixa.getId()));
+        this.labelDataAtual.setText(
+                this.sdf.format(dataAtual));
+    }
+
     private void atualizarTabelaResumo() {
-        int somatorio = 0;
+        BigDecimal somatorio = BigDecimal.ZERO;
+        BigDecimal subtotal;
+
         if (this.listagemItensPedido.isEmpty()) {
             Mensagem.mAviso("------");
         } else {
             DefaultTableModel modelo = (DefaultTableModel) this.tabelaResumo.getModel();
             modelo.setNumRows(0);
+
             for (ItemPedido itemPedido : this.listagemItensPedido) {
+                subtotal = itemPedido.getPrecoUnitario()
+                        .multiply(BigDecimal.valueOf(itemPedido.getQuantidade()));
+
                 modelo.addRow(new Object[]{
                     itemPedido.getNome(),
-                    itemPedido.getDescricao(),
-                    nf.format(itemPedido.getPrecoUnitario())
+                    itemPedido.getQuantidade(),
+                    nf.format(itemPedido.getPrecoUnitario()),
+                    nf.format(subtotal)
+
                 });
-//                somatorio += Integer
+                somatorio = somatorio.add(subtotal);
             }
+            this.labelVisualizarTotalPedido.setText(
+                    nf.format(somatorio));
         }
     }
 
@@ -614,19 +668,12 @@ public class PedidoVisao extends javax.swing.JFrame {
         }
     }
 
-    private void aposGravar(String mensagem, java.awt.event.ActionEvent evt) {
-        Mensagem.mCorreto(mensagem);
-//        this.btnCancelarActionPerformed(evt);
-        this.carregarTabelas();
-    }
-
     private void carregarComboBox() {
         DefaultComboBoxModel comboBox = (DefaultComboBoxModel) this.cbFormaPagamento.getModel();
         Pedido.FormaPagamento[] formasDePagamento = Pedido.FormaPagamento.values();
         for (Pedido.FormaPagamento forma : formasDePagamento) {
             comboBox.addElement(forma);
         }
-
     }
 
     private void carregarTabelas() {
@@ -636,12 +683,9 @@ public class PedidoVisao extends javax.swing.JFrame {
         this.atualizarTabelaRefeicao();
     }
 
-    private void carregarPainelInformacoes() {
-        this.labelNomeFuncionario.setText(this.funcionario.getNome());
-        this.labelVisualizarTotalPedido.setText("R$ 0,00");
-        this.labelIdCaixa.setText(String.valueOf(this.caixa.getId()));
-        this.labelDataAtual.setText(
-                this.sdf.format(dataAtual));
+    private void aposGravar(String mensagem, java.awt.event.ActionEvent evt) {
+        Mensagem.mCorreto(mensagem);
+//        this.btnCancelarActionPerformed(evt);
+        this.carregarTabelas();
     }
-
 }
