@@ -7,6 +7,7 @@ import br.edu.ifsp.pep.projetointegrador.utilitarios.Mensagem;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JFrame;
 
 public class MenuVisao extends javax.swing.JFrame {
 
@@ -52,7 +53,9 @@ public class MenuVisao extends javax.swing.JFrame {
         btnGerarRelatorio = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menu");
         setMinimumSize(new java.awt.Dimension(1280, 720));
+        setName("menu"); // NOI18N
         setPreferredSize(new java.awt.Dimension(1280, 720));
 
         painelFundo.setBackground(new java.awt.Color(242, 183, 5));
@@ -328,15 +331,11 @@ public class MenuVisao extends javax.swing.JFrame {
     private void btnRealizarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarPedidoActionPerformed
         if (this.caixa == null) {
             if (Mensagem.mSimNao("Caixa Fechado.\nDeseja Abrir para continuar?")) {
-                this.btnAbrirCaixaActionPerformed(evt);              
-                PedidoVisao pedidoVisao = new PedidoVisao();
-                pedidoVisao.setInformacoes(this.funcionario, this.caixa);
-                pedidoVisao.setVisible(true);
+                this.btnAbrirCaixaActionPerformed(evt);
+                this.chamarRealizarPedido();
             }
         } else {
-            PedidoVisao pedidoVisao = new PedidoVisao();
-            pedidoVisao.setInformacoes(this.funcionario, this.caixa);
-            pedidoVisao.setVisible(true);
+            this.chamarRealizarPedido();
         }
     }//GEN-LAST:event_btnRealizarPedidoActionPerformed
 
@@ -354,21 +353,25 @@ public class MenuVisao extends javax.swing.JFrame {
 
     private void btnGerenciarRefeicoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerenciarRefeicoesActionPerformed
         RefeicaoVisao refeicaoVisao = new RefeicaoVisao();
+        refeicaoVisao.setExtendedState(JFrame.MAXIMIZED_BOTH);
         refeicaoVisao.setVisible(true);
     }//GEN-LAST:event_btnGerenciarRefeicoesActionPerformed
 
     private void btnGerenciarFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerenciarFuncionariosActionPerformed
         FuncionarioVisao funcionarioVisao = new FuncionarioVisao();
+        funcionarioVisao.setExtendedState(JFrame.MAXIMIZED_BOTH);
         funcionarioVisao.setVisible(true);
     }//GEN-LAST:event_btnGerenciarFuncionariosActionPerformed
 
     private void btnGerenciarProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerenciarProdutosActionPerformed
         ProdutoVisao produtoVisao = new ProdutoVisao();
+        produtoVisao.setExtendedState(JFrame.MAXIMIZED_BOTH);
         produtoVisao.setVisible(true);
     }//GEN-LAST:event_btnGerenciarProdutosActionPerformed
 
     private void btnGerarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarRelatorioActionPerformed
         RelatorioVisao relatorioVisao = new RelatorioVisao();
+        relatorioVisao.setExtendedState(JFrame.MAXIMIZED_BOTH);
         relatorioVisao.setVisible(true);
     }//GEN-LAST:event_btnGerarRelatorioActionPerformed
 
@@ -437,6 +440,13 @@ public class MenuVisao extends javax.swing.JFrame {
         this.funcionario = funcionario;
         this.carregarPainelInformacoes();
         this.setVisibilidadeBotoes();
+    }
+
+    private void chamarRealizarPedido() {
+        PedidoVisao pedidoVisao = new PedidoVisao();
+        pedidoVisao.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        pedidoVisao.setInformacoes(this.funcionario, this.caixa);
+        pedidoVisao.setVisible(true);
     }
 
     private void carregarPainelInformacoes() {

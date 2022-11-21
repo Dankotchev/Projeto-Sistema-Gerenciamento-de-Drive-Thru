@@ -3,9 +3,9 @@ package br.edu.ifsp.pep.projetointegrador.sgdt.visao;
 import br.edu.ifsp.pep.projetointegrador.sgdt.controledao.FuncionarioDAO;
 import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Funcionario;
 import br.edu.ifsp.pep.projetointegrador.utilitarios.Mensagem;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.persistence.NoResultException;
+import javax.swing.JFrame;
 
 public class LoginVisao extends javax.swing.JFrame {
 
@@ -14,6 +14,7 @@ public class LoginVisao extends javax.swing.JFrame {
     public LoginVisao() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     @SuppressWarnings("unchecked")
@@ -238,22 +239,25 @@ public class LoginVisao extends javax.swing.JFrame {
             Funcionario funcionario;
             try {
                 funcionario = funcionarioDAO.buscarPorCPF(cpf);
-
+                
                 if (funcionario.getSenha().equals(senha)) {
                     Mensagem.mCorreto("Bem vindo " + funcionario.getNome());
 
                     if (funcionario.getCargo() != cozinha) {
                         MenuVisao menuVisao = new MenuVisao();
+                        menuVisao.setExtendedState(JFrame.MAXIMIZED_BOTH);
                         menuVisao.setFuncionario(funcionario);
                         menuVisao.setVisible(true);
                     } else {
                         CozinhaVisao cozinhaVisao = new CozinhaVisao();
+                        cozinhaVisao.setExtendedState(JFrame.MAXIMIZED_BOTH);
                         cozinhaVisao.setVisible(true);
                     }
                 } else {
                     Mensagem.mErro("Senha incorreta");
                 }
             } catch (NoResultException nre) {
+                System.out.println(nre.getMessage());
                 Mensagem.mAviso("Usuário não cadastrado ou incorreto");
             } catch (Exception ex) {
                 Mensagem.mAviso(ex.getMessage());
