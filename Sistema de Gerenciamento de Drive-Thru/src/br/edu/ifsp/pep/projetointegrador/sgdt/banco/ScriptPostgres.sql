@@ -102,11 +102,11 @@ CREATE TABLE
     );
 INSERT INTO funcionario (nome_funcionario, cpf, senha, data_nascimento, cargo, estado_civil)
 	VALUES
-	('Danilo Quirino', '456.325.982-10', 'danilo123', '1996-06-27', 'GERENTE', 'SOLTEIRO'),
-	('Tereza Domingues', '365.987.452-30', 'tereza123', '1963-09-15', 'GERENTE', 'CASADO'),
-	('Lucas Quirino', '102.365.025-00', 'lucas123' , '1965-03-30', 'COZINHEIRO', 'CASADO'),
-	('Dani Domingues Quirino', '000.145.302-66', 'dani123', '1999-08-24', 'ATENDENTE', 'SOLTEIRO'),
-	('Giovana Perreira Dassie', '654.302.222-55', 'giovana123' , '1999-01-01', 'ATENDENTE', 'CASADO');
+	('Danilo Quirino', '111.111.111-11', 'danilo123', '1996-06-27', 'GERENTE', 'SOLTEIRO'),
+	('Tereza Domingues', '222.222.222-22', 'tereza123', '1963-09-15', 'GERENTE', 'CASADO'),
+    ('Giovana Perreira Dassie', '333.333.333-33', 'giovana123' , '1999-01-01', 'ATENDENTE', 'CASADO'),
+	('Lucas Quirino', '444.444.444-44', 'lucas123' , '1965-03-30', 'COZINHEIRO', 'CASADO'),
+	('Dani Domingues Quirino', '555.555.555-55', 'dani123', '1999-08-24', 'ATENDENTE', 'SOLTEIRO');
 
 
 CREATE TABLE
