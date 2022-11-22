@@ -7,6 +7,8 @@ import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Caixa;
 import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Funcionario;
 import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.ItemPedido;
 import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Pedido;
+import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.PedidoProduto;
+import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.PedidoRefeicao;
 import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Produto;
 import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Refeicao;
 import br.edu.ifsp.pep.projetointegrador.utilitarios.Mensagem;
@@ -27,6 +29,7 @@ public class PedidoVisao extends javax.swing.JFrame {
     private Pedido pedidoGlobal;
     private Funcionario funcionario;
     private Caixa caixa;
+    private BigDecimal valorTotalPedido;
     private final ProdutoDAO produtoDAO = new ProdutoDAO();
     private final RefeicaoDAO refeicaoDAO = new RefeicaoDAO();
     private final PedidoDAO pedidoDAO = new PedidoDAO();
@@ -423,26 +426,87 @@ public class PedidoVisao extends javax.swing.JFrame {
 
     private void btnFinalizarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarPedidoActionPerformed
         boolean tudoOK = true;
-        
+        Pedido pedido = new Pedido();
+
         String placa = this.txtPlacaFormated.getText().toUpperCase();
         Pedido.FormaPagamento formaPagamento = (Pedido.FormaPagamento) this.cbFormaPagamento.getSelectedItem();
-        BigDecimal totalPedido = new BigDecimal(String.valueOf(this.labelVisualizarTotalPedido.getText()));
-        
-        
-  
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        String mensagem = "Pedido realizado";
-        this.aposGravar(mensagem, evt);
+
+        if (this.valorTotalPedido.equals(BigDecimal.ZERO)) {
+            Mensagem.mAviso("Valor total do pedido Zerado");
+            tudoOK = false;
+        }
+
+        if (placa.equals("   -    ")) {
+            Mensagem.mAtencao("Placa não informado");
+            this.txtPlacaFormated.requestFocus();
+            tudoOK = false;
+        }
+
+        if (formaPagamento == null) {
+            Mensagem.mAtencao("Informe uma Forma de Pagamento");
+            this.cbFormaPagamento.requestFocus();
+            tudoOK = false;
+        }
+
+        if (this.listagemDeProdutos.isEmpty() && this.listagemDeRefeicoes.isEmpty()) {
+            Mensagem.mAtencao("Selecione itens para o pedido");
+            tudoOK = false;
+        }
+
+        if (tudoOK) {
+            PedidoProduto pedidoProduto = new PedidoProduto();
+            PedidoRefeicao pedidoRefeicao = new PedidoRefeicao();
+            List<PedidoProduto> listaPedidoProdutos = new ArrayList<>();
+            List<PedidoRefeicao> listaPedidoRefeicao = new ArrayList<>();
+
+            // Coloca dados Básicos do Pedido
+            pedido.setStatus(true);
+            pedido.setVeiculo(placa);
+            pedido.setCaixa(caixa);
+            pedido.setTotalPedido(this.valorTotalPedido);
+            pedido.setFormaPagamento(formaPagamento);
+            pedido.setEstadoPedido(Pedido.EstadoPedido.ABERTO);
+
+            try {
+                // Coloca o pedido no banco de Dados
+                pedidoDAO.inserir(pedido);
+                // Retorna o último pedido
+                pedido = pedidoDAO.buscarUltimoPedido();
+            } catch (Exception ex) {
+                Mensagem.mErro(ex.getMessage());
+            }
+
+            // Colocado os Produtos e Refeições em suas próprias listas
+            for (ItemPedido itemPedido : this.listagemItensPedido) {
+
+                // Caso seja um Produto
+                if (itemPedido instanceof Produto) {
+                    pedidoProduto = new PedidoProduto(
+                            pedido, (Produto) itemPedido, itemPedido.getQuantidade(), itemPedido.getPrecoUnitario());
+                    pedidoProduto.setStatus(true);
+                    listaPedidoProdutos.add(pedidoProduto);
+                } // Caso seja uma Refeição
+                else {
+                    pedidoRefeicao = new PedidoRefeicao(
+                            pedido, (Refeicao) itemPedido,
+                            itemPedido.getQuantidade(), itemPedido.getPrecoUnitario());
+                    pedidoRefeicao.setStatus(true);
+                    listaPedidoRefeicao.add(pedidoRefeicao);
+                }
+            }
+
+            // Atualiza algumas informações do pedido
+            pedido.setListaPedidoProdutos(listaPedidoProdutos);
+            pedido.setListaPedidoRefeicao(listaPedidoRefeicao);
+            pedido.setEstadoPedido(Pedido.EstadoPedido.EM_FILA);
+
+            // Consolida no banco o pedido finalizado;
+            pedidoDAO.alterar(pedido);
+            String mensagem = "Pedido realizado";
+            this.aposGravar(mensagem, evt);
+
+        }
+
     }//GEN-LAST:event_btnFinalizarPedidoActionPerformed
 
     private void btnExcluirItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirItemActionPerformed
@@ -607,7 +671,7 @@ public class PedidoVisao extends javax.swing.JFrame {
     }
 
     private void atualizarTabelaResumo() {
-        BigDecimal somatorio = BigDecimal.ZERO;
+        this.valorTotalPedido = BigDecimal.ZERO;
         BigDecimal subtotal;
 
         if (this.listagemItensPedido.isEmpty()) {
@@ -627,10 +691,10 @@ public class PedidoVisao extends javax.swing.JFrame {
                     nf.format(subtotal)
 
                 });
-                somatorio = somatorio.add(subtotal);
+                this.valorTotalPedido = this.valorTotalPedido.add(subtotal);
             }
             this.labelVisualizarTotalPedido.setText(
-                    nf.format(somatorio));
+                    nf.format(valorTotalPedido));
         }
     }
 
@@ -685,7 +749,8 @@ public class PedidoVisao extends javax.swing.JFrame {
 
     private void aposGravar(String mensagem, java.awt.event.ActionEvent evt) {
         Mensagem.mCorreto(mensagem);
-//        this.btnCancelarActionPerformed(evt);
+        this.carregarPainelInformacoes();
         this.carregarTabelas();
+        this.listagemItensPedido = null;
     }
 }

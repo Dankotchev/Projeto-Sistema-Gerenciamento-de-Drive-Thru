@@ -24,6 +24,13 @@ public class PedidoDAO extends AbstractDAO<Pedido> {
                 .setParameter("emFila", Pedido.EstadoPedido.EM_FILA)
                 .setParameter("emPreparo", Pedido.EstadoPedido.EM_PREPARO)
                 .getResultList();
-
+    }
+    
+    public Pedido buscarUltimoPedido(){
+        return getEntityManager()
+                .createNamedQuery("Pedido.buscarUltimoPedido", Pedido.class)
+                .setParameter("aberto", Pedido.EstadoPedido.ABERTO)
+                .setMaxResults(1)
+                .getSingleResult();
     }
 }

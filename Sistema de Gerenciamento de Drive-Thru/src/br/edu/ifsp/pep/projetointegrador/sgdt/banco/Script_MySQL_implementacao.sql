@@ -42,22 +42,6 @@ INSERT INTO produto (nome, preco_unitario, quantidade, descricao)
     ('Kit-kat 180g', 5.66, 125, 'Barra de chocolate kit-kat');
 
 CREATE TABLE
-    IF NOT EXISTS veiculo (
-        id_veiculo INT AUTO_INCREMENT NOT NULL,
-        placa VARCHAR(8) NOT NULL,
-        status_veiculo BOOLEAN NOT NULL DEFAULT TRUE,
-        PRIMARY KEY (id_veiculo)
-    );
-
-INSERT INTO veiculo (placa)
-	VALUES
-	('ABC4F568'),
-	('BCC5A658'),
-	('BGH3D658'),
-	('MJU5D475'),
-	('RGT6D985');
-
-CREATE TABLE
     IF NOT EXISTS funcionario (
         id_funcionario INT AUTO_INCREMENT NOT NULL,
         nome_funcionario VARCHAR(60) NOT NULL,
@@ -106,7 +90,7 @@ INSERT INTO caixa (data, funcionario_id, estado, abertura, entradas, saidas)
 CREATE TABLE
     IF NOT EXISTS pedido (
         id_pedido INT AUTO_INCREMENT NOT NULL,
-        veiculo_id INT NOT NULL,
+        veiculo VARCHAR(8) NOT NULL,
         caixa_id INT NOT NULL,
         forma_pagamento VARCHAR(45) NOT NULL,
         data_pagamento DATE NOT NULL,
@@ -114,19 +98,18 @@ CREATE TABLE
         estado_pedido VARCHAR(45) NOT NULL DEFAULT 'ABERTO',
         status_pedido BOOLEAN NOT NULL DEFAULT TRUE,
         PRIMARY KEY (id_pedido),
-        FOREIGN KEY (veiculo_id) REFERENCES veiculo (id_veiculo),
         FOREIGN KEY (caixa_id) REFERENCES caixa (id_caixa)
     );
     
-INSERT INTO pedido (veiculo_id, caixa_id, forma_pagamento, data_pagamento, total_pedido)
+INSERT INTO pedido (veiculo, caixa_id, forma_pagamento, data_pagamento, total_pedido)
 	VALUES 
-	(1, 1, 'PIX', '2022-11-01', 120),
-	(2, 2, 'PIX', '2022-11-01', 85),
-	(5, 3, 'PIX', '2022-11-02', 36.90),
-	(4, 4, 'PIX', '2022-11-03', 14.50),
-	(3, 4, 'PIX', '2022-11-03', 65.66),
-	(1, 5, 'PIX', '2022-11-04', 70.15),
-	(2, 5, 'PIX', '2022-11-05', 100);
+	('MJU-D475', 1, 'PIX', '2022-11-01', 120),
+	('BGH-D658', 2, 'PIX', '2022-11-01', 85),
+	('BGH-D658', 3, 'PIX', '2022-11-02', 36.90),
+	('BCC-A658', 4, 'PIX', '2022-11-03', 14.50),
+	('ABC-D123', 4, 'PIX', '2022-11-03', 65.66),
+	('MJU-D475', 5, 'PIX', '2022-11-04', 70.15),
+	('BCC-A658', 5, 'PIX', '2022-11-05', 100);
 UPDATE pedido SET estado_pedido = 'ENTREGUE' WHERE  id_pedido > 0;
 
 CREATE TABLE

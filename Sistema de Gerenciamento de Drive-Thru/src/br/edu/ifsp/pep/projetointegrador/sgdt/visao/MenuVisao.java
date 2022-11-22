@@ -318,7 +318,7 @@ public class MenuVisao extends javax.swing.JFrame {
                         this.funcionario);
                 this.caixaDAO.inserir(caixa);
                 this.carregarPainelInformacoes();
-
+                Mensagem.mCorreto("Caixa Aberto");
             } catch (Exception ex) {
                 ex.printStackTrace();
                 System.out.println(ex.getMessage());

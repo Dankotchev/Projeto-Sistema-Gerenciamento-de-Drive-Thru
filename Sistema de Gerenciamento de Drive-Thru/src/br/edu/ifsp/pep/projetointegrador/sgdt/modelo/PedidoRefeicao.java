@@ -17,14 +17,14 @@ public class PedidoRefeicao implements Serializable {
     PedidoRefeicaoPK pedidoRefeicaoPK;
 
     @ManyToOne
-    @JoinColumn(name = "pedido_id", nullable = false)
+    @JoinColumn(name = "pedido_id", referencedColumnName = "id_pedido", nullable = false)
     private Pedido pedido;
 
     @ManyToOne
-    @JoinColumn(name = "refeicao_id", nullable = false)
+    @JoinColumn(name = "refeicao_id", referencedColumnName = "id", nullable = false)
     private Refeicao refeicao;
 
-    @Column(name = "quantidade", nullable = false)
+    @Column(name = "quantidade_pedido_refeicao", nullable = false)
     private Integer quantidade;
 
     @Column(name = "preco_unitario_refeicao", precision = 10, scale = 2, nullable = false)

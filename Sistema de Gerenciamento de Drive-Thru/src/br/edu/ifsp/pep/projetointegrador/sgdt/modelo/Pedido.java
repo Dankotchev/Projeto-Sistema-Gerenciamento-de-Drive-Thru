@@ -2,7 +2,6 @@ package br.edu.ifsp.pep.projetointegrador.sgdt.modelo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,7 +17,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
 
 @Entity
 @Table(name = "pedido")
@@ -30,7 +28,10 @@ import javax.persistence.Temporal;
                     + "AND p.status = true"),
     @NamedQuery(name = "Pedido.buscarEmFilaEmPreparo",
             query = "SELECT p FROM Pedido p WHERE p.estadoPedido = :emFila OR p.estadoPedido = :emPreparo "
-                    + "AND p.status = true ORDER BY p.id ASC")
+                    + "AND p.status = true ORDER BY p.id ASC"),
+    @NamedQuery(name = "Pedido.buscarUltimoPedido",
+            query = "SELECT p FROM Pedido p WHERE p.estadoPedido = :aberto "
+                    + "AND p.status = true ORDER BY p.id DESC")
 })
 public class Pedido implements Serializable {
 
@@ -39,13 +40,8 @@ public class Pedido implements Serializable {
     @Column(name = "id_pedido")
     private Integer id;
 
-    @JoinColumn(name = "veiculo")
-    @OneToOne
-    private Veiculo veiculo;
-
-    @Column(name = "data_pedido")
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dataPedido;
+    @Column(name = "veiculo", length = 8, nullable = false)
+    private String veiculo;
     
     @Column(name = "total_pedido", precision = 10, scale = 2, nullable = false)
     BigDecimal totalPedido;
@@ -54,7 +50,7 @@ public class Pedido implements Serializable {
     @Enumerated(EnumType.STRING)
     private FormaPagamento formaPagamento;
 
-    @Column(name = "estado_atual")
+    @Column(name = "estado_pedido")
     @Enumerated(EnumType.STRING)
     private EstadoPedido estadoPedido;
 
@@ -65,10 +61,10 @@ public class Pedido implements Serializable {
     @JoinColumn(name = "caixa_id")
     private Caixa caixa;
 
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pedido", cascade = {CascadeType.ALL, CascadeType.PERSIST})
     private List<PedidoProduto> listaPedidoProdutos;
 
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pedido", cascade = {CascadeType.ALL, CascadeType.PERSIST})
     private List<PedidoRefeicao> listaPedidoRefeicao;
 
     public enum EstadoPedido {
@@ -88,20 +84,12 @@ public class Pedido implements Serializable {
         this.id = id;
     }
 
-    public Veiculo getVeiculo() {
+    public String getVeiculo() {
         return veiculo;
     }
 
-    public void setVeiculo(Veiculo veiculo) {
+    public void setVeiculo(String veiculo) {
         this.veiculo = veiculo;
-    }
-
-    public Date getDataPedido() {
-        return dataPedido;
-    }
-
-    public void setDataPedido(Date dataPedido) {
-        this.dataPedido = dataPedido;
     }
 
     public BigDecimal getTotalPedido() {
@@ -160,9 +148,8 @@ public class Pedido implements Serializable {
         this.listaPedidoRefeicao = listaPedidoRefeicao;
     }
 
-    public Pedido(Veiculo veiculo, Date dataPedido, BigDecimal totalPedido, FormaPagamento formaPagamento, EstadoPedido estadoPedido, Caixa caixa, List<PedidoProduto> listaPedidoProdutos, List<PedidoRefeicao> listaPedidoRefeicao) {
+    public Pedido(String veiculo, BigDecimal totalPedido, FormaPagamento formaPagamento, EstadoPedido estadoPedido, Caixa caixa, List<PedidoProduto> listaPedidoProdutos, List<PedidoRefeicao> listaPedidoRefeicao) {
         this.veiculo = veiculo;
-        this.dataPedido = dataPedido;
         this.totalPedido = totalPedido;
         this.formaPagamento = formaPagamento;
         this.estadoPedido = estadoPedido;

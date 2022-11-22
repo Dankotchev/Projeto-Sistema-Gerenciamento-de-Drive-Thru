@@ -61,7 +61,7 @@ public class Funcionario implements Serializable {
     @Column(name = "status_funcionario", nullable = false)
     private boolean status;
 
-    @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "funcionario", cascade = {CascadeType.ALL, CascadeType.PERSIST})
     private List<Caixa> listaResponsabilidadeCaixas;
 
     public enum Cargo {
