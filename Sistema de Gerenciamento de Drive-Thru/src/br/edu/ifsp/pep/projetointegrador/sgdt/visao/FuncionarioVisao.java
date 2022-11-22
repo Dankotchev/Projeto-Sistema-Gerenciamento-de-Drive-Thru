@@ -176,7 +176,7 @@ public class FuncionarioVisao extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tabelaFuncionario.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tabelaFuncionario.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane6.setViewportView(tabelaFuncionario);
 
         painelVizualizar.setBackground(new java.awt.Color(255, 202, 138));

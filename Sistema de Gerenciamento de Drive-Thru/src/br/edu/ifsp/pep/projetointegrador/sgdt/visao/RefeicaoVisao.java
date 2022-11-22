@@ -58,7 +58,6 @@ public class RefeicaoVisao extends javax.swing.JFrame {
         setTitle("Manter Refeição");
         setMinimumSize(new java.awt.Dimension(1280, 720));
         setName("refeicao"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1280, 720));
 
         painelFundo.setBackground(new java.awt.Color(255, 202, 138));
 
@@ -173,7 +172,7 @@ public class RefeicaoVisao extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tabelaRefeicao.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tabelaRefeicao.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane6.setViewportView(tabelaRefeicao);
 
         painelVisualizar.setBackground(new java.awt.Color(255, 202, 138));

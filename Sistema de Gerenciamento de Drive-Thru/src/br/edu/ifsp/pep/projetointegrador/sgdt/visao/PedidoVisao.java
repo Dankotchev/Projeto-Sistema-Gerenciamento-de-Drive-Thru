@@ -160,7 +160,6 @@ public class PedidoVisao extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tabelaResumo.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         jScrollPane6.setViewportView(tabelaResumo);
         if (tabelaResumo.getColumnModel().getColumnCount() > 0) {
             tabelaResumo.getColumnModel().getColumn(0).setResizable(false);
