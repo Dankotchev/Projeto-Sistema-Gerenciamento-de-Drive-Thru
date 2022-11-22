@@ -267,12 +267,16 @@ public class EntregaPedidoVisao extends javax.swing.JFrame {
 
         if (this.pedidoGlobal != null) {
 
-            this.pedidoGlobal.setEstadoPedido(entregue);
-            this.pedidoDAO.alterar(this.pedidoGlobal);
-            this.atualizarListaPedidos();
-            this.btnCancelar.setVisible(false);
-            this.btnConfirmar.setVisible(false);
-            this.pedidoGlobal = null;
+            try {
+                this.pedidoGlobal.setEstadoPedido(entregue);
+                this.pedidoDAO.alterar(this.pedidoGlobal);
+                this.atualizarListaPedidos();
+                this.btnCancelar.setVisible(false);
+                this.btnConfirmar.setVisible(false);
+                this.pedidoGlobal = null;
+            } catch (Exception ex) {
+                Mensagem.mAviso("Ocorreu um erro durante a operação.\nContate o suporte");
+            }
         } else {
             Mensagem.mAviso("Selecione um pedido");
         }

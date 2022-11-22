@@ -22,7 +22,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "funcionario", uniqueConstraints = {
     @UniqueConstraint(
             name = "uniqueCpfNome",
-            columnNames = {"cpf", "nome"})
+            columnNames = {"cpf", "nome_funcionario"})
 })
 @NamedQueries(value = {
     @NamedQuery(name = "Funcionario.buscarPorNome",
@@ -37,7 +37,7 @@ public class Funcionario implements Serializable {
     @Column(name = "id_funcionario")
     private Integer id;
 
-    @Column(name = "cpf", nullable = false, length = 11)
+    @Column(name = "cpf", nullable = false, length = 14)
     private String cpf;
     
     @Column(name = "senha", length = 16, nullable = false)

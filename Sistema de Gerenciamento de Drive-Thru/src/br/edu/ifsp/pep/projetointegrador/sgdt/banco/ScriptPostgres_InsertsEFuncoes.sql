@@ -1,17 +1,5 @@
-CREATE SCHEMA sgdt;
 SET search_path TO sgdt;
 
-CREATE TABLE
-    IF NOT EXISTS refeicao (
-        id SERIAL,
-        nome VARCHAR(45) NOT NULL,
-        preco_unitario DECIMAL(10, 2) NOT NULL,
-        descricao VARCHAR(90) NOT NULL,
-        lista_ingredientes TEXT NOT NULL,
-        quantidade INT NOT NULL DEFAULT 0,
-        status BOOLEAN NOT NULL DEFAULT TRUE,
-        PRIMARY KEY (id)
-    );
 INSERT INTO refeicao (nome, preco_unitario, descricao, lista_ingredientes) 
     VALUES
         ('Refeição Barata A', 12.50, 'Uma refeição boa e barata', 'ingrediente 1, ingrediente 2, ingrediente 3'),
@@ -21,15 +9,6 @@ INSERT INTO refeicao (nome, preco_unitario, descricao, lista_ingredientes)
         ('Refeição Cara 2', 39.60, 'Uma refeição cara e otima', 'ingrediente A, ingrediente B, ingrediente C'),
         ('Refeição Cara 3', 40.99, 'Uma refeição cara e otima', 'ingrediente A, ingrediente B, ingrediente C');
 
-CREATE TABLE
-    IF NOT EXISTS produto (
-        id SERIAL,
-        nome VARCHAR(45) NOT NULL,
-        preco_unitario DECIMAL(10, 2) NOT NULL,
-        quantidade INT NOT NULL,
-        descricao VARCHAR(90) NULL,
-        status BOOLEAN NOT NULL DEFAULT TRUE,
-        PRIMARY KEY (id)
     );
 INSERT INTO produto (nome, preco_unitario, quantidade, descricao)
 	VALUES 
@@ -38,32 +17,13 @@ INSERT INTO produto (nome, preco_unitario, quantidade, descricao)
     ('Coca-cola 600ml', 10.99, 200, 'Refrigerante Coca-cola'),
     ('Kit-kat 180g', 5.66, 125, 'Barra de chocolate kit-kat');
 
-CREATE TABLE
-    IF NOT EXISTS ingrediente (
-        id_ingrediente SERIAL,
-        nome_ingrediente VARCHAR(60) NOT NULL,
-        quantidade_ingrediente INT NULL,
-        status_ingrediente BOOLEAN NOT NULL DEFAULT TRUE,
-        UNIQUE (nome_ingrediente),
-        PRIMARY KEY (id_ingrediente)
-    );
 INSERT INTO ingrediente (nome_ingrediente, quantidade_ingrediente)
 	VALUES
 	('Ingrediente A', 3600), ('Ingrediente 1', 2580), 
 	('Ingrediente B', 1250), ('Ingrediente 2', 3658),
 	('Ingrediente C', 850), ('Ingrediente 3', 10250),
 	('Ingrediente D', 125), ('Ingrediente 4', 1102);
-	
-CREATE TABLE
-    IF NOT EXISTS refeicao_ingrediente (
-        refeicao_id INT NOT NULL,
-        ingrediente_id INT NOT NULL,
-        quantidade_preparo INT NULL,
-        status_ingrediente BOOLEAN NOT NULL DEFAULT TRUE,
-        PRIMARY KEY (ingrediente_id, refeicao_id),     
-        FOREIGN KEY (refeicao_id) REFERENCES refeicao (id),
-        FOREIGN KEY (ingrediente_id) REFERENCES ingrediente (id_ingrediente)
-    );
+
 INSERT INTO refeicao_ingrediente (refeicao_id, ingrediente_id, quantidade_preparo)
 	VALUES
 	(1, 1, 9), (1, 3, 5), (1, 5, 8),
@@ -71,22 +31,8 @@ INSERT INTO refeicao_ingrediente (refeicao_id, ingrediente_id, quantidade_prepar
 	(3, 7, 3), (3, 8, 3),
 	(4, 2, 7), (4, 4, 5), (4, 6, 8),
 	(5, 2, 3), (5, 4, 9), (5, 6, 5),
-	(6, 2, 6), (6, 4, 4), (6, 6, 3);	
-	
-	
-CREATE TABLE
-    IF NOT EXISTS funcionario (
-        id_funcionario SERIAL,
-        nome_funcionario VARCHAR(60) NOT NULL,
-        cpf VARCHAR(14) NOT NULL,
-        senha VARCHAR(16) NOT NULL,
-        data_nascimento DATE NULL,
-        cargo VARCHAR(11) NULL,
-        estado_civil VARCHAR(14) NULL,
-        status_funcionario BOOLEAN NOT NULL DEFAULT TRUE,
-        PRIMARY KEY (id_funcionario),
-        UNIQUE (cpf, nome_funcionario)
-    );
+	(6, 2, 6), (6, 4, 4), (6, 6, 3);
+
 INSERT INTO funcionario (nome_funcionario, cpf, senha, data_nascimento, cargo, estado_civil)
 	VALUES
 	('Danilo Quirino', '111.111.111-11', 'danilo123', '1996-06-27', 'GERENTE', 'SOLTEIRO'),
@@ -95,20 +41,6 @@ INSERT INTO funcionario (nome_funcionario, cpf, senha, data_nascimento, cargo, e
 	('Lucas Quirino', '444.444.444-44', 'lucas123' , '1965-03-30', 'COZINHEIRO', 'CASADO'),
 	('Dani Domingues Quirino', '555.555.555-55', 'dani123', '1999-08-24', 'ATENDENTE', 'SOLTEIRO');
 
-
-CREATE TABLE
-    IF NOT EXISTS caixa (
-        id_caixa SERIAL,
-        data DATE NOT NULL,
-        funcionario_id INT NOT NULL,
-        estado VARCHAR(8) NOT NULL,
-        abertura DECIMAL(10, 2) NOT NULL,
-        entradas DECIMAL(10, 2) NOT NULL DEFAULT 0,
-        saidas DECIMAL(10, 2) NOT NULL DEFAULT 0,
-        status_caixa BOOLEAN NOT NULL DEFAULT TRUE,
-        PRIMARY KEY (id_caixa),
-        FOREIGN KEY (funcionario_id) REFERENCES funcionario (id_funcionario)
-    );
 INSERT INTO caixa (data, funcionario_id, estado, abertura, entradas, saidas)
 	VALUES 
 	('2022-11-01', 1, 'FECHADO', 0, 3650, 1100),
@@ -119,18 +51,6 @@ INSERT INTO caixa (data, funcionario_id, estado, abertura, entradas, saidas)
 	('2022-11-04', 4, 'FECHADO', 100, 3254, 120),
 	('2022-11-05', 5, 'ABERTO', 0, 3000, 0);
 
-CREATE TABLE
-    IF NOT EXISTS pedido (
-        id_pedido SERIAL,
-        veiculo VARCHAR(8) NOT NULL,
-        caixa_id INT NOT NULL,
-        forma_pagamento VARCHAR(45) NOT NULL,
-        total_pedido DECIMAL(10, 2) NOT NULL,
-        estado_pedido VARCHAR(45) NOT NULL DEFAULT 'ABERTO',
-        status_pedido BOOLEAN NOT NULL DEFAULT TRUE,
-        PRIMARY KEY (id_pedido),
-        FOREIGN KEY (caixa_id) REFERENCES caixa (id_caixa)
-    );
 INSERT INTO pedido (veiculo, caixa_id, forma_pagamento, total_pedido)
 	VALUES 
 	('MJU-D475', 1, 'PIX', 120),
@@ -152,17 +72,6 @@ UPDATE pedido SET estado_pedido = 'ENTREGUE' WHERE  id_pedido > 0 AND id_pedido 
 UPDATE pedido SET estado_pedido = 'EM_FILA' WHERE  id_pedido > 5 AND id_pedido <= 10;
 UPDATE pedido SET estado_pedido = 'EM_PREPARO' WHERE  id_pedido > 10;
 
-CREATE TABLE
-    IF NOT EXISTS pedido_produto (
-        produto_id INT NOT NULL,
-        pedido_id INT NOT NULL,
-        quantidade_pedido_produto INT NOT NULL,
-        preco_unitario_produto DECIMAL(10, 2) NOT NULL,
-        status_pedido_produto BOOLEAN NOT NULL DEFAULT TRUE,
-        PRIMARY KEY (pedido_id, produto_id),
-        FOREIGN KEY (produto_id) REFERENCES produto (id),
-        FOREIGN KEY (pedido_id) REFERENCES pedido (id)
-    );
 INSERT INTO pedido_produto (pedido_id, produto_id, quantidade_pedido_produto , preco_unitario_produto)
 	VALUES 
 	(2, 1, 2, 4.75),
@@ -172,17 +81,6 @@ INSERT INTO pedido_produto (pedido_id, produto_id, quantidade_pedido_produto , p
 	(5, 1, 2, 1.25),
 	(5, 3, 2, 12.00);
 
-CREATE TABLE
-    IF NOT EXISTS pedido_refeicao (
-        refeicao_id INT NOT NULL,
-        pedido_id INT NOT NULL,
-        quantidade_pedido_refeicao INT NOT NULL,
-        preco_unitario_refeicao DECIMAL(10, 2) NOT NULL,
-        status_pedido_refeicao BOOLEAN NOT NULL DEFAULT TRUE,
-        PRIMARY KEY (refeicao_id, pedido_id),
-        FOREIGN KEY (refeicao_id) REFERENCES refeicao (id),
-        FOREIGN KEY (pedido_id) REFERENCES pedido (id)
-    );
 INSERT INTO pedido_refeicao  (pedido_id, refeicao_id, quantidade_pedido_refeicao, preco_unitario_refeicao)
 	VALUES 
 	(3, 1, 2, 12.75),
@@ -193,79 +91,28 @@ INSERT INTO pedido_refeicao  (pedido_id, refeicao_id, quantidade_pedido_refeicao
 	(7, 5, 1, 40.00),
 	(7, 6, 1, 42.00);
 
-CREATE TABLE
-    IF NOT EXISTS fornecedor (
-        id_fornecedor SERIAL,
-        cnpj VARCHAR(18) NOT NULL,
-        razao_social VARCHAR(60) NOT NULL,
-        nome_fantasia VARCHAR(60) NULL,
-        contato_interno VARCHAR(60) NOT NULL,
-        status_fornecedor BOOLEAN NOT NULL DEFAULT TRUE,
-        UNIQUE (cnpj),
-        PRIMARY KEY (id_fornecedor)
-    );
 INSERT INTO fornecedor (cnpj, razao_social, nome_fantasia, contato_interno)
 	VALUES
 	('12.546.589/0001-12', 'Fornecedor A', 'Fantasia A', 'Carlos'),
 	('65.842.456/0001-36', 'Fornecedor B', 'Fantasia B', 'Maruan');
 
-CREATE TABLE
-    IF NOT EXISTS contato (
-        id_contato SERIAL,
-        telefone VARCHAR(11) NULL,
-        email VARCHAR(60) NULL,
-        status_contato BOOLEAN NOT NULL DEFAULT TRUE,
-        PRIMARY KEY (id_contato)
-    );
 INSERT INTO contato (telefone)
 	VALUES
 	('25658458748'), ('36258471425'), ('14365458758'), ('16325142536'), ('36478954788'),
 	('14258478965'), ('10214253625');
 
-CREATE TABLE
-    IF NOT EXISTS funcionario_tem_contato (
-        funcionario_id INT NOT NULL,
-        contato_id INT NOT NULL,
-        PRIMARY KEY (funcionario_id, contato_id),
-        FOREIGN KEY (funcionario_id) REFERENCES funcionario (id_funcionario),
-        FOREIGN KEY (contato_id) REFERENCES contato (id_contato)
-    );
 INSERT INTO funcionario_tem_contato (contato_id, funcionario_id)
 	VALUES
 	(1,1), (2,2), (3,3), (4,4), (5,5);
 
-CREATE TABLE
-    IF NOT EXISTS fornecedor_tem_contato (
-        fornecedor_id INT NOT NULL,
-        contato_id INT NOT NULL,
-        PRIMARY KEY (fornecedor_id, contato_id),
-        FOREIGN KEY (fornecedor_id) REFERENCES fornecedor (id_fornecedor),
-        FOREIGN KEY (contato_id) REFERENCES contato (id_contato)
-    );
 INSERT INTO fornecedor_tem_contato (fornecedor_id, contato_id)
 	VALUES
 	(1,6), (2,7);
 
-CREATE TABLE
-    IF NOT EXISTS fornece_produtos (
-        fornecedor_id INT NOT NULL,
-        produto_id INT NOT NULL,
-        PRIMARY KEY (fornecedor_id, produto_id),
-        FOREIGN KEY (fornecedor_id) REFERENCES fornecedor (id_fornecedor),
-        FOREIGN KEY (produto_id) REFERENCES produto (id)
-    );
 INSERT INTO fornece_produtos (fornecedor_id, produto_id)
 	VALUES
 	(1,1), (1,2), (2, 2), (1, 3), (2, 4), (1, 4);
 
-CREATE TABLE
-    IF NOT EXISTS fornece_ingredientes (
-        fornecedor_id INT NOT NULL,
-        ingrediente_id INT NOT NULL,
-        PRIMARY KEY (fornecedor_id, ingrediente_id),
-        FOREIGN KEY (fornecedor_id) REFERENCES fornecedor (id_fornecedor),
-        FOREIGN KEY (ingrediente_id) REFERENCES ingrediente (id_ingrediente)
-    );
 INSERT INTO fornece_ingredientes (fornecedor_id, ingrediente_id)
 	VALUES
 	(1, 1), (1, 2), (2, 2), (2, 3), (2,4), (1, 5), (1, 6), (2, 7), (1, 8), (2, 8);

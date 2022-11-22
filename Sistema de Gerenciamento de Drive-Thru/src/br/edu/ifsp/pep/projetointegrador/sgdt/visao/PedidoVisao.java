@@ -499,8 +499,12 @@ public class PedidoVisao extends javax.swing.JFrame {
             pedido.setListaPedidoRefeicao(listaPedidoRefeicao);
             pedido.setEstadoPedido(Pedido.EstadoPedido.EM_FILA);
 
-            // Consolida no banco o pedido finalizado;
-            pedidoDAO.alterar(pedido);
+            try {
+                // Consolida no banco o pedido finalizado;
+                pedidoDAO.alterar(pedido);
+            } catch (Exception ex) {
+                Mensagem.mAviso("Ocorreu um erro durante a operação.\nContate o suporte");
+            }
             String mensagem = "Pedido realizado";
             this.aposGravar(mensagem, evt);
 

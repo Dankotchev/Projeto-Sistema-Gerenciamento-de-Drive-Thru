@@ -3,6 +3,7 @@ package br.edu.ifsp.pep.projetointegrador.sgdt.visao;
 import br.edu.ifsp.pep.projetointegrador.sgdt.controledao.FuncionarioDAO;
 import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Funcionario;
 import br.edu.ifsp.pep.projetointegrador.utilitarios.Mensagem;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -247,6 +248,11 @@ public class FuncionarioVisao extends javax.swing.JFrame {
         txtSenha.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
         txtSenha.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtSenha.setText("senhaexemplo");
+        txtSenha.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtSenhaFocusGained(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
@@ -479,9 +485,22 @@ public class FuncionarioVisao extends javax.swing.JFrame {
             tudoOK = false;
         }
 
+//        if (tudoOK) {
+//            Funcionario funcionarioVerificarDuplicidade = null;
+//            try {
+//                funcionarioVerificarDuplicidade = funcionarioDAO.buscarPorCPF(cpf);
+//                if (funcionarioVerificarDuplicidade != null) {
+//                    Mensagem.mAviso("Funcionário já cadastrado.\nVerifique as informações e tente novamente");
+//                    tudoOK = false;
+//                    this.txtCPFFormated.requestFocus();
+//                }
+//            } catch (Exception ex) {
+//                System.out.println("Funcionário não existe no banco, tudo ok");
+//            }
+//        }
+
         if (tudoOK) {
             // Propagar no Banco de Dados se não houver informações faltantes ou incorretas
-
             // Verifica se está realizando uma exclusão, comparando o texto do botão
             if (this.btnGravar.getText().equals("Excluir")) {
                 mensagem = "Funcionário excluído";
@@ -525,7 +544,10 @@ public class FuncionarioVisao extends javax.swing.JFrame {
                 try {
                     funcionarioDAO.alterar(this.funcionarioGlobal);
                     this.aposGravar(mensagem, evt);
-                } catch (Exception e) {
+                } catch (SQLIntegrityConstraintViolationException icve){
+                    Mensagem.mErro("Nome e/ou CPf já cadastrados.\nVerifique as informações e tente novamente");
+                }
+                catch (Exception e) {
                     Mensagem.mErro(e.getMessage());
                 } finally {
                     this.funcionarioGlobal = null;
@@ -585,6 +607,10 @@ public class FuncionarioVisao extends javax.swing.JFrame {
         this.setEstadoBotoes(true);
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
+    private void txtSenhaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSenhaFocusGained
+        this.txtSenha.setText("");
+    }//GEN-LAST:event_txtSenhaFocusGained
+
     /**
      * @param args the command line arguments
      */
@@ -612,12 +638,7 @@ public class FuncionarioVisao extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

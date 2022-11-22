@@ -224,10 +224,14 @@ public class CozinhaVisao extends javax.swing.JFrame {
             if (pedido.getEstadoPedido() == emPreparo) {
                 Mensagem.mInformacao("Pedido já em preparo");
             } else {
-                pedido.setEstadoPedido(emPreparo);
-                this.pedidoDAO.alterar(pedido);
-                this.atualizarDetalhamento(pedido);
-                this.atualizarListaPedidos();
+                try {
+                    pedido.setEstadoPedido(emPreparo);
+                    this.pedidoDAO.alterar(pedido);
+                    this.atualizarDetalhamento(pedido);
+                    this.atualizarListaPedidos();
+                } catch (Exception ex) {
+                    Mensagem.mAviso("Ocorreu um erro durante a operação.\nContate o suporte");
+                }
             }
         } else {
             Mensagem.mAviso("Selecione um pedido");
@@ -246,9 +250,13 @@ public class CozinhaVisao extends javax.swing.JFrame {
             if (pedido.getEstadoPedido() == emFila) {
                 Mensagem.mInformacao("Pedido ainda na fila de preparo");
             } else {
-                pedido.setEstadoPedido(finalizado);
-                this.pedidoDAO.alterar(pedido);
-                this.atualizarListaPedidos();
+                try {
+                    pedido.setEstadoPedido(finalizado);
+                    this.pedidoDAO.alterar(pedido);
+                    this.atualizarListaPedidos();
+                } catch (Exception ex) {
+                    Mensagem.mAviso("Ocorreu um erro durante a operação.\nContate o suporte");
+                }
             }
         } else {
             Mensagem.mAviso("Selecione um pedido");

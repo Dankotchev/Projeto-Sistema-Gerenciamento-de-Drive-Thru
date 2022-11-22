@@ -28,7 +28,7 @@ public abstract class AbstractDAO<T> {
         em.close();
     }
 
-    public void alterar(T entity) {
+    public void alterar(T entity) throws Exception {
         EntityManager em = getEntityManager();
 
         em.getTransaction().begin();

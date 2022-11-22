@@ -356,11 +356,15 @@ public class MenuVisao extends javax.swing.JFrame {
 
     private void btnFecharCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharCaixaActionPerformed
         if (this.caixa != null) {
-            this.caixa.setEstadoCaixa(Caixa.EstadoCaixa.FECHADO);
-            this.caixaDAO.alterar(this.caixa);
-            this.caixa = null;
-            this.carregarPainelInformacoes();
-            Mensagem.mInformacao("Caixa Fechado");
+            try {
+                this.caixa.setEstadoCaixa(Caixa.EstadoCaixa.FECHADO);
+                this.caixaDAO.alterar(this.caixa);
+                this.caixa = null;
+                this.carregarPainelInformacoes();
+                Mensagem.mInformacao("Caixa Fechado");
+            } catch (Exception ex) {
+                Mensagem.mAviso("Ocorreu um erro durante a operação.\nContate o suporte");
+            }
         } else {
             Mensagem.mAviso("Não há caixa aberto");
         }
