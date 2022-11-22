@@ -85,7 +85,7 @@ INSERT INTO caixa (data, funcionario_id, estado, abertura, entradas, saidas)
 	('2022-11-03', 4, 'FECHADO', 65, 1250, 0),
 	('2022-11-03', 5, 'FECHADO', 80, 8350, 155),
 	('2022-11-04', 4, 'FECHADO', 100, 3254, 120),
-	('2022-11-05', 5, 'FECHADO', 0, 3000, 0);
+	('2022-11-05', 5, 'ABERTO', 0, 3000, 0);
 
 CREATE TABLE
     IF NOT EXISTS pedido (
@@ -93,7 +93,6 @@ CREATE TABLE
         veiculo VARCHAR(8) NOT NULL,
         caixa_id INT NOT NULL,
         forma_pagamento VARCHAR(45) NOT NULL,
-        data_pagamento DATE NOT NULL,
         total_pedido DECIMAL(10, 2) NOT NULL,
         estado_pedido VARCHAR(45) NOT NULL DEFAULT 'ABERTO',
         status_pedido BOOLEAN NOT NULL DEFAULT TRUE,
@@ -101,16 +100,26 @@ CREATE TABLE
         FOREIGN KEY (caixa_id) REFERENCES caixa (id_caixa)
     );
     
-INSERT INTO pedido (veiculo, caixa_id, forma_pagamento, data_pagamento, total_pedido)
+INSERT INTO pedido (veiculo, caixa_id, forma_pagamento, total_pedido)
 	VALUES 
-	('MJU-D475', 1, 'PIX', '2022-11-01', 120),
-	('BGH-D658', 2, 'PIX', '2022-11-01', 85),
-	('BGH-D658', 3, 'PIX', '2022-11-02', 36.90),
-	('BCC-A658', 4, 'PIX', '2022-11-03', 14.50),
-	('ABC-D123', 4, 'PIX', '2022-11-03', 65.66),
-	('MJU-D475', 5, 'PIX', '2022-11-04', 70.15),
-	('BCC-A658', 5, 'PIX', '2022-11-05', 100);
-UPDATE pedido SET estado_pedido = 'ENTREGUE' WHERE  id_pedido > 0;
+	('MJU-D475', 1, 'PIX', 120),
+	('BGH-D658', 2, 'PIX', 85),
+	('BGH-D658', 3, 'PIX', 36.90),
+	('BCC-A658', 4, 'PIX', 14.50),
+	('ABC-D123', 4, 'PIX', 65.66),
+	('MJU-D475', 5, 'PIX', 70.15),
+	('BCC-A658', 5, 'PIX', 100),
+        ('KJH-L3GF', 7, 'PIX', 39.99),
+        ('KJH-V369', 7, 'PIX', 12.50),
+        ('MMM-S365', 7, 'PIX', 55.90),
+        ('SSW-4H58', 7, 'PIX', 14.85),
+        ('EEE-5G96', 7, 'PIX', 36.58),
+        ('SSW-4H58', 7, 'PIX', 36.14),
+        ('SSW-4H58', 7, 'PIX', 22.99),
+        ('SSW-4H58', 6, 'PIX', 10.99),
+UPDATE pedido SET estado_pedido = 'ENTREGUE' WHERE  id_pedido > 0 AND id_pedido <= 5;
+UPDATE pedido SET estado_pedido = 'EM_FILA' WHERE  id_pedido > 5 AND id_pedido <= 10;
+UPDATE pedido SET estado_pedido = 'EM_PREPARO' WHERE  id_pedido > 10;
 
 CREATE TABLE
     IF NOT EXISTS pedido_produto (

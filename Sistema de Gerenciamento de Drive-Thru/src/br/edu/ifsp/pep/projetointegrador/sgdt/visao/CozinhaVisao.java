@@ -34,12 +34,12 @@ public class CozinhaVisao extends javax.swing.JFrame {
         tabelaDetalhamento = new javax.swing.JTable();
         labelTabelaPedidos = new javax.swing.JLabel();
         labelTabelaDetalhamento = new javax.swing.JLabel();
+        btnPrepararPedido1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cozinha");
         setMinimumSize(new java.awt.Dimension(1280, 720));
         setName("cozinha"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1280, 720));
 
         painelFundo.setBackground(new java.awt.Color(255, 202, 138));
 
@@ -74,19 +74,24 @@ public class CozinhaVisao extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nº do Pedido", "Satus"
+                "Nº do Pedido", "Veiculo", "Satus"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        tabelaPedido.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tabelaPedido.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(tabelaPedido);
+        if (tabelaPedido.getColumnModel().getColumnCount() > 0) {
+            tabelaPedido.getColumnModel().getColumn(0).setResizable(false);
+            tabelaPedido.getColumnModel().getColumn(1).setResizable(false);
+            tabelaPedido.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         btnPrepararPedido.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnPrepararPedido.setForeground(new java.awt.Color(217, 28, 38));
@@ -123,7 +128,7 @@ public class CozinhaVisao extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tabelaDetalhamento.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tabelaDetalhamento.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(tabelaDetalhamento);
 
         labelTabelaPedidos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -131,6 +136,15 @@ public class CozinhaVisao extends javax.swing.JFrame {
 
         labelTabelaDetalhamento.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         labelTabelaDetalhamento.setText("Detalhamento");
+
+        btnPrepararPedido1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnPrepararPedido1.setForeground(new java.awt.Color(217, 28, 38));
+        btnPrepararPedido1.setText("Visualizar Pedido");
+        btnPrepararPedido1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrepararPedido1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelFundoLayout = new javax.swing.GroupLayout(painelFundo);
         painelFundo.setLayout(painelFundoLayout);
@@ -145,7 +159,8 @@ public class CozinhaVisao extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(painelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnPrepararPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFinalizarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnFinalizarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPrepararPedido1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(painelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelFundoLayout.createSequentialGroup()
                         .addGap(95, 95, 95)
@@ -172,9 +187,11 @@ public class CozinhaVisao extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
                     .addGroup(painelFundoLayout.createSequentialGroup()
                         .addComponent(btnPrepararPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnPrepararPedido1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnFinalizarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(85, 85, 85))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jScrollPane2))
                 .addContainerGap())
         );
@@ -208,9 +225,9 @@ public class CozinhaVisao extends javax.swing.JFrame {
                 Mensagem.mInformacao("Pedido já em preparo");
             } else {
                 pedido.setEstadoPedido(emPreparo);
+                this.pedidoDAO.alterar(pedido);
                 this.atualizarDetalhamento(pedido);
                 this.atualizarListaPedidos();
-                this.pedidoDAO.alterar(pedido);
             }
         } else {
             Mensagem.mAviso("Selecione um pedido");
@@ -230,14 +247,26 @@ public class CozinhaVisao extends javax.swing.JFrame {
                 Mensagem.mInformacao("Pedido ainda na fila de preparo");
             } else {
                 pedido.setEstadoPedido(finalizado);
-                this.atualizarDetalhamento(pedido);
-                this.atualizarListaPedidos();
                 this.pedidoDAO.alterar(pedido);
+                this.atualizarListaPedidos();
             }
         } else {
             Mensagem.mAviso("Selecione um pedido");
         }
     }//GEN-LAST:event_btnFinalizarPedidoActionPerformed
+
+    private void btnPrepararPedido1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrepararPedido1ActionPerformed
+        if (this.tabelaPedido.getSelectedRow() >= 0) {
+            Pedido pedido = this.listagemDePedidos
+                    .get(this.tabelaPedido
+                            .getSelectedRow());
+
+            this.atualizarDetalhamento(pedido);
+            this.atualizarListaPedidos();
+        } else {
+            Mensagem.mAviso("Selecione um pedido");
+        }
+    }//GEN-LAST:event_btnPrepararPedido1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -253,16 +282,24 @@ public class CozinhaVisao extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CozinhaVisao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CozinhaVisao.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CozinhaVisao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CozinhaVisao.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CozinhaVisao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CozinhaVisao.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CozinhaVisao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CozinhaVisao.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -278,6 +315,7 @@ public class CozinhaVisao extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFinalizarPedido;
     private javax.swing.JButton btnPrepararPedido;
+    private javax.swing.JButton btnPrepararPedido1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel labelTabelaDetalhamento;
@@ -296,7 +334,7 @@ public class CozinhaVisao extends javax.swing.JFrame {
 
             for (Pedido pedido : this.listagemDePedidos) {
                 modelo.addRow(new Object[]{
-                    pedido.getId(), pedido.getEstadoPedido()
+                    pedido.getId(), pedido.getVeiculo(), pedido.getEstadoPedido()
                 });
             }
         }
@@ -326,5 +364,6 @@ public class CozinhaVisao extends javax.swing.JFrame {
                 pedidoProduto.getProduto().getDescricao()
             });
         }
+        this.tabelaDetalhamento.setEnabled(false);
     }
 }

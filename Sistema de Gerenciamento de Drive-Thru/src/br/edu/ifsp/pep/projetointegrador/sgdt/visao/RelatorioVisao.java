@@ -206,19 +206,20 @@ public class RelatorioVisao extends javax.swing.JFrame {
             parametros.put("DataFinal", dataFinal);
             switch (selecao) {
                 case 0:
-                CaixaDAO caixaDAO = new CaixaDAO();
-                relatorio = "Fluxo_de_Caixa.jrxml";
-                break;
+                    CaixaDAO caixaDAO = new CaixaDAO();
+                    relatorio = "FluxoDeCaixa.jrxml";
+                    break;
                 case 1:
-                relatorio = "Relatorio_de_Vendas.jrxml";
-
-                break;
+                    relatorio = "RelatorioDeVendas.jrxml";
+                    Mensagem.mInformacao("Relatório ainda não disponível");
+                    break;
 
                 case 2:
-                relatorio = "Relatorio_de_Estoque.jrxml";
-                break;
+                    relatorio = "RelatorioDeEstoque.jrxml";
+                    Mensagem.mInformacao("Relatório ainda não disponível");
+                    break;
                 default:
-                throw new AssertionError();
+                    throw new AssertionError();
             }
             //            Relatorio.gerarFromJasper(relatorio, lista, parametros);
         }
