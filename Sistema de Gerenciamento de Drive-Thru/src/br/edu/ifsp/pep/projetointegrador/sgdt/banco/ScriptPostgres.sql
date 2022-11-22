@@ -1,5 +1,4 @@
-CREATE SCHEMA sgdt;
-SET search_path TO sgdt;
+SET search_path TO public;
 
 CREATE TABLE
     IF NOT EXISTS refeicao (
@@ -161,7 +160,7 @@ CREATE TABLE
         status_pedido_produto BOOLEAN NOT NULL DEFAULT TRUE,
         PRIMARY KEY (pedido_id, produto_id),
         FOREIGN KEY (produto_id) REFERENCES produto (id),
-        FOREIGN KEY (pedido_id) REFERENCES pedido (id)
+        FOREIGN KEY (pedido_id) REFERENCES pedido (id_pedido)
     );
 INSERT INTO pedido_produto (pedido_id, produto_id, quantidade_pedido_produto , preco_unitario_produto)
 	VALUES 
@@ -181,7 +180,7 @@ CREATE TABLE
         status_pedido_refeicao BOOLEAN NOT NULL DEFAULT TRUE,
         PRIMARY KEY (refeicao_id, pedido_id),
         FOREIGN KEY (refeicao_id) REFERENCES refeicao (id),
-        FOREIGN KEY (pedido_id) REFERENCES pedido (id)
+        FOREIGN KEY (pedido_id) REFERENCES pedido (id_pedido)
     );
 INSERT INTO pedido_refeicao  (pedido_id, refeicao_id, quantidade_pedido_refeicao, preco_unitario_refeicao)
 	VALUES 
@@ -280,6 +279,7 @@ BEGIN
 	IF (TG_OP = 'INSERT') THEN
 			UPDATE produto p SET p.quantidade = p.quantidade - NEW.quantidade_pedido_produto WHERE p.id = NEW.pedido_id;
 		RETURN NEW;
+	END IF;
 	IF (TG_OP = 'UPDATE') THEN
 			UPDATE produto p
 				SET p.quantidade = p.quantidade - NEW.quantidade_pedido_produto + OLD.quantidade_pedido_produto

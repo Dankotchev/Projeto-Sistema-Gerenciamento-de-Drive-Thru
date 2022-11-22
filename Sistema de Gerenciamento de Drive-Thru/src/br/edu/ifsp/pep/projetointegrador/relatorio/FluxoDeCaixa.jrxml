@@ -1,35 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f533a07d-a3a5-41c7-ab5a-acca6997efc2">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ProjetoIntegradorMySQL.jrdax"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Postgres.jrdax"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<queryString language="EJBQL">
-		<![CDATA[SELECT c FROM Caixa c WHERE c.estadoCaixa = 'FECHADO' AND c.status = true]]>
+	<parameter name="DataInicial" class="java.util.Date"/>
+	<parameter name="DataFinal" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[SELECT * FROM caixa WHERE estado = 'FECHADO' AND data >= $P{DataInicial}  AND data <= $P{DataFinal}]]>
 	</queryString>
+	<field name="id_caixa" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_caixa"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_caixa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="caixa"/>
+	</field>
+	<field name="data" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="data"/>
+		<property name="com.jaspersoft.studio.field.label" value="data"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="caixa"/>
+	</field>
+	<field name="funcionario_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="funcionario_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="funcionario_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="caixa"/>
+	</field>
+	<field name="estado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="estado"/>
+		<property name="com.jaspersoft.studio.field.label" value="estado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="caixa"/>
+	</field>
 	<field name="abertura" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[abertura]]></fieldDescription>
+		<property name="com.jaspersoft.studio.field.name" value="abertura"/>
+		<property name="com.jaspersoft.studio.field.label" value="abertura"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="caixa"/>
 	</field>
 	<field name="entradas" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[entradas]]></fieldDescription>
-	</field>
-	<field name="funcionario" class="br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Funcionario">
-		<fieldDescription><![CDATA[funcionario]]></fieldDescription>
-	</field>
-	<field name="id" class="java.lang.Integer">
-		<fieldDescription><![CDATA[id]]></fieldDescription>
-	</field>
-	<field name="estadoCaixa" class="br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Caixa.EstadoCaixa">
-		<fieldDescription><![CDATA[estadoCaixa]]></fieldDescription>
-	</field>
-	<field name="dataCaixa" class="java.util.Date">
-		<fieldDescription><![CDATA[dataCaixa]]></fieldDescription>
+		<property name="com.jaspersoft.studio.field.name" value="entradas"/>
+		<property name="com.jaspersoft.studio.field.label" value="entradas"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="caixa"/>
 	</field>
 	<field name="saidas" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[saidas]]></fieldDescription>
+		<property name="com.jaspersoft.studio.field.name" value="saidas"/>
+		<property name="com.jaspersoft.studio.field.label" value="saidas"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="caixa"/>
 	</field>
-	<field name="status" class="java.lang.Boolean">
-		<fieldDescription><![CDATA[status]]></fieldDescription>
+	<field name="status_caixa" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="status_caixa"/>
+		<property name="com.jaspersoft.studio.field.label" value="status_caixa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="caixa"/>
 	</field>
+	<variable name="SaldoFinal" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{TotalEntradas}.subtract( $V{TotalSaida} )]]></variableExpression>
+	</variable>
+	<variable name="TotalEntradas" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{entradas}]]></variableExpression>
+	</variable>
+	<variable name="TotalSaida" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{saidas}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -58,7 +85,7 @@
 				<textElement>
 					<font size="14"/>
 				</textElement>
-				<text><![CDATA[Relátorio de Fluxo de Caixa]]></text>
+				<text><![CDATA[Relátorio de Fluxo de Caixa: entre ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="400" y="0" width="70" height="30" uuid="ab1c8ca9-14d4-4f65-8d86-fd7903379d3a"/>
@@ -68,6 +95,27 @@
 				<reportElement x="475" y="0" width="100" height="30" uuid="e05ba12f-ebf1-49e9-b51b-9a2c4031cabd"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
+			<textField pattern="dd/yyyy/MMMMM">
+				<reportElement x="310" y="40" width="100" height="30" uuid="f82af3ae-294a-436e-917f-0885efaefd82"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DataInicial}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/yyyy/MMMMM">
+				<reportElement x="440" y="40" width="100" height="30" uuid="ad04db42-4be7-464a-a596-5a50dc3626eb"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DataFinal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="410" y="40" width="30" height="30" uuid="ca61f093-af7d-4e47-8655-afa9b638cdf5"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[ e ]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
@@ -125,15 +173,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="28" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="0" width="100" height="25" uuid="02e0d104-dfe0-4ef8-9cad-156dcd287be8">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="397af426-791b-4c2c-8469-9208e6e8f025"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{dataCaixa}]]></textFieldExpression>
-			</textField>
+		<band height="47" splitType="Stretch">
 			<textField>
 				<reportElement x="160" y="0" width="100" height="25" uuid="f3f555de-180b-4e07-b3f0-ab9285424b2b">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b77abec4-6fe1-47c0-a36b-68a4d4650799"/>
@@ -158,10 +198,38 @@
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{entradas}.subtract( $F{saidas} )]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="95b83318-492f-4eb1-8151-d6b233496db8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c9090340-b6da-40d8-9305-0828e24d9548"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="47" splitType="Stretch">
+			<textField>
+				<reportElement x="450" y="0" width="100" height="30" uuid="48ac9624-59a2-4c7b-9703-78742a7fdc5d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SaldoFinal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="0" width="100" height="30" uuid="e63c5cdb-44bd-493c-bf41-8b8729072649"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalEntradas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="270" y="0" width="100" height="30" uuid="2600a2a6-73f9-49e5-999d-0da5b82853b5"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalSaida}]]></textFieldExpression>
+			</textField>
+		</band>
 	</columnFooter>
 	<pageFooter>
 		<band height="37" splitType="Stretch">

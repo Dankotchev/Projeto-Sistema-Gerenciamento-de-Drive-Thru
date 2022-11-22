@@ -1,9 +1,12 @@
 package br.edu.ifsp.pep.projetointegrador.sgdt.visao;
 
 import br.edu.ifsp.pep.projetointegrador.sgdt.controledao.CaixaDAO;
+import br.edu.ifsp.pep.projetointegrador.sgdt.modelo.Caixa;
 import br.edu.ifsp.pep.projetointegrador.utilitarios.Mensagem;
+import br.edu.ifsp.pep.projetointegrador.utilitarios.Relatorio;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 public class RelatorioVisao extends javax.swing.JFrame {
 
@@ -207,13 +210,14 @@ public class RelatorioVisao extends javax.swing.JFrame {
             switch (selecao) {
                 case 0:
                     CaixaDAO caixaDAO = new CaixaDAO();
-                    relatorio = "FluxoDeCaixa.jrxml";
+                    relatorio = "FluxoDeCaixa.jasper";
+                    List<Caixa> fluxoDeCaixa = caixaDAO.fluxoDeCaixa(dataInicial, dataFinal);
+                    Relatorio.gerarFromJasper(relatorio, fluxoDeCaixa, parametros);
                     break;
                 case 1:
                     relatorio = "RelatorioDeVendas.jrxml";
                     Mensagem.mInformacao("Relatório ainda não disponível");
                     break;
-
                 case 2:
                     relatorio = "RelatorioDeEstoque.jrxml";
                     Mensagem.mInformacao("Relatório ainda não disponível");
@@ -221,7 +225,6 @@ public class RelatorioVisao extends javax.swing.JFrame {
                 default:
                     throw new AssertionError();
             }
-            //            Relatorio.gerarFromJasper(relatorio, lista, parametros);
         }
 
         this.cbTiposRelatorios.setSelectedIndex(-1);

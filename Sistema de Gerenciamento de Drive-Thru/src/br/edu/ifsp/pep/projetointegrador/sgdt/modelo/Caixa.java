@@ -12,12 +12,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "caixa")
+@NamedQueries(value = {
+    @NamedQuery(name = "Produto.fluxoDeCaixa",
+            query = "SELECT c FROM Caixa c WHERE estado = :fechado AND data >= :dataInicial  AND data <= dataFinal "
+                    + "AND c.status = true")
+})
 public class Caixa implements Serializable {
 
     @Id

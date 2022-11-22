@@ -10,8 +10,8 @@ public abstract class AbstractDAO<T> {
 
     public AbstractDAO() {
         emf = Persistence
-                .createEntityManagerFactory("ProjetoIntegradorSGDT_PU");
-//                .createEntityManagerFactory("ProjetoIntegradorSGDT_PU_POSTGRES");
+//                .createEntityManagerFactory("ProjetoIntegradorSGDT_PU");
+                .createEntityManagerFactory("ProjetoIntegradorSGDT_PU_POSTGRES");
     }
 
     protected EntityManager getEntityManager() {

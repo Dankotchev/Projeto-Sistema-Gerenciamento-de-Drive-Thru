@@ -1,4 +1,4 @@
-SET search_path TO sgdt;
+SET search_path TO public;
 
 INSERT INTO refeicao (nome, preco_unitario, descricao, lista_ingredientes) 
     VALUES
