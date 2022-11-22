@@ -50,6 +50,7 @@ public class MenuVisao extends javax.swing.JFrame {
         btnGerenciarRefeicoes = new javax.swing.JButton();
         btnGerenciarFuncionarios = new javax.swing.JButton();
         btnGerenciarProdutos = new javax.swing.JButton();
+        btnEntregarPedido = new javax.swing.JButton();
         btnGerarRelatorio = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -121,7 +122,7 @@ public class MenuVisao extends javax.swing.JFrame {
                 .addComponent(labelCargo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelCargoFuncionario)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 606, Short.MAX_VALUE)
                 .addComponent(labelCaixa)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelIdCaixa)
@@ -150,7 +151,7 @@ public class MenuVisao extends javax.swing.JFrame {
         painelBotoes.setBackground(new java.awt.Color(255, 202, 138));
         painelBotoes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         java.awt.GridBagLayout painelBotoesLayout = new java.awt.GridBagLayout();
-        painelBotoesLayout.columnWidths = new int[] {0, 10, 0, 10, 0};
+        painelBotoesLayout.columnWidths = new int[] {0, 10, 0, 10, 0, 10, 0};
         painelBotoesLayout.rowHeights = new int[] {0, 10, 0, 10, 0};
         painelBotoes.setLayout(painelBotoesLayout);
 
@@ -195,7 +196,7 @@ public class MenuVisao extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         painelBotoes.add(btnFecharCaixa, gridBagConstraints);
@@ -228,6 +229,7 @@ public class MenuVisao extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         painelBotoes.add(btnGerenciarFuncionarios, gridBagConstraints);
 
@@ -241,10 +243,25 @@ public class MenuVisao extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         painelBotoes.add(btnGerenciarProdutos, gridBagConstraints);
+
+        btnEntregarPedido.setBackground(new java.awt.Color(243, 192, 32));
+        btnEntregarPedido.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
+        btnEntregarPedido.setForeground(new java.awt.Color(217, 28, 38));
+        btnEntregarPedido.setText("Entregar Pedidos");
+        btnEntregarPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntregarPedidoActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        painelBotoes.add(btnEntregarPedido, gridBagConstraints);
 
         btnGerarRelatorio.setBackground(new java.awt.Color(243, 192, 32));
         btnGerarRelatorio.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
@@ -258,6 +275,7 @@ public class MenuVisao extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weighty = 0.1;
         painelBotoes.add(btnGerarRelatorio, gridBagConstraints);
@@ -272,12 +290,9 @@ public class MenuVisao extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(painelInfoCaixaOperacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(painelFundoLayout.createSequentialGroup()
-                .addGroup(painelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1)
-                    .addGroup(painelFundoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(painelBotoes, javax.swing.GroupLayout.DEFAULT_SIZE, 1268, Short.MAX_VALUE)))
+                .addComponent(jSeparator1)
                 .addContainerGap())
+            .addComponent(painelBotoes, javax.swing.GroupLayout.DEFAULT_SIZE, 1280, Short.MAX_VALUE)
         );
         painelFundoLayout.setVerticalGroup(
             painelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -375,6 +390,12 @@ public class MenuVisao extends javax.swing.JFrame {
         relatorioVisao.setVisible(true);
     }//GEN-LAST:event_btnGerarRelatorioActionPerformed
 
+    private void btnEntregarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregarPedidoActionPerformed
+        EntregaPedidoVisao entregaPedidoVisao = new EntregaPedidoVisao();
+        entregaPedidoVisao.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        entregaPedidoVisao.setVisible(true);
+    }//GEN-LAST:event_btnEntregarPedidoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -413,6 +434,7 @@ public class MenuVisao extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAbrirCaixa;
+    private javax.swing.JButton btnEntregarPedido;
     private javax.swing.JButton btnFecharCaixa;
     private javax.swing.JButton btnGerarRelatorio;
     private javax.swing.JButton btnGerenciarFuncionarios;

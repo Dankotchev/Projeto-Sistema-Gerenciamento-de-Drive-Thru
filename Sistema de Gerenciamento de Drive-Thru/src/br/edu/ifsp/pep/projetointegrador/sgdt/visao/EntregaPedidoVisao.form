@@ -60,9 +60,10 @@
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnPrepararPedido" min="-2" pref="262" max="-2" attributes="0"/>
-                      <Component id="btnFinalizarPedido" min="-2" pref="261" max="-2" attributes="0"/>
-                      <Component id="btnPrepararPedido1" min="-2" pref="262" max="-2" attributes="0"/>
+                      <Component id="btnEntregarPedido" min="-2" pref="262" max="-2" attributes="0"/>
+                      <Component id="btnConfirmar" min="-2" pref="261" max="-2" attributes="0"/>
+                      <Component id="btnVisualizarPedido" alignment="0" min="-2" pref="262" max="-2" attributes="0"/>
+                      <Component id="btnCancelar" alignment="1" min="-2" pref="261" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
@@ -95,18 +96,24 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane1" alignment="0" pref="536" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="btnPrepararPedido" min="-2" pref="123" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnPrepararPedido1" min="-2" pref="123" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnFinalizarPedido" min="-2" pref="123" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jScrollPane1" alignment="0" pref="536" max="32767" attributes="0"/>
+                              <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="btnEntregarPedido" min="-2" pref="123" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btnConfirmar" min="-2" pref="123" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btnCancelar" min="-2" pref="123" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="btnVisualizarPedido" min="-2" pref="123" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -149,7 +156,7 @@
                   <Color blue="5" green="e2" red="f2" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="COZINHA"/>
+                <Property name="text" type="java.lang.String" value="ENTREGA DE PEDIDOS"/>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
             </Component>
@@ -201,7 +208,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="btnPrepararPedido">
+        <Component class="javax.swing.JButton" name="btnEntregarPedido">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="18" style="1"/>
@@ -209,13 +216,13 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="26" green="1c" red="d9" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Preparar Pedido"/>
+            <Property name="text" type="java.lang.String" value="Entregar Pedido"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPrepararPedidoActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEntregarPedidoActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnFinalizarPedido">
+        <Component class="javax.swing.JButton" name="btnConfirmar">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="18" style="1"/>
@@ -223,10 +230,10 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="26" green="1c" red="d9" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Finalizar Pedido"/>
+            <Property name="text" type="java.lang.String" value="Confimar"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFinalizarPedidoActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConfirmarActionPerformed"/>
           </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane2">
@@ -261,7 +268,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="18" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Pedidos em Fila"/>
+            <Property name="text" type="java.lang.String" value="Pedidos"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="labelTabelaDetalhamento">
@@ -272,7 +279,7 @@
             <Property name="text" type="java.lang.String" value="Detalhamento"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="btnPrepararPedido1">
+        <Component class="javax.swing.JButton" name="btnVisualizarPedido">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="18" style="1"/>
@@ -283,7 +290,21 @@
             <Property name="text" type="java.lang.String" value="Visualizar Pedido"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPrepararPedido1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVisualizarPedidoActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnCancelar">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="18" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="26" green="1c" red="d9" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Cancelar Entrega"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

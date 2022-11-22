@@ -26,6 +26,13 @@ public class PedidoDAO extends AbstractDAO<Pedido> {
                 .getResultList();
     }
     
+    public List<Pedido> buscarFinalizado (){
+        return getEntityManager()
+                .createNamedQuery("Pedido.buscarFinalizado", Pedido.class)
+                .setParameter("finalizado", Pedido.EstadoPedido.FINALIZADO)
+                .getResultList();
+    }
+    
     public Pedido buscarUltimoPedido(){
         return getEntityManager()
                 .createNamedQuery("Pedido.buscarUltimoPedido", Pedido.class)

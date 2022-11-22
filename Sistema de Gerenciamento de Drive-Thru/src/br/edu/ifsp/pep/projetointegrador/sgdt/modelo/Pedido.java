@@ -29,6 +29,9 @@ import javax.persistence.Table;
     @NamedQuery(name = "Pedido.buscarEmFilaEmPreparo",
             query = "SELECT p FROM Pedido p WHERE p.estadoPedido = :emFila OR p.estadoPedido = :emPreparo "
                     + "AND p.status = true ORDER BY p.id ASC"),
+    @NamedQuery(name = "Pedido.buscarFinalizado",
+            query = "SELECT p FROM Pedido p WHERE p.estadoPedido = :finalizado "
+                    + "AND p.status = true ORDER BY p.id ASC"),
     @NamedQuery(name = "Pedido.buscarUltimoPedido",
             query = "SELECT p FROM Pedido p WHERE p.estadoPedido = :aberto "
                     + "AND p.status = true ORDER BY p.id DESC")
