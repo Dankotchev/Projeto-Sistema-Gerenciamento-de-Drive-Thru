@@ -28,7 +28,7 @@ public class ItemPedido implements Serializable {
     @Column(name = "descricao", length = 100, nullable = false)
     private String descricao;
 
-    @Column(name = "quantidade", nullable = false)
+    @Column(name = "quantidade", nullable = true)
     private Integer quantidade;
 
     @Column(name = "status", nullable = false)

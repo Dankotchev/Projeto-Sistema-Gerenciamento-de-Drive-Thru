@@ -20,11 +20,11 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "caixa")
-@NamedQueries(value = {
-    @NamedQuery(name = "Produto.fluxoDeCaixa",
-            query = "SELECT c FROM Caixa c WHERE estado = :fechado AND data >= :dataInicial  AND data <= dataFinal "
-                    + "AND c.status = true")
-})
+//@NamedQueries(value = {
+//    @NamedQuery(name = "Produto.fluxoDeCaixa",
+//            query = "SELECT c FROM Caixa c WHERE c.estado = :fechado AND c.data = :dataInicial  AND c.data = :dataFinal "
+//                    + "AND c.status = true")
+//})
 public class Caixa implements Serializable {
 
     @Id

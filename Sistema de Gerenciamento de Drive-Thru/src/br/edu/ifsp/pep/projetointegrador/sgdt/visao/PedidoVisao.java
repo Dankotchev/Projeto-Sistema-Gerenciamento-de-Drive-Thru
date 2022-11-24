@@ -507,6 +507,7 @@ public class PedidoVisao extends javax.swing.JFrame {
             }
             String mensagem = "Pedido realizado";
             this.aposGravar(mensagem, evt);
+            this.limparCampos();
 
         }
 
@@ -676,13 +677,12 @@ public class PedidoVisao extends javax.swing.JFrame {
     private void atualizarTabelaResumo() {
         this.valorTotalPedido = BigDecimal.ZERO;
         BigDecimal subtotal;
+        DefaultTableModel modelo = (DefaultTableModel) this.tabelaResumo.getModel();
+        modelo.setNumRows(0);
 
         if (this.listagemItensPedido.isEmpty()) {
-            Mensagem.mAviso("------");
+//            Mensagem.mAviso("------");
         } else {
-            DefaultTableModel modelo = (DefaultTableModel) this.tabelaResumo.getModel();
-            modelo.setNumRows(0);
-
             for (ItemPedido itemPedido : this.listagemItensPedido) {
                 subtotal = itemPedido.getPrecoUnitario()
                         .multiply(BigDecimal.valueOf(itemPedido.getQuantidade()));
@@ -755,5 +755,13 @@ public class PedidoVisao extends javax.swing.JFrame {
         this.carregarPainelInformacoes();
         this.carregarTabelas();
         this.listagemItensPedido = null;
+    }
+
+    private void limparCampos() {
+        this.labelVisualizarTotalPedido.setText("R$ 0,00");
+        this.txtPlacaFormated.setText("");
+        this.listagemItensPedido = null;
+        this.carregarTabelas();
+        this.atualizarTabelaResumo();
     }
 }

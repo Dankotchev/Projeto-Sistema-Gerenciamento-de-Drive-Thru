@@ -277,13 +277,13 @@ CREATE OR REPLACE FUNCTION f_atualizar_estoque()
 RETURNS TRIGGER AS $$
 BEGIN
 	IF (TG_OP = 'INSERT') THEN
-			UPDATE produto p SET p.quantidade = p.quantidade - NEW.quantidade_pedido_produto WHERE p.id = NEW.pedido_id;
+			UPDATE produto SET quantidade = quantidade - NEW.quantidade_pedido_produto WHERE id = NEW.produto_id;
 		RETURN NEW;
 	END IF;
 	IF (TG_OP = 'UPDATE') THEN
-			UPDATE produto p
-				SET p.quantidade = p.quantidade - NEW.quantidade_pedido_produto + OLD.quantidade_pedido_produto
-				WHERE p.id = NEW.pedido_id;
+			UPDATE produto
+				SET quantidade = quantidade - NEW.quantidade_pedido_produto + OLD.quantidade_pedido_produto
+				WHERE id = NEW.produto_id;
 		RETURN NEW;
 	END IF;
 
@@ -300,7 +300,7 @@ RETURNS TRIGGER AS $$
 BEGIN
 	IF (TG_OP = 'UPDATE') THEN
             IF (OLD.estado_pedido = 'ABERTO' AND NEW.estado_pedido = 'EM_FILA') THEN
-                UPDATE caixa c SET c.entradas = c.entradas + NEW.total_pedido WHERE c.id_caixa = NEW.caixa_id;
+                UPDATE caixa SET entradas = entradas + NEW.total_pedido WHERE id_caixa = NEW.caixa_id;
             END IF;
 		RETURN NEW;
 	END IF;
